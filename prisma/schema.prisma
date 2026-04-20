@@ -1,0 +1,135 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Kegiatan {
+  id        Int      @id @default(autoincrement())
+  judul     String
+  slug      String   @unique
+  isi       String   @db.Text
+  gambar    String?
+  kategori  String   @default("Umum")
+  penulis   String   @default("Admin")
+  status    String   @default("Aktif")
+  tanggal   DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("kegiatan")
+}
+
+model Umkm {
+  id        Int     @id @default(autoincrement())
+  nama      String
+  deskripsi String?
+  kontak    String
+  foto      String?
+
+  @@map("umkm")
+}
+
+model PengajuanSurat {
+  id         Int      @id @default(autoincrement())
+  nama       String
+  nik        String
+  jenisSurat String
+  status     String   @default("Pending")
+  whatsapp   String
+  createdAt  DateTime @default(now())
+
+  @@map("pengajuansurat")
+}
+
+model BannerHomepage {
+  id        Int      @id @default(autoincrement())
+  tagline   String?
+  judul     String?
+  deskripsi String?
+  gambarURL String
+  halaman   String   @default("home")
+  createdAt DateTime @default(now())
+
+  @@map("bannerhomepage")
+}
+
+model HomeService {
+  id      Int    @id @default(autoincrement())
+  title   String
+  iconURL String
+
+  @@map("homeservice")
+}
+
+model HomeStatistic {
+  id    Int     @id @default(autoincrement())
+  label String
+  value String
+  icon  String?
+
+  @@map("homestatistic")
+}
+
+model HomeWelcome {
+  id        Int     @id @default(autoincrement())
+  namaLurah String
+  konten    String  @db.Text
+  fotoURL   String?
+
+  @@map("homewelcome")
+}
+
+model Penduduk {
+  nik          String   @id @unique(map: "Penduduk_nik_key")
+  nama         String
+  alamat       String
+  pekerjaan    String
+  tanggalLahir DateTime
+
+  @@map("penduduk")
+}
+
+model PerangkatDesa {
+  id        Int      @id @default(autoincrement())
+  nama      String
+  jabatan   String
+  nip       String?
+  foto      String?
+  urutan    Int      @default(100)
+  createdAt DateTime @default(now())
+
+  @@map("perangkatdesa")
+}
+
+model PesanMasuk {
+  id        Int      @id @default(autoincrement())
+  nama      String
+  whatsapp  String
+  pesan     String   @db.Text
+  status    String   @default("Belum Dibaca")
+  createdAt DateTime @default(now())
+
+  @@map("pesanmasuk")
+}
+
+model ProfilKonten {
+  id        Int      @id @default(autoincrement())
+  kategori  String   @unique(map: "ProfilKonten_kategori_key")
+  judul     String
+  isi       String   @db.Text
+  updatedAt DateTime
+
+  @@map("profilkonten")
+}
+
+model SiteConfig {
+  id        Int      @id @default(autoincrement())
+  key       String   @unique(map: "SiteConfig_key_key")
+  value     String   @db.Text
+  updatedAt DateTime
+
+  @@map("siteconfig")
+}
