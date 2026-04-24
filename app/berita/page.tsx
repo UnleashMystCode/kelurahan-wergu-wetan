@@ -1,15 +1,15 @@
 import prisma from "@/lib/db"; // Singleton
 import BeritaView from "@/components/user/BeritaView";
 
-export const dynamic = 'force-dynamic'; 
+export const dynamic = "force-dynamic";
 
 export default async function NewsPage() {
   const banner = await prisma.bannerHomepage.findFirst({
-    where: { halaman: "berita" }
+    where: { halaman: "berita" },
   });
 
   const newsData = await prisma.kegiatan.findMany({
-    orderBy: { tanggal: "desc" }
+    orderBy: { tanggal: "desc" },
   });
 
   return (

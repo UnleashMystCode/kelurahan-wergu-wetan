@@ -7,7 +7,7 @@ export const dictionary = {
       news: "Berita",
       contact: "Kontak",
       adminLogin: "Login Admin", // <--- GANTI INI
-      city: "KOTA KUDUS"
+      city: "KOTA KUDUS",
     },
     profilPage: {
       title: "Profil Kelurahan",
@@ -18,10 +18,9 @@ export const dictionary = {
         tugas: "Tugas & Fungsi",
         monografi: "Monografi & Peta",
         sarana: "Sarana Prasarana",
-        prestasi: "Prestasi Desa"
-      }
-    }
-
+        prestasi: "Prestasi Desa",
+      },
+    },
   },
   EN: {
     navbar: {
@@ -31,7 +30,7 @@ export const dictionary = {
       news: "News",
       contact: "Contact",
       adminLogin: "Admin Login", // <--- GANTI INI
-      city: "KUDUS CITY"
+      city: "KUDUS CITY",
     },
     profilPage: {
       title: "Village Profile",
@@ -42,10 +41,9 @@ export const dictionary = {
         tugas: "Duties & Functions",
         monografi: "Monograph & Map",
         sarana: "Infrastructure",
-        prestasi: "Achievements"
-      }
-    }
-
+        prestasi: "Achievements",
+      },
+    },
   },
   JW: {
     navbar: {
@@ -55,7 +53,7 @@ export const dictionary = {
       news: "Warto",
       contact: "Hubungi",
       adminLogin: "Login Admin", // <--- GANTI INI (Istilah teknis biasanya tetap)
-      city: "KUTHA KUDUS"
+      city: "KUTHA KUDUS",
     },
     profilPage: {
       title: "Profil Kelurahan",
@@ -66,9 +64,8 @@ export const dictionary = {
         tugas: "Tugas & Fungsi",
         monografi: "Monografi & Peta",
         sarana: "Sarana Prasarana",
-        prestasi: "Prestasi Desa"
-      }
-    }
-
-  }
+        prestasi: "Prestasi Desa",
+      },
+    },
+  },
 };

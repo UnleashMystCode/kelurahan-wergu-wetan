@@ -1,14 +1,14 @@
-import AdminBannerManager from '@/components/admin/AdminBannerManager';
-import prisma from '@/lib/db';
-import { ReactNode } from 'react';
+import AdminBannerManager from "@/components/admin/AdminBannerManager";
+import prisma from "@/lib/db";
+import { ReactNode } from "react";
 
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 
 export default async function TentangKamiLayout({ children }: { children: ReactNode }) {
   // Fetch banner data for the "tentang-kami" page
   const banners = await prisma.bannerHomepage.findMany({
-    where: { halaman: 'tentang-kami' },
-    orderBy: { createdAt: 'desc' },
+    where: { halaman: "tentang-kami" },
+    orderBy: { createdAt: "desc" },
   });
 
   return (
@@ -19,7 +19,7 @@ export default async function TentangKamiLayout({ children }: { children: ReactN
       </div>
       {/* Banner manager specific to this page */}
       <section>
-        <h2 className="text-lg font-bold text-slate-700 mb-4 border-l-4 border-blue-600 pl-3">
+        <h2 className="mb-4 border-l-4 border-blue-600 pl-3 text-lg font-bold text-slate-700">
           A. Hero Banner Tentang Kami
         </h2>
         <AdminBannerManager initialData={banners} fixedPage="tentang-kami" />

@@ -19,21 +19,24 @@ async function main() {
           halaman: "home",
           tagline: "Melayani dengan Sepenuh Hati",
           judul: "Selamat Datang di Kelurahan Wergu Wetan",
-          deskripsi: "Portal resmi pelayanan administrasi Kelurahan Wergu Wetan, Kota Kudus, Jawa Tengah.",
+          deskripsi:
+            "Portal resmi pelayanan administrasi Kelurahan Wergu Wetan, Kota Kudus, Jawa Tengah.",
           gambarURL: "/images/hero_office.png",
         },
         {
           halaman: "home",
           tagline: "Layanan Digital Terpadu",
           judul: "Pengajuan Surat Online Kini Lebih Mudah",
-          deskripsi: "Ajukan berbagai layanan surat administrasi tanpa harus antri, kapan saja dan di mana saja.",
+          deskripsi:
+            "Ajukan berbagai layanan surat administrasi tanpa harus antri, kapan saja dan di mana saja.",
           gambarURL: "/images/hero_digital.png",
         },
         {
           halaman: "profil",
           tagline: "Tentang Kami",
           judul: "Profil Kelurahan Wergu Wetan",
-          deskripsi: "Mengenal lebih dekat Kelurahan Wergu Wetan — sejarah, visi misi, dan perangkat desa.",
+          deskripsi:
+            "Mengenal lebih dekat Kelurahan Wergu Wetan — sejarah, visi misi, dan perangkat desa.",
           gambarURL: "/images/hero_community.png",
         },
         {
@@ -99,21 +102,61 @@ Wassalamu'alaikum Wr. Wb.`,
     await prisma.perangkatDesa.createMany({
       data: [
         // LEVEL 1 — PIMPINAN
-        { nama: "H. Ahmad Fauzi, S.Sos., M.Si.", jabatan: "Lurah",                                    nip: "197001012000121001", urutan: 1 },
+        {
+          nama: "H. Ahmad Fauzi, S.Sos., M.Si.",
+          jabatan: "Lurah",
+          nip: "197001012000121001",
+          urutan: 1,
+        },
         // LEVEL 2 — SEKRETARIAT
-        { nama: "Dra. Sri Wahyuni",               jabatan: "Sekretaris Lurah",                          nip: "197505152003122003", urutan: 2 },
+        {
+          nama: "Dra. Sri Wahyuni",
+          jabatan: "Sekretaris Lurah",
+          nip: "197505152003122003",
+          urutan: 2,
+        },
         // LEVEL 3 — SEKSI / KASI (maks 4 sesuai pedoman nasional)
-        { nama: "Budi Santoso, S.E.",              jabatan: "Kasi Pemerintahan",                         nip: "198003202006041002", urutan: 3 },
-        { nama: "Rina Kusumawati, S.Sos.",         jabatan: "Kasi Pemberdayaan Masyarakat",              nip: "198208122008012005", urutan: 4 },
-        { nama: "Agus Triyono",                    jabatan: "Kasi Kesejahteraan Sosial",                 nip: "197911282010011003", urutan: 5 },
-        { nama: "Listya Andini, S.H.",             jabatan: "Kasi Ekonomi & Pembangunan",                nip: "198604132012012007", urutan: 6 },
+        {
+          nama: "Budi Santoso, S.E.",
+          jabatan: "Kasi Pemerintahan",
+          nip: "198003202006041002",
+          urutan: 3,
+        },
+        {
+          nama: "Rina Kusumawati, S.Sos.",
+          jabatan: "Kasi Pemberdayaan Masyarakat",
+          nip: "198208122008012005",
+          urutan: 4,
+        },
+        {
+          nama: "Agus Triyono",
+          jabatan: "Kasi Kesejahteraan Sosial",
+          nip: "197911282010011003",
+          urutan: 5,
+        },
+        {
+          nama: "Listya Andini, S.H.",
+          jabatan: "Kasi Ekonomi & Pembangunan",
+          nip: "198604132012012007",
+          urutan: 6,
+        },
         // LEVEL 4 — STAF ADMINISTRASI & FUNGSIONAL
-        { nama: "Dewi Rahmawati, S.Kom.",          jabatan: "Staf Administrasi Umum",                   nip: null,                urutan: 7 },
-        { nama: "Rendi Pratama, A.Md.",            jabatan: "Staf Keuangan & Aset",                     nip: null,                urutan: 8 },
-        { nama: "Siti Nurkhasanah",                jabatan: "Staf Pelayanan Publik",                    nip: null,                urutan: 9 },
-        { nama: "Wahyu Santoso, S.Kom.",           jabatan: "Operator SIAK / Komputer",                 nip: null,                urutan: 10 },
-        { nama: "Achmad Rifai",                    jabatan: "Staf Keamanan & Ketertiban",               nip: null,                urutan: 11 },
-        { nama: "Nurul Hidayah, S.E.",             jabatan: "Staf Pemberdayaan & Kesejahteraan",        nip: null,                urutan: 12 },
+        { nama: "Dewi Rahmawati, S.Kom.", jabatan: "Staf Administrasi Umum", nip: null, urutan: 7 },
+        { nama: "Rendi Pratama, A.Md.", jabatan: "Staf Keuangan & Aset", nip: null, urutan: 8 },
+        { nama: "Siti Nurkhasanah", jabatan: "Staf Pelayanan Publik", nip: null, urutan: 9 },
+        {
+          nama: "Wahyu Santoso, S.Kom.",
+          jabatan: "Operator SIAK / Komputer",
+          nip: null,
+          urutan: 10,
+        },
+        { nama: "Achmad Rifai", jabatan: "Staf Keamanan & Ketertiban", nip: null, urutan: 11 },
+        {
+          nama: "Nurul Hidayah, S.E.",
+          jabatan: "Staf Pemberdayaan & Kesejahteraan",
+          nip: null,
+          urutan: 12,
+        },
       ],
     });
     console.log("✅ Perangkat Desa selesai");
@@ -182,7 +225,10 @@ Wassalamu'alaikum Wr. Wb.`,
       data: [
         { key: "phone", value: "(0291) 430xxx / 0812-3456-7890" },
         { key: "email", value: "pemdes.werguwetan@kudus.go.id" },
-        { key: "alamat", value: "Jl. Jendral Sudirman No. 12, Wergu Wetan, Kec. Kota, Kudus, Jawa Tengah 59316" },
+        {
+          key: "alamat",
+          value: "Jl. Jendral Sudirman No. 12, Wergu Wetan, Kec. Kota, Kudus, Jawa Tengah 59316",
+        },
       ],
     });
     console.log("✅ Site Config selesai");
@@ -233,5 +279,11 @@ Wassalamu'alaikum Wr. Wb.`,
 }
 
 main()
-  .then(async () => { await prisma.$disconnect(); })
-  .catch(async (e) => { console.error(e); await prisma.$disconnect(); process.exit(1); });
+  .then(async () => {
+    await prisma.$disconnect();
+  })
+  .catch(async (e) => {
+    console.error(e);
+    await prisma.$disconnect();
+    process.exit(1);
+  });

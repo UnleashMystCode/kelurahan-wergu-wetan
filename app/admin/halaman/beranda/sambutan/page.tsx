@@ -1,6 +1,6 @@
 import AdminHomeFeatures from "@/components/admin/AdminHomeFeatures";
 import prisma from "@/lib/db";
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 
 export default async function AdminSambutanPage() {
   const welcome = await prisma.homeWelcome.findFirst();

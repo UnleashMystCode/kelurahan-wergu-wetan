@@ -2,9 +2,22 @@
 
 import { useState } from "react";
 // Hapus import ArrowLeft & Link karena sudah tidak dipakai
-import { 
-  Plus, Trash2, Edit2, ShieldAlert, Search, Key, Mail, X, Save, User, 
-  CheckCircle, Users, Download, Filter, RefreshCw 
+import {
+  Plus,
+  Trash2,
+  Edit2,
+  ShieldAlert,
+  Search,
+  Key,
+  Mail,
+  X,
+  Save,
+  User,
+  CheckCircle,
+  Users,
+  Download,
+  Filter,
+  RefreshCw,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -13,7 +26,13 @@ export default function AdminSettingsPage() {
   const [admins, setAdmins] = useState([
     { id: 1, name: "Budi Santoso", email: "budi@desa.go.id", role: "Petugas", status: "Active" },
     { id: 2, name: "Siti Aminah", email: "siti@desa.go.id", role: "Petugas", status: "Inactive" },
-    { id: 3, name: "Rahmat Hidayat", email: "rahmat@desa.go.id", role: "Super Admin", status: "Active" },
+    {
+      id: 3,
+      name: "Rahmat Hidayat",
+      email: "rahmat@desa.go.id",
+      role: "Super Admin",
+      status: "Active",
+    },
   ]);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -37,9 +56,9 @@ export default function AdminSettingsPage() {
   const handleSave = (e: React.FormEvent) => {
     e.preventDefault();
     if (editData) {
-      setAdmins(admins.map(a => a.id === editData.id ? { ...a, ...form, role: a.role } : a));
+      setAdmins(admins.map((a) => (a.id === editData.id ? { ...a, ...form, role: a.role } : a)));
     } else {
-      const newId = admins.length > 0 ? Math.max(...admins.map(a => a.id)) + 1 : 1;
+      const newId = admins.length > 0 ? Math.max(...admins.map((a) => a.id)) + 1 : 1;
       setAdmins([...admins, { id: newId, role: "Petugas", ...form }]);
     }
     setIsModalOpen(false);
@@ -48,7 +67,7 @@ export default function AdminSettingsPage() {
 
   const handleDelete = (id: number) => {
     if (confirm("Yakin ingin menghapus akses admin ini?")) {
-      setAdmins(admins.filter(a => a.id !== id));
+      setAdmins(admins.filter((a) => a.id !== id));
     }
   };
 
@@ -57,162 +76,198 @@ export default function AdminSettingsPage() {
     setTimeout(() => setIsRefreshing(false), 1000);
   };
 
-  const filteredAdmins = filterStatus === "All" 
-    ? admins 
-    : admins.filter(a => a.status === filterStatus);
+  const filteredAdmins =
+    filterStatus === "All" ? admins : admins.filter((a) => a.status === filterStatus);
   const totalAdmins = admins.length;
-  const activeAdmins = admins.filter(a => a.status === "Active").length;
+  const activeAdmins = admins.filter((a) => a.status === "Active").length;
 
   return (
     <div className="space-y-8 pb-10">
-      
       {/* 1. HEADER PAGE (TANPA TOMBOL KEMBALI) */}
-      <div className="flex flex-col xl:flex-row justify-between items-start xl:items-center gap-6 p-6 bg-white rounded-3xl shadow-sm border border-slate-100">
-        
+      <div className="flex flex-col items-start justify-between gap-6 rounded-3xl border border-slate-100 bg-white p-6 shadow-sm xl:flex-row xl:items-center">
         {/* Judul & Ikon (Langsung di kiri, tanpa panah back) */}
         <div className="flex items-center gap-5">
-           <div className="w-16 h-16 rounded-2xl bg-red-50 text-red-500 flex items-center justify-center shadow-sm border border-red-100">
-              <ShieldAlert size={32} />
-           </div>
-           <div>
-              <h1 className="text-2xl md:text-3xl font-bold text-slate-900 tracking-tight leading-none">Manajemen Admin</h1>
-              <p className="text-slate-500 text-sm mt-1.5 font-medium flex items-center gap-1.5">
-                 <span className="w-2 h-2 rounded-full bg-red-500 inline-block animate-pulse"></span>
-                 <span className="text-red-600 font-bold bg-red-50 px-2 py-0.5 rounded text-xs border border-red-100">Super Admin Zone</span>
-              </p>
-           </div>
+          <div className="flex h-16 w-16 items-center justify-center rounded-2xl border border-red-100 bg-red-50 text-red-500 shadow-sm">
+            <ShieldAlert size={32} />
+          </div>
+          <div>
+            <h1 className="text-2xl leading-none font-bold tracking-tight text-slate-900 md:text-3xl">
+              Manajemen Admin
+            </h1>
+            <p className="mt-1.5 flex items-center gap-1.5 text-sm font-medium text-slate-500">
+              <span className="inline-block h-2 w-2 animate-pulse rounded-full bg-red-500"></span>
+              <span className="rounded border border-red-100 bg-red-50 px-2 py-0.5 text-xs font-bold text-red-600">
+                Super Admin Zone
+              </span>
+            </p>
+          </div>
         </div>
 
         {/* Tombol Aksi Kanan */}
-        <div className="flex flex-wrap gap-3 w-full xl:w-auto">
-            <button className="px-5 py-3 bg-white border border-slate-200 text-slate-600 font-bold rounded-xl text-sm hover:bg-slate-50 hover:text-blue-600 transition flex items-center gap-2 shadow-sm flex-1 xl:flex-none justify-center">
-                <Download size={18} /> Export CSV
-            </button>
-            <button 
-                onClick={openAddModal}
-                className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl font-bold text-sm shadow-lg shadow-blue-600/20 flex items-center gap-2 transition-all hover:-translate-y-1 active:scale-95 flex-1 xl:flex-none justify-center"
-            >
-                <Plus size={18} /> Tambah Admin
-            </button>
+        <div className="flex w-full flex-wrap gap-3 xl:w-auto">
+          <button className="flex flex-1 items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-5 py-3 text-sm font-bold text-slate-600 shadow-sm transition hover:bg-slate-50 hover:text-blue-600 xl:flex-none">
+            <Download size={18} /> Export CSV
+          </button>
+          <button
+            onClick={openAddModal}
+            className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-blue-600 px-6 py-3 text-sm font-bold text-white shadow-lg shadow-blue-600/20 transition-all hover:-translate-y-1 hover:bg-blue-700 active:scale-95 xl:flex-none"
+          >
+            <Plus size={18} /> Tambah Admin
+          </button>
         </div>
       </div>
 
       {/* 2. STATS CARDS (Tetap Sama) */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm flex items-center gap-5 hover:shadow-md transition-all">
-          <div className="w-14 h-14 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+        <div className="flex items-center gap-5 rounded-3xl border border-slate-100 bg-white p-6 shadow-sm transition-all hover:shadow-md">
+          <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-50 text-blue-600">
             <Users size={28} />
           </div>
           <div>
-            <p className="text-slate-400 text-xs font-bold uppercase tracking-widest mb-1">Total Akun</p>
+            <p className="mb-1 text-xs font-bold tracking-widest text-slate-400 uppercase">
+              Total Akun
+            </p>
             <h3 className="text-3xl font-extrabold text-slate-800">{totalAdmins}</h3>
           </div>
         </div>
-        <div className="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm flex items-center gap-5 hover:shadow-md transition-all">
-          <div className="w-14 h-14 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center">
+        <div className="flex items-center gap-5 rounded-3xl border border-slate-100 bg-white p-6 shadow-sm transition-all hover:shadow-md">
+          <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-emerald-50 text-emerald-600">
             <CheckCircle size={28} />
           </div>
           <div>
-            <p className="text-slate-400 text-xs font-bold uppercase tracking-widest mb-1">Status Aktif</p>
+            <p className="mb-1 text-xs font-bold tracking-widest text-slate-400 uppercase">
+              Status Aktif
+            </p>
             <h3 className="text-3xl font-extrabold text-slate-800">{activeAdmins}</h3>
           </div>
         </div>
-        <div className="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm flex items-center gap-5 hover:shadow-md transition-all">
-          <div className="w-14 h-14 bg-orange-50 text-orange-600 rounded-2xl flex items-center justify-center">
+        <div className="flex items-center gap-5 rounded-3xl border border-slate-100 bg-white p-6 shadow-sm transition-all hover:shadow-md">
+          <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-orange-50 text-orange-600">
             <ShieldAlert size={28} />
           </div>
           <div>
-            <p className="text-slate-400 text-xs font-bold uppercase tracking-widest mb-1">Keamanan</p>
+            <p className="mb-1 text-xs font-bold tracking-widest text-slate-400 uppercase">
+              Keamanan
+            </p>
             <h3 className="text-lg font-bold text-slate-800">AES-256 Encrypted</h3>
           </div>
         </div>
       </div>
 
       {/* 3. TABEL DATA (Tetap Sama) */}
-      <div className="bg-white rounded-3xl shadow-xl shadow-slate-200/50 border border-slate-100 overflow-hidden">
+      <div className="overflow-hidden rounded-3xl border border-slate-100 bg-white shadow-xl shadow-slate-200/50">
         {/* Toolbar */}
-        <div className="p-6 border-b border-slate-100 flex flex-col md:flex-row justify-between gap-4 items-center bg-slate-50/50">
-          <div className="relative w-full md:w-80 group">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-blue-500 transition-colors" size={20} />
-            <input 
-              type="text" 
-              placeholder="Cari nama atau email..." 
-              className="w-full pl-12 pr-4 py-3 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all font-medium" 
+        <div className="flex flex-col items-center justify-between gap-4 border-b border-slate-100 bg-slate-50/50 p-6 md:flex-row">
+          <div className="group relative w-full md:w-80">
+            <Search
+              className="absolute top-1/2 left-4 -translate-y-1/2 text-slate-400 transition-colors group-focus-within:text-blue-500"
+              size={20}
+            />
+            <input
+              type="text"
+              placeholder="Cari nama atau email..."
+              className="w-full rounded-xl border border-slate-200 bg-white py-3 pr-4 pl-12 text-sm font-medium transition-all focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 focus:outline-none"
             />
           </div>
 
-          <div className="flex items-center gap-3 w-full md:w-auto">
-             <div className="relative flex-1 md:flex-none">
-                <select 
-                    value={filterStatus}
-                    onChange={(e) => setFilterStatus(e.target.value)}
-                    className="w-full appearance-none bg-white border border-slate-200 text-slate-600 text-sm font-bold py-3 pl-4 pr-10 rounded-xl focus:outline-none focus:border-blue-500 hover:bg-slate-50 cursor-pointer shadow-sm"
-                >
-                    <option value="All">Semua Status</option>
-                    <option value="Active">Hanya Aktif</option>
-                    <option value="Inactive">Non-Aktif</option>
-                </select>
-                <Filter size={16} className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
-             </div>
+          <div className="flex w-full items-center gap-3 md:w-auto">
+            <div className="relative flex-1 md:flex-none">
+              <select
+                value={filterStatus}
+                onChange={(e) => setFilterStatus(e.target.value)}
+                className="w-full cursor-pointer appearance-none rounded-xl border border-slate-200 bg-white py-3 pr-10 pl-4 text-sm font-bold text-slate-600 shadow-sm hover:bg-slate-50 focus:border-blue-500 focus:outline-none"
+              >
+                <option value="All">Semua Status</option>
+                <option value="Active">Hanya Aktif</option>
+                <option value="Inactive">Non-Aktif</option>
+              </select>
+              <Filter
+                size={16}
+                className="pointer-events-none absolute top-1/2 right-4 -translate-y-1/2 text-slate-400"
+              />
+            </div>
 
-             <button 
-                onClick={handleRefresh}
-                className="p-3 bg-white border border-slate-200 text-slate-600 rounded-xl hover:text-blue-600 hover:bg-blue-50 transition shadow-sm" 
-                title="Refresh Data"
-             >
-                <RefreshCw size={20} className={isRefreshing ? "animate-spin text-blue-600" : ""} />
-             </button>
+            <button
+              onClick={handleRefresh}
+              className="rounded-xl border border-slate-200 bg-white p-3 text-slate-600 shadow-sm transition hover:bg-blue-50 hover:text-blue-600"
+              title="Refresh Data"
+            >
+              <RefreshCw size={20} className={isRefreshing ? "animate-spin text-blue-600" : ""} />
+            </button>
           </div>
         </div>
 
         {/* Table Body */}
         <div className="overflow-x-auto">
-          <table className="w-full text-left border-collapse">
-            <thead className="bg-slate-50 border-b border-slate-100">
+          <table className="w-full border-collapse text-left">
+            <thead className="border-b border-slate-100 bg-slate-50">
               <tr>
-                <th className="px-8 py-5 text-xs font-bold text-slate-500 uppercase tracking-widest">Admin Info</th>
-                <th className="px-8 py-5 text-xs font-bold text-slate-500 uppercase tracking-widest">Role</th>
-                <th className="px-8 py-5 text-xs font-bold text-slate-500 uppercase tracking-widest">Status</th>
-                <th className="px-8 py-5 text-xs font-bold text-slate-500 uppercase tracking-widest text-right">Aksi</th>
+                <th className="px-8 py-5 text-xs font-bold tracking-widest text-slate-500 uppercase">
+                  Admin Info
+                </th>
+                <th className="px-8 py-5 text-xs font-bold tracking-widest text-slate-500 uppercase">
+                  Role
+                </th>
+                <th className="px-8 py-5 text-xs font-bold tracking-widest text-slate-500 uppercase">
+                  Status
+                </th>
+                <th className="px-8 py-5 text-right text-xs font-bold tracking-widest text-slate-500 uppercase">
+                  Aksi
+                </th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-50">
               {filteredAdmins.length > 0 ? (
                 filteredAdmins.map((admin) => (
-                  <tr key={admin.id} className="hover:bg-blue-50/40 transition-colors group">
+                  <tr key={admin.id} className="group transition-colors hover:bg-blue-50/40">
                     <td className="px-8 py-5">
                       <div className="flex items-center gap-4">
-                        <div className={`w-12 h-12 rounded-2xl flex items-center justify-center font-bold text-lg shadow-sm
-                          ${admin.id % 2 === 0 ? 'bg-indigo-100 text-indigo-600' : 'bg-pink-100 text-pink-600'}`}>
+                        <div
+                          className={`flex h-12 w-12 items-center justify-center rounded-2xl text-lg font-bold shadow-sm ${admin.id % 2 === 0 ? "bg-indigo-100 text-indigo-600" : "bg-pink-100 text-pink-600"}`}
+                        >
                           {admin.name.charAt(0)}
                         </div>
                         <div>
-                          <p className="font-bold text-slate-800 text-sm group-hover:text-blue-600 transition-colors">{admin.name}</p>
-                          <p className="text-xs text-slate-500 font-medium">{admin.email}</p>
+                          <p className="text-sm font-bold text-slate-800 transition-colors group-hover:text-blue-600">
+                            {admin.name}
+                          </p>
+                          <p className="text-xs font-medium text-slate-500">{admin.email}</p>
                         </div>
                       </div>
                     </td>
                     <td className="px-8 py-5">
-                      <span className={`text-xs font-bold px-3 py-1 rounded-lg border
-                        ${admin.role === 'Super Admin' ? 'bg-red-50 text-red-600 border-red-100' : 'bg-slate-100 text-slate-600 border-slate-200'}`}>
-                           {admin.role}
+                      <span
+                        className={`rounded-lg border px-3 py-1 text-xs font-bold ${admin.role === "Super Admin" ? "border-red-100 bg-red-50 text-red-600" : "border-slate-200 bg-slate-100 text-slate-600"}`}
+                      >
+                        {admin.role}
                       </span>
                     </td>
                     <td className="px-8 py-5">
-                      <span className={`px-3 py-1 rounded-full text-xs font-bold inline-flex items-center gap-2 border
-                        ${admin.status === 'Active' 
-                          ? 'bg-emerald-50 text-emerald-700 border-emerald-100' 
-                          : 'bg-slate-100 text-slate-500 border-slate-200'}`}>
-                        <span className={`w-2 h-2 rounded-full ${admin.status === 'Active' ? 'bg-emerald-500 animate-pulse' : 'bg-slate-400'}`}></span> 
+                      <span
+                        className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs font-bold ${
+                          admin.status === "Active"
+                            ? "border-emerald-100 bg-emerald-50 text-emerald-700"
+                            : "border-slate-200 bg-slate-100 text-slate-500"
+                        }`}
+                      >
+                        <span
+                          className={`h-2 w-2 rounded-full ${admin.status === "Active" ? "animate-pulse bg-emerald-500" : "bg-slate-400"}`}
+                        ></span>
                         {admin.status}
                       </span>
                     </td>
                     <td className="px-8 py-5 text-right">
-                      <div className="flex justify-end gap-2 opacity-80 group-hover:opacity-100 transition-opacity">
-                        <button onClick={() => openEditModal(admin)} className="p-2.5 bg-white border border-slate-200 text-slate-600 hover:text-blue-600 hover:border-blue-200 hover:bg-blue-50 rounded-xl transition-all shadow-sm">
+                      <div className="flex justify-end gap-2 opacity-80 transition-opacity group-hover:opacity-100">
+                        <button
+                          onClick={() => openEditModal(admin)}
+                          className="rounded-xl border border-slate-200 bg-white p-2.5 text-slate-600 shadow-sm transition-all hover:border-blue-200 hover:bg-blue-50 hover:text-blue-600"
+                        >
                           <Edit2 size={18} />
                         </button>
-                        <button onClick={() => handleDelete(admin.id)} className="p-2.5 bg-white border border-slate-200 text-slate-600 hover:text-red-600 hover:border-red-200 hover:bg-red-50 rounded-xl transition-all shadow-sm">
+                        <button
+                          onClick={() => handleDelete(admin.id)}
+                          className="rounded-xl border border-slate-200 bg-white p-2.5 text-slate-600 shadow-sm transition-all hover:border-red-200 hover:bg-red-50 hover:text-red-600"
+                        >
                           <Trash2 size={18} />
                         </button>
                       </div>
@@ -221,7 +276,9 @@ export default function AdminSettingsPage() {
                 ))
               ) : (
                 <tr>
-                  <td colSpan={4} className="p-16 text-center">Data tidak ditemukan</td>
+                  <td colSpan={4} className="p-16 text-center">
+                    Data tidak ditemukan
+                  </td>
                 </tr>
               )}
             </tbody>
@@ -233,82 +290,121 @@ export default function AdminSettingsPage() {
       <AnimatePresence>
         {isModalOpen && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-            <motion.div 
-              initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
               onClick={() => setIsModalOpen(false)}
               className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm"
             />
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.95, y: 20 }} 
-              animate={{ opacity: 1, scale: 1, y: 0 }} 
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="relative bg-white w-full max-w-lg rounded-3xl shadow-2xl overflow-hidden z-10"
+              className="relative z-10 w-full max-w-lg overflow-hidden rounded-3xl bg-white shadow-2xl"
             >
-              <div className="px-8 py-6 border-b border-slate-100 bg-slate-50/50 flex justify-between items-center">
+              <div className="flex items-center justify-between border-b border-slate-100 bg-slate-50/50 px-8 py-6">
                 <div>
-                   <h3 className="text-xl font-bold text-slate-800">{editData ? "Edit Data Admin" : "Tambah Admin Baru"}</h3>
-                   <p className="text-xs text-slate-500 mt-1">Pastikan data yang dimasukkan sudah benar.</p>
+                  <h3 className="text-xl font-bold text-slate-800">
+                    {editData ? "Edit Data Admin" : "Tambah Admin Baru"}
+                  </h3>
+                  <p className="mt-1 text-xs text-slate-500">
+                    Pastikan data yang dimasukkan sudah benar.
+                  </p>
                 </div>
-                <button onClick={() => setIsModalOpen(false)} className="w-9 h-9 flex items-center justify-center rounded-full bg-slate-200 text-slate-500 hover:bg-red-100 hover:text-red-500 transition"><X size={20} /></button>
+                <button
+                  onClick={() => setIsModalOpen(false)}
+                  className="flex h-9 w-9 items-center justify-center rounded-full bg-slate-200 text-slate-500 transition hover:bg-red-100 hover:text-red-500"
+                >
+                  <X size={20} />
+                </button>
               </div>
 
-              <form onSubmit={handleSave} className="p-8 space-y-5">
+              <form onSubmit={handleSave} className="space-y-5 p-8">
                 <div>
-                  <label className="text-xs font-bold text-slate-700 mb-2 block uppercase tracking-wider">Nama Lengkap</label>
+                  <label className="mb-2 block text-xs font-bold tracking-wider text-slate-700 uppercase">
+                    Nama Lengkap
+                  </label>
                   <div className="relative">
-                    <User size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
-                    <input 
-                      type="text" required 
-                      className="w-full bg-slate-50 border border-slate-200 rounded-xl pl-11 pr-4 py-3 text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all font-medium text-slate-700"
+                    <User
+                      size={18}
+                      className="absolute top-1/2 left-4 -translate-y-1/2 text-slate-400"
+                    />
+                    <input
+                      type="text"
+                      required
+                      className="w-full rounded-xl border border-slate-200 bg-slate-50 py-3 pr-4 pl-11 text-sm font-medium text-slate-700 transition-all focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:outline-none"
                       placeholder="Contoh: Budi Santoso"
                       value={form.name}
-                      onChange={(e) => setForm({...form, name: e.target.value})}
+                      onChange={(e) => setForm({ ...form, name: e.target.value })}
                     />
                   </div>
                 </div>
                 <div>
-                  <label className="text-xs font-bold text-slate-700 mb-2 block uppercase tracking-wider">Email Login</label>
+                  <label className="mb-2 block text-xs font-bold tracking-wider text-slate-700 uppercase">
+                    Email Login
+                  </label>
                   <div className="relative">
-                    <Mail size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
-                    <input 
-                      type="email" required 
-                      className="w-full bg-slate-50 border border-slate-200 rounded-xl pl-11 pr-4 py-3 text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all font-medium text-slate-700"
+                    <Mail
+                      size={18}
+                      className="absolute top-1/2 left-4 -translate-y-1/2 text-slate-400"
+                    />
+                    <input
+                      type="email"
+                      required
+                      className="w-full rounded-xl border border-slate-200 bg-slate-50 py-3 pr-4 pl-11 text-sm font-medium text-slate-700 transition-all focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:outline-none"
                       placeholder="nama@desa.go.id"
                       value={form.email}
-                      onChange={(e) => setForm({...form, email: e.target.value})}
+                      onChange={(e) => setForm({ ...form, email: e.target.value })}
                     />
                   </div>
                 </div>
                 <div className="grid grid-cols-2 gap-4">
-                    <div>
-                        <label className="text-xs font-bold text-slate-700 mb-2 block uppercase tracking-wider">{editData ? "Reset Pass" : "Password"}</label>
-                        <div className="relative">
-                            <Key size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
-                            <input 
-                            type="password" 
-                            required={!editData} 
-                            className="w-full bg-slate-50 border border-slate-200 rounded-xl pl-11 pr-4 py-3 text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all font-medium text-slate-700"
-                            placeholder="••••••••"
-                            value={form.password}
-                            onChange={(e) => setForm({...form, password: e.target.value})}
-                            />
-                        </div>
+                  <div>
+                    <label className="mb-2 block text-xs font-bold tracking-wider text-slate-700 uppercase">
+                      {editData ? "Reset Pass" : "Password"}
+                    </label>
+                    <div className="relative">
+                      <Key
+                        size={18}
+                        className="absolute top-1/2 left-4 -translate-y-1/2 text-slate-400"
+                      />
+                      <input
+                        type="password"
+                        required={!editData}
+                        className="w-full rounded-xl border border-slate-200 bg-slate-50 py-3 pr-4 pl-11 text-sm font-medium text-slate-700 transition-all focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:outline-none"
+                        placeholder="••••••••"
+                        value={form.password}
+                        onChange={(e) => setForm({ ...form, password: e.target.value })}
+                      />
                     </div>
-                    <div>
-                        <label className="text-xs font-bold text-slate-700 mb-2 block uppercase tracking-wider">Status</label>
-                        <select 
-                            className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all font-medium text-slate-700"
-                            value={form.status}
-                            onChange={(e) => setForm({...form, status: e.target.value})}
-                        >
-                            <option value="Active">Active</option>
-                            <option value="Inactive">Blokir</option>
-                        </select>
-                    </div>
+                  </div>
+                  <div>
+                    <label className="mb-2 block text-xs font-bold tracking-wider text-slate-700 uppercase">
+                      Status
+                    </label>
+                    <select
+                      className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-medium text-slate-700 transition-all focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:outline-none"
+                      value={form.status}
+                      onChange={(e) => setForm({ ...form, status: e.target.value })}
+                    >
+                      <option value="Active">Active</option>
+                      <option value="Inactive">Blokir</option>
+                    </select>
+                  </div>
                 </div>
-                <div className="pt-6 flex gap-3">
-                  <button type="button" onClick={() => setIsModalOpen(false)} className="flex-1 px-4 py-3 bg-white border border-slate-200 text-slate-600 font-bold rounded-xl text-sm hover:bg-slate-50 transition">Batal</button>
-                  <button type="submit" className="flex-1 px-4 py-3 bg-blue-600 text-white font-bold rounded-xl text-sm hover:bg-blue-700 transition shadow-lg shadow-blue-600/20 flex items-center justify-center gap-2">
+                <div className="flex gap-3 pt-6">
+                  <button
+                    type="button"
+                    onClick={() => setIsModalOpen(false)}
+                    className="flex-1 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-bold text-slate-600 transition hover:bg-slate-50"
+                  >
+                    Batal
+                  </button>
+                  <button
+                    type="submit"
+                    className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 py-3 text-sm font-bold text-white shadow-lg shadow-blue-600/20 transition hover:bg-blue-700"
+                  >
                     <Save size={18} /> Simpan Data
                   </button>
                 </div>

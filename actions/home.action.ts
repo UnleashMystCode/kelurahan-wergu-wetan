@@ -9,7 +9,7 @@ import { HomeService } from "@/core/services/home.service";
  * 1. Statistik Excel
  * 2. Layanan (Icon Grid Beranda)
  * 3. Sambutan Lurah
- * 
+ *
  * Karena file ini sudah di-refactor, 171 baris kode yang "kotor" (parsing Excel & I/O Foto)
  * telah dibuang ke Service Layer, menyisakan Controller yang sangat bersih.
  */
@@ -96,4 +96,3 @@ export async function saveWelcome(formData: FormData) {
     return { success: false, message: error.message };
   }
 }
-

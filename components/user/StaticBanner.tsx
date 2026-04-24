@@ -11,19 +11,19 @@ type StaticBannerProps = {
 
 export default function StaticBanner({ title, desc, imageURL, Icon }: StaticBannerProps) {
   return (
-    <div className="relative h-[600px] md:h-[700px] w-full overflow-hidden bg-slate-900 mt-[-100px]">
-      <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat" 
-        style={{ backgroundImage: `url(${imageURL})` }} 
+    <div className="relative mt-[-100px] h-[600px] w-full overflow-hidden bg-slate-900 md:h-[700px]">
+      <div
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: `url(${imageURL})` }}
       />
       <div className="absolute inset-0 bg-black/50 bg-gradient-to-t from-black/80 via-transparent to-black/30" />
-      
-      <div className="absolute inset-0 flex items-center justify-center text-center px-4 z-20 pt-[100px]">
-        <div className="max-w-4xl mx-auto">
+
+      <div className="absolute inset-0 z-20 flex items-center justify-center px-4 pt-[100px] text-center">
+        <div className="mx-auto max-w-4xl">
           <motion.div
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            className="inline-block mb-6 p-4 bg-white/10 backdrop-blur-md rounded-full border border-white/20 shadow-lg"
+            className="mb-6 inline-block rounded-full border border-white/20 bg-white/10 p-4 shadow-lg backdrop-blur-md"
           >
             <Icon size={32} className="text-blue-200" />
           </motion.div>
@@ -31,7 +31,7 @@ export default function StaticBanner({ title, desc, imageURL, Icon }: StaticBann
           <motion.h1
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
-            className="text-4xl md:text-5xl lg:text-6xl font-black text-white mb-6 leading-tight tracking-tight"
+            className="mb-6 text-4xl leading-tight font-black tracking-tight text-white md:text-5xl lg:text-6xl"
           >
             {title}
           </motion.h1>
@@ -40,7 +40,7 @@ export default function StaticBanner({ title, desc, imageURL, Icon }: StaticBann
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2 }}
-            className="text-lg md:text-xl text-blue-50 max-w-2xl mx-auto leading-relaxed opacity-90 font-medium"
+            className="mx-auto max-w-2xl text-lg leading-relaxed font-medium text-blue-50 opacity-90 md:text-xl"
           >
             {desc}
           </motion.p>

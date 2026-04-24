@@ -2,13 +2,29 @@
 
 import { useState, useTransition } from "react";
 import { motion } from "framer-motion";
-import { MapPin, Phone, Mail, Send, CheckCircle, PhoneCall, Clock, Loader2, MessageSquare } from "lucide-react";
+import {
+  MapPin,
+  Phone,
+  Mail,
+  Send,
+  CheckCircle,
+  PhoneCall,
+  Clock,
+  Loader2,
+  MessageSquare,
+} from "lucide-react";
 import StaticBanner from "./StaticBanner"; // Tidak dipakai lagi, diganti hero minimalis
 import { kirimPesan } from "@/actions/kontak.action";
 
 type KontakInfo = { phone: string; email: string; alamat: string };
 
-export default function KontakView({ banner, kontakInfo }: { banner?: any; kontakInfo?: KontakInfo }) {
+export default function KontakView({
+  banner,
+  kontakInfo,
+}: {
+  banner?: any;
+  kontakInfo?: KontakInfo;
+}) {
   const [formStatus, setFormStatus] = useState<"idle" | "success">("idle");
   const [isPending, startTransition] = useTransition();
 
@@ -30,41 +46,54 @@ export default function KontakView({ banner, kontakInfo }: { banner?: any; konta
   };
 
   return (
-    <div className="bg-slate-50 min-h-screen pb-20">
+    <div className="min-h-screen bg-slate-50 pb-20">
       {/* 1. HERO HEADER (Minimalist Dark Style) */}
-      <div className="relative w-full bg-[#0B132B] mt-[-100px] pt-[200px] pb-[100px] md:pt-[240px] md:pb-[140px] flex flex-col items-center justify-center text-center px-4">
-        <motion.h1 
-          initial={{ y: 20, opacity: 0 }} 
-          animate={{ y: 0, opacity: 1 }} 
-          style={{ fontFamily: "Georgia, 'Times New Roman', Times, serif" }} 
-          className="text-6xl md:text-[80px] text-white mb-6 tracking-tight leading-none"
+      <div className="relative mt-[-100px] flex w-full flex-col items-center justify-center bg-[#0B132B] px-4 pt-[200px] pb-[100px] text-center md:pt-[240px] md:pb-[140px]">
+        <motion.h1
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          style={{ fontFamily: "Georgia, 'Times New Roman', Times, serif" }}
+          className="mb-6 text-6xl leading-none tracking-tight text-white md:text-[80px]"
         >
           Kontak
         </motion.h1>
-        
-        <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.1 }} className="w-full max-w-2xl">
-           <p className="text-lg md:text-xl text-slate-300 font-medium tracking-wide">Hubungi kami atau sampaikan aspirasi Anda secara daring.</p>
+
+        <motion.div
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.1 }}
+          className="w-full max-w-2xl"
+        >
+          <p className="text-lg font-medium tracking-wide text-slate-300 md:text-xl">
+            Hubungi kami atau sampaikan aspirasi Anda secara daring.
+          </p>
         </motion.div>
       </div>
 
-      <div className="container mx-auto px-6 pt-16 relative z-30 grid grid-cols-1 lg:grid-cols-12 gap-10">
+      <div className="relative z-30 container mx-auto grid grid-cols-1 gap-10 px-6 pt-16 lg:grid-cols-12">
         {/* ===== KOLOM KIRI: INFO KONTAK ===== */}
-        <div className="lg:col-span-4 space-y-6">
+        <div className="space-y-6 lg:col-span-4">
           {/* Card Info Kontak */}
-          <div className="bg-white p-10 rounded-[3rem] shadow-xl border border-slate-100">
-            <h3 className="text-xl font-black text-slate-800 mb-6 pb-4 border-b border-slate-100">Informasi Kontak</h3>
+          <div className="rounded-[3rem] border border-slate-100 bg-white p-10 shadow-xl">
+            <h3 className="mb-6 border-b border-slate-100 pb-4 text-xl font-black text-slate-800">
+              Informasi Kontak
+            </h3>
             <div className="space-y-6">
               <ContactInfoItem Icon={MapPin} label="Alamat Kantor" value={info.alamat} />
               <ContactInfoItem Icon={Phone} label="Nomor Telepon / WA" value={info.phone} />
               <ContactInfoItem Icon={Mail} label="Email Resmi" value={info.email} />
-              <ContactInfoItem Icon={Clock} label="Jam Pelayanan" value="Senin – Jumat, 08:00 – 15:00 WIB" />
+              <ContactInfoItem
+                Icon={Clock}
+                label="Jam Pelayanan"
+                value="Senin – Jumat, 08:00 – 15:00 WIB"
+              />
             </div>
           </div>
 
           {/* Peta Google Maps */}
-          <div className="h-72 rounded-[3rem] overflow-hidden shadow-xl border-8 border-white">
+          <div className="h-72 overflow-hidden rounded-[3rem] border-8 border-white shadow-xl">
             <iframe
-              className="w-full h-full"
+              className="h-full w-full"
               loading="lazy"
               src="https://maps.google.com/maps?q=Wergu%20Wetan%20Kudus&t=&z=15&ie=UTF8&iwloc=&output=embed"
               title="Peta Kelurahan Wergu Wetan"
@@ -76,28 +105,31 @@ export default function KontakView({ banner, kontakInfo }: { banner?: any; konta
             href={`https://wa.me/${info.phone.replace(/\D/g, "")}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center justify-center gap-3 w-full bg-emerald-500 hover:bg-emerald-600 text-white py-4 rounded-2xl font-black shadow-lg shadow-emerald-200 transition active:scale-95"
+            className="flex w-full items-center justify-center gap-3 rounded-2xl bg-emerald-500 py-4 font-black text-white shadow-lg shadow-emerald-200 transition hover:bg-emerald-600 active:scale-95"
           >
             <Phone size={20} /> Hubungi via WhatsApp
           </a>
         </div>
 
         {/* ===== KOLOM KANAN: FORM ASPIRASI ===== */}
-        <div className="lg:col-span-8 bg-white p-10 md:p-14 rounded-[3.5rem] shadow-2xl border border-slate-100">
+        <div className="rounded-[3.5rem] border border-slate-100 bg-white p-10 shadow-2xl md:p-14 lg:col-span-8">
           {formStatus === "success" ? (
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              className="text-center py-20"
+              className="py-20 text-center"
             >
-              <div className="w-24 h-24 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-8 shadow-lg shadow-emerald-100">
+              <div className="mx-auto mb-8 flex h-24 w-24 items-center justify-center rounded-full bg-emerald-100 text-emerald-600 shadow-lg shadow-emerald-100">
                 <CheckCircle size={48} />
               </div>
-              <h3 className="text-3xl font-black text-slate-800 mb-4">Pesan Terkirim! 🎉</h3>
-              <p className="text-slate-500 mb-10 text-lg max-w-md mx-auto">Terima kasih atas aspirasi Anda. Petugas kami akan merespons secepatnya melalui WhatsApp yang Anda daftarkan.</p>
+              <h3 className="mb-4 text-3xl font-black text-slate-800">Pesan Terkirim! 🎉</h3>
+              <p className="mx-auto mb-10 max-w-md text-lg text-slate-500">
+                Terima kasih atas aspirasi Anda. Petugas kami akan merespons secepatnya melalui
+                WhatsApp yang Anda daftarkan.
+              </p>
               <button
                 onClick={() => setFormStatus("idle")}
-                className="bg-blue-600 text-white px-10 py-4 rounded-2xl font-black shadow-lg shadow-blue-200 active:scale-95 transition-all"
+                className="rounded-2xl bg-blue-600 px-10 py-4 font-black text-white shadow-lg shadow-blue-200 transition-all active:scale-95"
               >
                 Kirim Pesan Lagi
               </button>
@@ -105,53 +137,65 @@ export default function KontakView({ banner, kontakInfo }: { banner?: any; konta
           ) : (
             <>
               <div className="mb-10">
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="w-10 h-10 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center">
+                <div className="mb-2 flex items-center gap-3">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-blue-100 text-blue-600">
                     <MessageSquare size={20} />
                   </div>
                   <h2 className="text-2xl font-black text-slate-800">Formulir Aspirasi</h2>
                 </div>
-                <p className="text-slate-500 ml-[52px]">Isi formulir di bawah ini untuk menyampaikan pesan, saran, atau keluhan kepada pihak Kelurahan.</p>
+                <p className="ml-[52px] text-slate-500">
+                  Isi formulir di bawah ini untuk menyampaikan pesan, saran, atau keluhan kepada
+                  pihak Kelurahan.
+                </p>
               </div>
 
               <form action={handleSubmit} className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                   <div className="space-y-2">
-                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Nama Lengkap *</label>
+                    <label className="text-[10px] font-black tracking-widest text-slate-400 uppercase">
+                      Nama Lengkap *
+                    </label>
                     <input
                       name="nama"
                       type="text"
                       required
-                      className="w-full bg-slate-50 px-5 py-4 rounded-2xl outline-none font-bold text-slate-900 border-2 border-transparent focus:border-blue-500/20 transition"
+                      className="w-full rounded-2xl border-2 border-transparent bg-slate-50 px-5 py-4 font-bold text-slate-900 transition outline-none focus:border-blue-500/20"
                       placeholder="Budi Santoso"
                     />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Nomor WhatsApp *</label>
+                    <label className="text-[10px] font-black tracking-widest text-slate-400 uppercase">
+                      Nomor WhatsApp *
+                    </label>
                     <input
                       name="whatsapp"
                       type="tel"
                       required
-                      className="w-full bg-slate-50 px-5 py-4 rounded-2xl outline-none font-bold text-slate-900 border-2 border-transparent focus:border-blue-500/20 transition"
+                      className="w-full rounded-2xl border-2 border-transparent bg-slate-50 px-5 py-4 font-bold text-slate-900 transition outline-none focus:border-blue-500/20"
                       placeholder="08xxxxxxxxxx"
                     />
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Pesan / Aspirasi *</label>
+                  <label className="text-[10px] font-black tracking-widest text-slate-400 uppercase">
+                    Pesan / Aspirasi *
+                  </label>
                   <textarea
                     name="pesan"
                     rows={7}
                     required
-                    className="w-full bg-slate-50 p-5 rounded-3xl outline-none font-medium text-slate-800 border-2 border-transparent focus:border-blue-500/20 transition resize-none"
+                    className="w-full resize-none rounded-3xl border-2 border-transparent bg-slate-50 p-5 font-medium text-slate-800 transition outline-none focus:border-blue-500/20"
                     placeholder="Tuliskan saran, keluhan, atau pertanyaan Anda di sini..."
                   />
                 </div>
-                <p className="text-xs text-slate-400">* Wajib diisi. Nomor WhatsApp Anda bersifat rahasia dan hanya digunakan untuk membalas pesan.</p>
+                <p className="text-xs text-slate-400">
+                  * Wajib diisi. Nomor WhatsApp Anda bersifat rahasia dan hanya digunakan untuk
+                  membalas pesan.
+                </p>
                 <button
                   type="submit"
                   disabled={isPending}
-                  className="w-full bg-blue-600 text-white py-5 rounded-3xl font-black shadow-2xl shadow-blue-500/20 hover:bg-blue-700 transition flex items-center justify-center gap-3 text-lg disabled:opacity-70 active:scale-95"
+                  className="flex w-full items-center justify-center gap-3 rounded-3xl bg-blue-600 py-5 text-lg font-black text-white shadow-2xl shadow-blue-500/20 transition hover:bg-blue-700 active:scale-95 disabled:opacity-70"
                 >
                   {isPending ? <Loader2 size={24} className="animate-spin" /> : <Send size={24} />}
                   {isPending ? "Mengirim..." : "Kirim Aspirasi"}
@@ -168,12 +212,14 @@ export default function KontakView({ banner, kontakInfo }: { banner?: any; konta
 function ContactInfoItem({ Icon, label, value }: any) {
   return (
     <div className="flex gap-4">
-      <div className="w-11 h-11 bg-blue-50 rounded-2xl flex items-center justify-center text-blue-600 shrink-0 mt-0.5">
+      <div className="mt-0.5 flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-blue-50 text-blue-600">
         <Icon size={18} />
       </div>
       <div>
-        <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">{label}</p>
-        <p className="text-slate-800 font-bold leading-relaxed">{value}</p>
+        <p className="mb-1 text-[10px] font-black tracking-widest text-slate-400 uppercase">
+          {label}
+        </p>
+        <p className="leading-relaxed font-bold text-slate-800">{value}</p>
       </div>
     </div>
   );
