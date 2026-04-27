@@ -12,7 +12,7 @@ export class LayananRepository {
   // Fungsi ini menerima data yang PASTI SUDAH VALID (karena sudah disaring oleh Service & Zod)
   async simpanPengajuan(data: PengajuanSuratDTO) {
     // Interaksi dengan Prisma ORM untuk meng-insert data ke tabel MySQL
-    return await prisma.pengajuansurat.create({
+    return await prisma.pengajuanSurat.create({
       data: {
         nama: data.nama,
         nik: data.nik,
