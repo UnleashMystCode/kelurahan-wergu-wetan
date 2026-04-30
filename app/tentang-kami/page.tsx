@@ -8,7 +8,7 @@ export default async function ProfilPage() {
   // 1. UBAH DISINI: Pakai 'findMany' bukan 'findFirst'
   // Agar dapat Array [] (banyak gambar), bukan Object {} (satu gambar)
   const banners = await prisma.bannerHomepage.findMany({
-    where: { halaman: "profil" },
+    where: { halaman: "tentang-kami" },
     orderBy: { createdAt: "desc" },
   });
 
