@@ -133,3 +133,19 @@ model SiteConfig {
 
   @@map("siteconfig")
 }
+
+model PotensiDesa {
+  id               Int      @id @default(autoincrement())
+  judul            String
+  slug             String   @unique
+  deskripsiSingkat String   @db.Text
+  isi              String   @db.Text
+  kategori         String   @default("UMKM")
+  gambar           String?
+  penulis          String   @default("Admin")
+  status           String   @default("Aktif")
+  tanggal          DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  @@map("potensidesa")
+}

@@ -11,5 +11,10 @@ export default async function PotensiDesaPage() {
     orderBy: { createdAt: "desc" },
   });
 
-  return <PotensiDesaView banner={banner} />;
+  const potensiItems = await prisma.potensiDesa.findMany({
+    where: { status: "Aktif" },
+    orderBy: { tanggal: "desc" },
+  });
+
+  return <PotensiDesaView banner={banner} potensiItems={potensiItems} />;
 }
