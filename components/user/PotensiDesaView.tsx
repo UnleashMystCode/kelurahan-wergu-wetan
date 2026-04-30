@@ -154,7 +154,7 @@ const categories = [
   "Keagamaan",
 ];
 
-export default function PotensiDesaView() {
+export default function PotensiDesaView({ banner }: { banner?: any }) {
   const [activeCategory, setActiveCategory] = useState("Semua");
 
   const HEADER_OFFSET = 120; // Topbar 40px + Navbar 80px
@@ -171,7 +171,7 @@ export default function PotensiDesaView() {
         {/* Background Image */}
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: `url('/images/hero_neighborhood.png')` }}
+          style={{ backgroundImage: `url('${banner?.gambarURL || "/images/hero_neighborhood.png"}')` }}
         />
         {/* Overlay Gelap */}
         <div className="absolute inset-0 bg-black/50 bg-gradient-to-t from-black/80 via-transparent to-black/30" />
@@ -185,7 +185,7 @@ export default function PotensiDesaView() {
               transition={{ delay: 0.2 }}
               className="mb-6 text-4xl leading-tight font-extrabold tracking-tight text-white drop-shadow-lg md:text-5xl lg:text-6xl"
             >
-              Potensi Kelurahan
+              {banner?.judul || "Potensi Kelurahan"}
             </motion.h1>
 
             <motion.p
@@ -194,8 +194,8 @@ export default function PotensiDesaView() {
               transition={{ delay: 0.3 }}
               className="mx-auto max-w-2xl text-lg leading-relaxed text-blue-50 opacity-90 drop-shadow-md md:text-xl"
             >
-              Eksplorasi keberagaman aset, potensi unggulan UMKM, wisata ikonik, hingga dinamika
-              sosial masyarakat Wergu Wetan.
+              {banner?.deskripsi ||
+                "Eksplorasi keberagaman aset, potensi unggulan UMKM, wisata ikonik, hingga dinamika sosial masyarakat Wergu Wetan."}
             </motion.p>
           </div>
         </div>
