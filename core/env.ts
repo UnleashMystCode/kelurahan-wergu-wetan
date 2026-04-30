@@ -15,7 +15,7 @@ const _env = envSchema.safeParse(process.env);
 if (!_env.success) {
   console.error("🚨 ADA MASALAH DI FILE .env:");
 
-  const treeError = _env.error.flatten().fieldErrors;
+  const treeError = z.treeifyError(_env.error);
   console.error(treeError);
 
   throw new Error("Tolong perbaiki file .env dulu bos!");
