@@ -24,11 +24,11 @@ export default function LayananView({ banner }: any) {
   const [layananCategory, setLayananCategory] = useState("umum");
 
   const categories = [
+    { id: "umum", name: "Umum" },
     { id: "sertifikasi", name: "Sertifikasi" },
     { id: "pemerintahan", name: "Pemerintahan" },
     { id: "perizinan", name: "Perizinan" },
     { id: "sdm", name: "Pengembangan SDM" },
-    { id: "umum", name: "Umum" },
   ];
 
   const listLayanan = [
@@ -45,25 +45,27 @@ export default function LayananView({ banner }: any) {
   return (
     <div className="min-h-screen bg-slate-50 pb-20">
       {/* 1. HERO HEADER (Minimalist Dark Style) */}
-      <div className="relative mt-[-100px] flex w-full flex-col items-center justify-center bg-[#0B132B] px-4 pt-[200px] pb-[100px] text-center md:pt-[240px] md:pb-[140px]">
-        <motion.h1
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          style={{ fontFamily: "Georgia, 'Times New Roman', Times, serif" }}
-          className="mb-6 text-6xl leading-none tracking-tight text-white md:text-[80px]"
-        >
-          Layanan
-        </motion.h1>
-        <motion.div
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.1 }}
-          className="w-full max-w-2xl"
-        >
-          <p className="text-lg font-medium tracking-wide text-slate-300 md:text-xl">
-            Panduan lengkap & administrasi digital Kelurahan Wergu Wetan.
-          </p>
-        </motion.div>
+      <div className="relative mt-[-100px] flex w-full flex-col items-center justify-center bg-[#0B132B] px-4 pt-[240px] pb-[100px] text-center md:pt-[280px] md:pb-[140px]">
+        <div className="mx-auto max-w-4xl">
+          <motion.h1
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            style={{ fontFamily: "Georgia, 'Times New Roman', Times, serif" }}
+            className="mb-6 text-6xl leading-none tracking-tight text-white md:text-[80px]"
+          >
+            Layanan
+          </motion.h1>
+          <motion.div
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.1 }}
+            className="w-full max-w-2xl mx-auto"
+          >
+            <p className="text-lg font-medium tracking-wide text-slate-300 md:text-xl">
+              Panduan lengkap & administrasi digital Kelurahan Wergu Wetan.
+            </p>
+          </motion.div>
+        </div>
       </div>
 
       {/* 2. STICKY SUB-NAVBAR (KATEGORI UTAMA) */}
@@ -75,12 +77,16 @@ export default function LayananView({ banner }: any) {
                 key={item.id}
                 onClick={() => {
                   setLayananCategory(item.id);
-                  window.scrollTo({ top: 300, behavior: "smooth" });
+                  const el = document.getElementById("layanan-grid");
+                  if (el) {
+                    const y = el.getBoundingClientRect().top + window.scrollY - 180;
+                    window.scrollTo({ top: y, behavior: "smooth" });
+                  }
                 }}
                 className={`relative flex h-full items-center gap-2 border-b-[3px] px-6 text-[13px] font-bold whitespace-nowrap transition-all outline-none lg:text-sm ${
                   layananCategory === item.id
-                    ? "border-blue-600 bg-blue-50/50 text-blue-600"
-                    : "border-transparent text-slate-500 hover:bg-slate-50 hover:text-blue-600"
+                    ? "border-blue-600 bg-blue-50/50 text-blue-600 rounded-t-lg"
+                    : "border-transparent text-slate-500 hover:bg-slate-100 hover:text-blue-600 hover:border-blue-400 rounded-t-lg"
                 }`}
               >
                 {item.name}
@@ -92,7 +98,7 @@ export default function LayananView({ banner }: any) {
 
       {/* 3. GRID UTAMA */}
       {layananCategory === "umum" ? (
-        <div className="container mx-auto mt-16 grid grid-cols-1 items-start gap-10 px-4 lg:grid-cols-12">
+        <div id="layanan-grid" className="container mx-auto mt-16 grid grid-cols-1 items-start gap-10 px-4 scroll-mt-[180px] lg:grid-cols-12">
           {/* KOLOM KIRI: CARD TUTORIAL (UKURAN 720PX BIAR PAS) */}
           <div className="space-y-16 lg:col-span-8">
             {listLayanan.map((layanan) => (
@@ -100,7 +106,7 @@ export default function LayananView({ banner }: any) {
                 id={layanan.id}
                 key={layanan.id}
                 // 👇 TINGGI DINAIKKAN KE 720PX UNTUK MENGHAPUS GAP BAWAH
-                className="flex min-h-[720px] flex-col justify-center rounded-[3rem] border border-slate-100 bg-white p-10 shadow-sm transition-all duration-300 md:p-14"
+                className="flex min-h-[720px] flex-col justify-center rounded-[3rem] border border-slate-100 bg-white p-8 shadow-sm transition-all duration-300 scroll-mt-[200px] md:p-14"
               >
                 <div className="flex flex-col gap-12">
                   <div className="mb-2">

@@ -7,7 +7,7 @@ export const metadata = {
   description: "Hubungi Kelurahan Wergu Wetan atau sampaikan aspirasi Anda secara online.",
 };
 
-export default async function KontakPage() {
+export default async function KontakPage() { await new Promise((resolve) => setTimeout(resolve, 500));
   const banner = await prisma.bannerHomepage.findFirst({ where: { halaman: "kontak" } });
 
   // Ambil konfigurasi kontak dari DB (jika sudah diisi Admin)

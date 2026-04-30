@@ -66,11 +66,11 @@ export default function HomeView({
   const [layananActiveIndex, setLayananActiveIndex] = useState(0);
 
   const layananTabsList = [
+    { id: "umum", label: "Umum" },
     { id: "sertifikasi", label: "Sertifikasi" },
     { id: "pemerintahan", label: "Pemerintahan" },
     { id: "perizinan", label: "Perizinan" },
     { id: "sdm", label: "Pengembangan SDM" },
-    { id: "umum", label: "Umum" },
   ];
 
   // Mouse Drag Swiping Handlers
@@ -260,8 +260,8 @@ export default function HomeView({
                 onClick={() => scrollToSection(menu.id)}
                 className={`group relative flex h-full items-center justify-center border-b-[3px] px-5 text-[13px] font-bold tracking-wide whitespace-nowrap transition-all lg:px-6 lg:text-[14.5px] ${
                   activeTab === menu.id
-                    ? "border-blue-600 bg-blue-50/30 text-blue-700"
-                    : "border-transparent text-slate-500 hover:bg-slate-50/50 hover:text-blue-700"
+                    ? "border-blue-600 bg-blue-50/50 text-blue-600 rounded-t-lg"
+                    : "border-transparent text-slate-500 hover:bg-slate-100 hover:text-blue-600 hover:border-blue-400 rounded-t-lg"
                 }`}
               >
                 {menu.label}
@@ -275,26 +275,26 @@ export default function HomeView({
         {/* SEKSI 1: SAMBUTAN LURAH (SURAT RESMI STYLE) */}
         <section
           id="sambutan"
-          className="flex scroll-mt-[120px] flex-col items-center justify-center py-16 md:py-24"
+          className="flex scroll-mt-[180px] flex-col items-center justify-center py-16 md:py-24"
         >
           <div className="mx-auto w-full max-w-5xl bg-transparent text-center">
             {welcome ? (
               <div className="flex flex-col items-center">
                 <motion.h2
-                  initial={{ opacity: 0, y: 30 }}
+                  initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.5 }}
-                  transition={{ duration: 0.8, delay: 0.05, ease: "easeOut" }}
+                  viewport={{ once: true, margin: "-50px" }}
+                  transition={{ duration: 0.6, ease: "easeOut" }}
                   className={`mb-8 text-center text-3xl leading-snug font-bold tracking-tight text-slate-800 md:mb-12 md:text-5xl ${instrumentSerif.className}`}
                 >
                   Harapan dan Terima Kasih
                 </motion.h2>
 
                 <motion.div
-                  initial={{ opacity: 0, y: 40 }}
+                  initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.5 }}
-                  transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
+                  viewport={{ once: true, margin: "-50px" }}
+                  transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
                   className={`prose prose-slate mx-auto max-w-4xl text-justify text-[14px] leading-[26px] font-medium whitespace-pre-line text-slate-600 md:text-[16px] md:leading-[30px]`}
                 >
                   {welcome.konten}
@@ -304,10 +304,10 @@ export default function HomeView({
                 <div className="mt-12 flex w-full flex-col items-center">
                   {/* Tanda tangan (Wipe Animation Render) */}
                   <motion.div
-                    initial={{ opacity: 0, scale: 0.9, y: 30 }}
+                    initial={{ opacity: 0, scale: 0.95, y: 20 }}
                     whileInView={{ opacity: 1, scale: 1, y: 0 }}
-                    viewport={{ once: true, amount: 0.5 }}
-                    transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
+                    viewport={{ once: true, margin: "-50px" }}
+                    transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
                     className="mx-auto mb-4 flex w-full max-w-[320px] justify-center"
                   >
                     {welcome?.fotoURL ? (
@@ -331,10 +331,10 @@ export default function HomeView({
                     ) : (
                       /* Fallback: Tanda tangan cursive palsu jika admin belum meng-upload gambar TTD */
                       <motion.div
-                        initial={isMounted ? { opacity: 0, scale: 0.8 } : false}
+                        initial={isMounted ? { opacity: 0, scale: 0.9 } : false}
                         whileInView={{ opacity: 1, scale: 1 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 1 }}
+                        viewport={{ once: true, margin: "-50px" }}
+                        transition={{ duration: 0.6 }}
                         className="mt-2 mb-4 -rotate-6 transform"
                       >
                         <span
@@ -351,19 +351,19 @@ export default function HomeView({
                   </motion.div>
 
                   <motion.h3
-                    initial={{ opacity: 0, y: 40 }}
+                    initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, amount: 0.5 }}
-                    transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
+                    viewport={{ once: true, margin: "-50px" }}
+                    transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
                     className={`text-[30px] leading-[30px] font-bold text-slate-600 ${instrumentSerif.className}`}
                   >
                     {welcome?.namaLurah || "Bapak Lurah"}
                   </motion.h3>
                   <motion.p
-                    initial={{ opacity: 0, y: 40 }}
+                    initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, amount: 0.5 }}
-                    transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
+                    viewport={{ once: true, margin: "-50px" }}
+                    transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
                     className={`mt-1 text-[21px] leading-[14px] font-medium tracking-wide text-slate-600 ${instrumentSerif.className}`}
                   >
                     Lurah Wergu Wetan
@@ -397,30 +397,30 @@ export default function HomeView({
         <div className="relative z-10 container mx-auto flex h-full flex-col justify-center px-6 py-16 md:px-16 md:py-24">
           <div className="max-w-xl">
             <motion.p
-              initial={{ opacity: 0, y: 40 }}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
               className="mb-3 text-[11px] font-black tracking-widest text-white/70 uppercase drop-shadow-md"
             >
               Sekilas Profil
             </motion.p>
 
             <motion.h2
-              initial={{ opacity: 0, y: 40 }}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
               className="mb-6 text-4xl leading-tight font-bold tracking-tight text-white drop-shadow-lg md:text-5xl lg:text-6xl"
             >
               Tentang Kami
             </motion.h2>
 
             <motion.p
-              initial={{ opacity: 0, y: 40 }}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
               className="mb-10 max-w-xl text-base leading-relaxed font-medium text-white/90 drop-shadow-md md:text-lg"
             >
               Lebih dari enam dekade menyediakan pilar pelayanan birokrasi dan ruang hidup komunal
@@ -429,10 +429,10 @@ export default function HomeView({
 
             {/* Outline Buttons */}
             <motion.div
-              initial={{ opacity: 0, y: 40 }}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
               className="flex flex-wrap items-center gap-4"
             >
               <Link
@@ -462,13 +462,13 @@ export default function HomeView({
 
       <div className="relative z-30 container mx-auto px-6">
         {/* SEKSI 2: STATISTIK (PERTAMINA STYLE) */}
-        <section id="statistik" className="scroll-mt-[120px] py-16 md:py-24">
+        <section id="statistik" className="scroll-mt-[180px] py-16 md:py-24">
           <div className="mb-12 flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
             <div className="max-w-2xl">
               <motion.p
                 initial={{ opacity: 0, y: 10 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
+                viewport={{ once: true, margin: "-50px" }}
                 className="mb-3 text-[11px] font-black tracking-widest text-[#0f3b9e] uppercase"
               >
                 Statistik Kelurahan
@@ -476,7 +476,7 @@ export default function HomeView({
               <motion.h2
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
+                viewport={{ once: true, margin: "-50px" }}
                 transition={{ delay: 0.1 }}
                 className="text-3xl leading-tight font-extrabold text-slate-800 md:text-4xl"
               >
@@ -487,18 +487,18 @@ export default function HomeView({
               <motion.p
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.2 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ delay: 0.1 }}
                 className="max-w-sm text-sm font-medium text-slate-500 md:text-right"
               >
                 Data kependudukan terbaru yang mencakup distribusi penduduk, jenis kelamin, dan
                 profil layanan Kelurahan.
               </motion.p>
               <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
+                initial={{ opacity: 0, scale: 0.95 }}
                 whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.3 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ delay: 0.2 }}
               >
                 <Link
                   href="/tentang-kami#monografi"
@@ -518,10 +518,10 @@ export default function HomeView({
             {stats?.slice(0, 4).map((stat: any, index: number) => (
               <motion.div
                 key={stat.id}
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1, duration: 0.6 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ delay: index * 0.05, duration: 0.5 }}
                 className="flex flex-col gap-2"
               >
                 <div className="flex flex-col">
@@ -630,7 +630,7 @@ export default function HomeView({
         {/* SEKSI 2: LAYANAN (PERTAMINA INVESTOR STYLE) */}
         <section
           id="layanan"
-          className="relative right-1/2 left-1/2 -mr-[50vw] -ml-[50vw] w-[100vw] scroll-mt-[120px] overflow-hidden bg-white pt-16 pb-20"
+          className="relative right-1/2 left-1/2 -mr-[50vw] -ml-[50vw] w-[100vw] scroll-mt-[180px] overflow-hidden bg-white pt-16 pb-20"
         >
           {/* Bagian Atas / Header */}
           <div className="container mx-auto mb-12 flex flex-col items-start justify-between gap-8 px-6 lg:flex-row lg:items-center">
@@ -659,16 +659,16 @@ export default function HomeView({
           </div>
 
           {/* TAB LAYANAN (SUB-MENU) */}
-          <div className="container mx-auto mt-5 mb-8 overflow-hidden px-6">
-            <div className="no-scrollbar flex items-center gap-2 overflow-x-auto border-b border-slate-200 lg:gap-4">
+          <div className="container mx-auto mt-5 mb-8 px-6">
+            <div className="no-scrollbar flex h-[60px] items-center gap-1 overflow-x-auto border-b border-slate-200 lg:gap-2">
               {layananTabsList.map((tab) => (
                 <button
                   key={tab.id}
                   onClick={() => setLayananTab(tab.id)}
-                  className={`border-b-[3px] px-3 py-3 text-[13px] font-bold tracking-wide whitespace-nowrap transition-all outline-none lg:px-5 lg:text-sm ${
+                  className={`relative flex h-full items-center justify-center border-b-[3px] px-5 text-[13px] font-bold tracking-wide whitespace-nowrap transition-all outline-none lg:px-6 lg:text-[14.5px] ${
                     layananTab === tab.id
-                      ? "border-blue-700 bg-blue-50/50 text-blue-700"
-                      : "border-transparent text-slate-500 hover:bg-slate-50/80 hover:text-blue-700"
+                      ? "border-blue-700 bg-blue-50/50 text-blue-700 rounded-t-lg"
+                      : "border-transparent text-slate-500 hover:bg-slate-100 hover:text-blue-700 hover:border-blue-400 rounded-t-lg"
                   }`}
                 >
                   {tab.label}
@@ -903,8 +903,8 @@ export default function HomeView({
                   <motion.div
                     initial={isMounted ? { y: 20, opacity: 0 } : false}
                     whileInView={{ y: 0, opacity: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6 }}
+                    viewport={{ once: true, margin: "-50px" }}
+                    transition={{ duration: 0.5 }}
                     className="group relative h-[400px] w-full cursor-pointer overflow-hidden rounded-[12px] lg:h-full"
                   >
                     <img
@@ -933,8 +933,8 @@ export default function HomeView({
                         key={item.id}
                         initial={isMounted ? { y: 20, opacity: 0 } : false}
                         whileInView={{ y: 0, opacity: 1 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: (index + 1) * 0.1, duration: 0.6 }}
+                        viewport={{ once: true, margin: "-50px" }}
+                        transition={{ delay: index * 0.05, duration: 0.4 }}
                         className="group relative h-[250px] w-full cursor-pointer overflow-hidden rounded-[12px] lg:h-auto"
                       >
                         <img
@@ -1016,8 +1016,8 @@ export default function HomeView({
                     <motion.div
                       initial={isMounted ? { y: 20, opacity: 0 } : false}
                       whileInView={{ y: 0, opacity: 1 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: index * 0.1, duration: 0.6 }}
+                      viewport={{ once: true, margin: "-50px" }}
+                      transition={{ delay: index * 0.05, duration: 0.5 }}
                       className="flex h-full flex-col text-left"
                     >
                       {/* Image Container Aspect 4:3 with Subtle rounding */}

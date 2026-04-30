@@ -32,7 +32,7 @@ type Props = {
 
 export default function TentangKamiView({ banners, perangkat, konten, stats = [] }: Props) {
   const { t } = useLanguage();
-  const [activeTab, setActiveTab] = useState("struktur");
+  const [activeTab, setActiveTab] = useState("visi");
 
   // === 🔧 KALKULASI HEADER (Sesuai ClientLayout) ===
   const HEADER_OFFSET = 120; // Topbar 40px + Navbar 80px
@@ -141,8 +141,8 @@ export default function TentangKamiView({ banners, perangkat, konten, stats = []
                 onClick={() => scrollToSection(menu.id)}
                 className={`group relative flex h-full items-center gap-2 border-b-[3px] px-6 text-[13px] font-bold whitespace-nowrap transition-all md:text-sm ${
                   activeTab === menu.id
-                    ? "border-blue-600 bg-blue-50/50 text-blue-600"
-                    : "border-transparent text-slate-500 hover:bg-slate-50 hover:text-blue-600"
+                    ? "border-blue-600 bg-blue-50/50 text-blue-600 rounded-t-lg"
+                    : "border-transparent text-slate-500 hover:bg-slate-100 hover:text-blue-600 hover:border-blue-400 rounded-t-lg"
                 }`}
               >
                 {menu.label}
@@ -500,8 +500,8 @@ export default function TentangKamiView({ banners, perangkat, konten, stats = []
                     key={idx}
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: idx * 0.1, duration: 0.5 }}
+                    viewport={{ once: true, margin: "-50px" }}
+                    transition={{ delay: idx * 0.05, duration: 0.4 }}
                     className="group flex cursor-default flex-col items-start justify-center rounded-2xl border border-slate-100 bg-white p-5 shadow-sm transition-all hover:-translate-y-1 hover:border-blue-200 hover:shadow-xl"
                   >
                     <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-blue-50 text-blue-600 transition-colors group-hover:bg-blue-600 group-hover:text-white">
@@ -571,8 +571,8 @@ export default function TentangKamiView({ banners, perangkat, konten, stats = []
                         <motion.div
                           initial={{ width: 0 }}
                           whileInView={{ width: `${isu.val}%` }}
-                          viewport={{ once: true }}
-                          transition={{ duration: 1.2, ease: "easeOut", delay: idx * 0.2 }}
+                          viewport={{ once: true, margin: "-50px" }}
+                          transition={{ duration: 1, ease: "easeOut", delay: idx * 0.1 }}
                           className={`h-full ${isu.color} rounded-r-full`}
                         />
                       </div>
@@ -590,8 +590,8 @@ export default function TentangKamiView({ banners, perangkat, konten, stats = []
                   <motion.div
                     initial={{ opacity: 0, x: -20 }}
                     whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: 0.1 }}
+                    viewport={{ once: true, margin: "-50px" }}
+                    transition={{ duration: 0.4, delay: 0.05 }}
                     className="group flex cursor-default items-center justify-between rounded-2xl border border-slate-100 bg-white p-5 shadow-sm transition-all hover:border-rose-100 hover:shadow-lg"
                   >
                     <div>
@@ -609,8 +609,8 @@ export default function TentangKamiView({ banners, perangkat, konten, stats = []
                   <motion.div
                     initial={{ opacity: 0, x: -20 }}
                     whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: 0.2 }}
+                    viewport={{ once: true, margin: "-50px" }}
+                    transition={{ duration: 0.4, delay: 0.1 }}
                     className="group flex cursor-default items-center justify-between rounded-2xl border border-slate-100 bg-white p-5 shadow-sm transition-all hover:border-blue-100 hover:shadow-lg"
                   >
                     <div>
@@ -628,8 +628,8 @@ export default function TentangKamiView({ banners, perangkat, konten, stats = []
                   <motion.div
                     initial={{ opacity: 0, x: -20 }}
                     whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: 0.3 }}
+                    viewport={{ once: true, margin: "-50px" }}
+                    transition={{ duration: 0.4, delay: 0.15 }}
                     className="group flex cursor-default items-center justify-between rounded-2xl border border-slate-100 bg-white p-5 shadow-sm transition-all hover:border-amber-100 hover:shadow-lg"
                   >
                     <div>
@@ -674,8 +674,8 @@ export default function TentangKamiView({ banners, perangkat, konten, stats = []
                       key={i}
                       initial={{ height: 0 }}
                       whileInView={{ height: `${val}%` }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.8, delay: i * 0.1, ease: "easeOut" }}
+                      viewport={{ once: true, margin: "-50px" }}
+                      transition={{ duration: 0.6, delay: i * 0.05, ease: "easeOut" }}
                       className="w-5 rounded-t-sm bg-emerald-400 lg:w-7"
                     />
                   ))}

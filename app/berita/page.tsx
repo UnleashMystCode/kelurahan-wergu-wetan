@@ -4,6 +4,7 @@ import BeritaView from "@/components/user/BeritaView";
 export const dynamic = "force-dynamic";
 
 export default async function NewsPage() {
+  await new Promise((resolve) => setTimeout(resolve, 500));
   const banner = await prisma.bannerHomepage.findFirst({
     where: { halaman: "berita" },
   });

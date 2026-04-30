@@ -129,27 +129,29 @@ export default function BeritaView({ banner, newsData = [] }: any) {
   return (
     <div className="min-h-screen bg-slate-50 pb-20">
       {/* 1. HERO HEADER (Minimalist Dark Search Style) */}
-      <div className="relative mt-[-100px] flex w-full flex-col items-center justify-center bg-[#0B132B] pt-[200px] pb-[100px] text-center md:pt-[240px] md:pb-[140px]">
-        <motion.h1
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          style={{ fontFamily: "Georgia, 'Times New Roman', Times, serif" }}
-          className="mb-6 text-6xl leading-none tracking-tight text-white md:text-[80px]"
-        >
-          Berita
-        </motion.h1>
+      <div className="relative mt-[-100px] flex w-full flex-col items-center justify-center bg-[#0B132B] px-4 pt-[240px] pb-[100px] text-center md:pt-[280px] md:pb-[140px]">
+        <div className="mx-auto w-full max-w-4xl">
+          <motion.h1
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            style={{ fontFamily: "Georgia, 'Times New Roman', Times, serif" }}
+            className="mb-6 text-5xl leading-none tracking-tight text-white md:text-[80px]"
+          >
+            Berita
+          </motion.h1>
 
-        <motion.div
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.1 }}
-          className="mb-12 w-full max-w-3xl px-4"
-        >
-          <p className="text-lg font-medium text-slate-300 md:text-xl">
-            Telusuri arsip publikasi, laporan kegiatan, pencapaian kinerja, serta siaran pers resmi
-            liputan Kelurahan Wergu Wetan.
-          </p>
-        </motion.div>
+          <motion.div
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.1 }}
+            className="mb-10 w-full px-4"
+          >
+            <p className="text-lg font-medium text-slate-300 md:text-xl">
+              Telusuri arsip publikasi, laporan kegiatan, pencapaian kinerja, serta siaran pers resmi
+              liputan Kelurahan Wergu Wetan.
+            </p>
+          </motion.div>
+        </div>
 
         <div className="w-full max-w-2xl px-6">
           <motion.div
@@ -163,7 +165,7 @@ export default function BeritaView({ banner, newsData = [] }: any) {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Cari Berita..."
-              className="w-full bg-[#eaedf4] px-6 py-[18px] text-[17px] text-slate-800 placeholder-slate-500 shadow-xl transition-all outline-none focus:ring-4 focus:ring-blue-500/30"
+              className="w-full rounded-2xl bg-[#eaedf4] px-6 py-[18px] text-[17px] text-slate-800 placeholder-slate-500 shadow-xl transition-all outline-none focus:ring-4 focus:ring-blue-500/30"
             />
             <button className="absolute top-1/2 right-5 -translate-y-1/2 text-slate-600 transition-colors hover:text-slate-900">
               <Search size={22} className="stroke-[2.5px]" />
@@ -185,8 +187,8 @@ export default function BeritaView({ banner, newsData = [] }: any) {
                 onClick={() => setActiveTag(tag)}
                 className={`group relative flex h-full items-center gap-2 border-b-[3px] px-6 text-[13px] font-bold whitespace-nowrap transition-all lg:text-sm ${
                   activeTag === tag
-                    ? "border-blue-600 bg-blue-50/50 text-blue-600"
-                    : "border-transparent text-slate-500 hover:bg-slate-50 hover:text-blue-600"
+                    ? "border-blue-600 bg-blue-50/50 text-blue-600 rounded-t-lg"
+                    : "border-transparent text-slate-500 hover:bg-slate-100 hover:text-blue-600 hover:border-blue-400 rounded-t-lg"
                 } `}
               >
                 {tag}

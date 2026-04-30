@@ -3,6 +3,9 @@ import prisma from "@/lib/db";
 export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
+  // Simulasi network delay (500ms) agar animasi skeleton merata dan nyaman dilihat (anti-flicker)
+  await new Promise((resolve) => setTimeout(resolve, 500));
+
   const banners =
     (await prisma.bannerHomepage.findMany({
       where: { halaman: "home" },

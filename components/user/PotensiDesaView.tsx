@@ -123,10 +123,10 @@ const potensiData = [
     gradient: "from-emerald-600 to-green-600",
   },
 
-  // RELIGI
+  // KEAGAMAAN
   {
     id: "rel-1",
-    kategori: "Religi",
+    kategori: "Keagamaan",
     title: "Masjid Baitul Muttaqin",
     desc: "Pusat kegiatan ibadah utama bagi warga muslim, rutin mengadakan kajian, TPQ, dan kegiatan amaliyah lainnya.",
     img: "/images/hero_community.png",
@@ -136,7 +136,7 @@ const potensiData = [
   },
   {
     id: "rel-2",
-    kategori: "Religi",
+    kategori: "Keagamaan",
     title: "Mushola & Surau Warga",
     desc: "Tersebar di setiap RW, memfasilitasi kegiatan peribadatan lingkungan dan mempererat tali silaturahmi tetangga.",
     img: "/images/hero_digital.png",
@@ -151,7 +151,7 @@ const categories = [
   "Ekonomi & UMKM",
   "Sosial & Organisasi",
   "Ikonik & Fasilitas",
-  "Religi",
+  "Keagamaan",
 ];
 
 export default function PotensiDesaView() {
@@ -214,8 +214,8 @@ export default function PotensiDesaView() {
                 onClick={() => setActiveCategory(cat)}
                 className={`group relative flex h-full items-center gap-2 border-b-[3px] px-6 text-[13px] font-bold whitespace-nowrap transition-all md:text-sm ${
                   activeCategory === cat
-                    ? "border-blue-600 bg-blue-50/50 text-blue-600"
-                    : "border-transparent text-slate-500 hover:bg-slate-50 hover:text-blue-600"
+                    ? "border-blue-600 bg-blue-50/50 text-blue-600 rounded-t-lg"
+                    : "border-transparent text-slate-500 hover:bg-slate-100 hover:text-blue-600 hover:border-blue-400 rounded-t-lg"
                 }`}
               >
                 {cat}

@@ -2,7 +2,7 @@ import LayananView from "@/components/user/LayananView";
 import prisma from "@/lib/db";
 export const dynamic = "force-dynamic";
 
-export default async function LayananPage() {
+export default async function LayananPage() { await new Promise((resolve) => setTimeout(resolve, 500));
   // 1. Ambil Banner Database
   const banner = await prisma.bannerHomepage.findFirst({
     where: { halaman: "layanan" },

@@ -16,7 +16,7 @@ export default function Navbar() {
   const pathname = usePathname();
   const { t } = useLanguage();
   const inputRef = useRef<HTMLInputElement>(null);
-
+  const searchContainerRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const checkScroll = () => {
       if (window.scrollY > 20) {
@@ -40,6 +40,20 @@ export default function Navbar() {
     setIsSearchOpen(false);
     setIsOpen(false);
   }, [pathname]);
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (searchContainerRef.current && !searchContainerRef.current.contains(event.target as Node)) {
+        setIsSearchOpen(false);
+      }
+    }
+    if (isSearchOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isSearchOpen]);
 
   const isActive = (path: string) => pathname === path;
 
@@ -67,7 +81,7 @@ export default function Navbar() {
     <>
       <nav
         className={`flex h-[80px] w-full items-center transition-all duration-500 ${
-          scrolled ? "border-b border-slate-100 bg-white shadow-sm" : "bg-transparent"
+          scrolled || isOpen ? "border-b border-slate-100 bg-white shadow-sm" : "bg-transparent"
         }`}
       >
         <div className="relative container mx-auto flex w-full items-center justify-between px-4 md:px-6">
@@ -186,6 +200,7 @@ export default function Navbar() {
                 // === TAMPILAN 2: SEARCH BAR EXPANDED (IBM STYLE) ===
                 <motion.div
                   key="search-bar"
+                  ref={searchContainerRef}
                   variants={searchBarVariants}
                   initial="hidden"
                   animate="visible"
@@ -196,7 +211,7 @@ export default function Navbar() {
                       : "border border-white/20 bg-white/20 backdrop-blur-md"
                   }`}
                 >
-                  {/* Input Field (Placing padding-left higher since icon moved) */}
+                  {/* Input Field */}
                   <input
                     ref={inputRef}
                     type="text"
@@ -209,9 +224,8 @@ export default function Navbar() {
                     onKeyDown={(e) => e.key === "Escape" && setIsSearchOpen(false)}
                   />
 
-                  {/* GROUP BUTTONS ON THE RIGHT (Search & Close) */}
+                  {/* GROUP BUTTONS ON THE RIGHT (Search) */}
                   <div className="flex shrink-0 items-center gap-1 pr-1.5">
-                    {/* Tombol Search (Fungsional) */}
                     <button
                       className={`rounded-xl p-2.5 transition-all ${
                         scrolled
@@ -221,19 +235,6 @@ export default function Navbar() {
                       aria-label="Submit Search"
                     >
                       <Search size={20} />
-                    </button>
-
-                    {/* Tombol Close (X) */}
-                    <button
-                      onClick={() => setIsSearchOpen(false)}
-                      className={`rounded-xl p-2.5 transition-all ${
-                        scrolled
-                          ? "text-slate-500 hover:bg-slate-200 hover:text-red-500"
-                          : "text-white/80 hover:bg-white/20 hover:text-white"
-                      }`}
-                      aria-label="Close Search"
-                    >
-                      <X size={20} />
                     </button>
                   </div>
                 </motion.div>
@@ -246,7 +247,7 @@ export default function Navbar() {
             className={`relative z-20 transition-opacity md:hidden ${isSearchOpen ? "pointer-events-none opacity-0" : "opacity-100"}`}
           >
             <button
-              className={`rounded-lg p-2 transition-colors ${scrolled ? "text-slate-800 hover:bg-slate-100" : "text-white hover:bg-white/10"}`}
+              className={`rounded-lg p-2 transition-colors ${scrolled || isOpen ? "text-slate-800 hover:bg-slate-100" : "text-white hover:bg-white/10"}`}
               onClick={() => setIsOpen(!isOpen)}
             >
               {isOpen ? <X size={24} /> : <Menu size={24} />}
