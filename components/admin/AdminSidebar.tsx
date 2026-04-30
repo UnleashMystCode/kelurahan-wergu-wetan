@@ -16,6 +16,7 @@ import {
   Building,
   Newspaper,
   Phone,
+  Store,
 } from "lucide-react";
 import { useState, useEffect } from "react";
 
@@ -181,7 +182,19 @@ export default function AdminSidebar() {
           />
 
           <div className="mt-6 mb-2 px-4 text-[10px] font-bold tracking-wider text-slate-500 uppercase">
-            4. Halaman Layanan
+            4. Halaman Potensi Desa
+          </div>
+          <SidebarLink
+            href="/admin/halaman/potensi-desa"
+            icon={Store}
+            label="Banner & Profil UMKM"
+            isActive={isActive("/admin/halaman/potensi-desa")}
+            accent={accentColor}
+            isLoading={isLoading}
+          />
+
+          <div className="mt-6 mb-2 px-4 text-[10px] font-bold tracking-wider text-slate-500 uppercase">
+            5. Halaman Layanan
           </div>
           <SidebarLink
             href="/admin/halaman/layanan"
@@ -193,7 +206,7 @@ export default function AdminSidebar() {
           />
 
           <div className="mt-6 mb-2 px-4 text-[10px] font-bold tracking-wider text-slate-500 uppercase">
-            5. Footer & Pengaturan
+            6. Footer & Pengaturan
           </div>
           <SidebarLink
             href="/admin/halaman/kontak"
