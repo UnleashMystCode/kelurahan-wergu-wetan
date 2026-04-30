@@ -4,6 +4,7 @@ import prisma from "@/lib/db";
 export const dynamic = "force-dynamic";
 
 export default async function ProfilPage() {
+  await new Promise((resolve) => setTimeout(resolve, 500));
   // 1. UBAH DISINI: Pakai 'findMany' bukan 'findFirst'
   // Agar dapat Array [] (banyak gambar), bukan Object {} (satu gambar)
   const banners = await prisma.bannerHomepage.findMany({
