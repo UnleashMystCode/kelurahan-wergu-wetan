@@ -8,10 +8,12 @@
     "start": "next start",
     "lint": "eslint",
     "format": "prettier --write .",
-    "prisma:generate": "prisma generate"
+    "prisma:generate": "prisma generate",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@prisma/client": "^5.10.2",
+    "@tailwindcss/typography": "^0.5.19",
     "date-fns": "^4.1.0",
     "framer-motion": "^12.30.0",
     "lucide-react": "^0.563.0",

@@ -192,45 +192,43 @@ export default function BeritaView({ banner, newsData = [] }: any) {
       {/* 3. NEWS LIST (CLEAN SERIF DOCUMENT STYLE) */}
       <div className="relative z-30 container mx-auto px-6 pt-16">
         <div className="mx-auto flex max-w-4xl flex-col pt-6">
-          <AnimatePresence mode="popLayout">
+          <AnimatePresence mode="wait">
             {filtered.length > 0 ? (
-              filtered.map((item: any, idx: number) => (
-                <motion.div
-                  layout
-                  initial={{ opacity: 0, y: 15 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -15 }}
-                  transition={{ duration: 0.4, delay: idx * 0.05 }}
-                  key={item.id}
-                  className="group mb-14 flex flex-col"
-                >
-                  <Link href={`/berita/${item.slug}`} className="mb-3 block">
-                    {/* Title Using Serif Font Stack mimicking Presidential/Legal Document Styles */}
-                    <h3
-                      style={{ fontFamily: "Georgia, 'Times New Roman', Times, serif" }}
-                      className="text-[26px] leading-[1.25] tracking-tight text-slate-800 transition-colors group-hover:text-blue-700 md:text-[32px]"
-                    >
-                      {item.judul}
-                    </h3>
-                  </Link>
+              <motion.div
+                key={activeTag} // Key changes when category changes, triggering exit/enter for the whole block
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.3 }}
+                className="w-full"
+              >
+                {filtered.map((item: any, idx: number) => (
+                  <div key={item.id} className="group mb-14 flex flex-col">
+                    <Link href={`/berita/${item.slug}`} className="mb-3 block">
+                      <h3
+                        style={{ fontFamily: "Georgia, 'Times New Roman', Times, serif" }}
+                        className="text-[26px] leading-[1.25] tracking-tight text-slate-800 transition-colors group-hover:text-blue-700 md:text-[32px]"
+                      >
+                        {item.judul}
+                      </h3>
+                    </Link>
 
-                  {/* Meta details (Category | Date) */}
-                  <div className="mt-2 flex flex-wrap items-center text-[14.5px] font-medium tracking-wide text-slate-500">
-                    <span className="text-slate-600">
-                      {item.kategori} {item.penulis ? `, ${item.penulis}` : ""}
-                    </span>
-                    <span className="mx-4 font-light text-slate-300">|</span>
-                    <span>
-                      {/* Using locale to match the style format "April 15, 2026" if possible, or Ind style "15 April 2026" */}
-                      {new Date(item.tanggal).toLocaleDateString("id-ID", {
-                        month: "long",
-                        day: "numeric",
-                        year: "numeric",
-                      })}
-                    </span>
+                    <div className="mt-2 flex flex-wrap items-center text-[14.5px] font-medium tracking-wide text-slate-500">
+                      <span className="text-slate-600">
+                        {item.kategori} {item.penulis ? `, ${item.penulis}` : ""}
+                      </span>
+                      <span className="mx-4 font-light text-slate-300">|</span>
+                      <span>
+                        {new Date(item.tanggal).toLocaleDateString("id-ID", {
+                          month: "long",
+                          day: "numeric",
+                          year: "numeric",
+                        })}
+                      </span>
+                    </div>
                   </div>
-                </motion.div>
-              ))
+                ))}
+              </motion.div>
             ) : (
               <div className="flex flex-col items-center justify-center py-24 text-center">
                 <div className="mb-6 flex h-24 w-24 items-center justify-center rounded-full border border-slate-200 bg-slate-100 shadow-sm">

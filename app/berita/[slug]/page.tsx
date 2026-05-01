@@ -1,23 +1,23 @@
 import prisma from "@/lib/db";
 import { notFound } from "next/navigation";
-import PotensiDetailView from "@/components/user/PotensiDetailView";
+import BeritaDetailView from "@/components/user/BeritaDetailView";
 
 export const dynamic = "force-dynamic";
 
-export default async function PotensiDesaDetailPage({ params }: { params: Promise<{ slug: string }> }) {
+export default async function BeritaDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const resolvedParams = await params;
-
+  
   // Beri sedikit jeda agar transisi skeleton loader terlihat mulus dan seirama
   await new Promise((resolve) => setTimeout(resolve, 500));
-
-  // Ambil data potensi desa berdasarkan slug
-  const potensi = await prisma.potensiDesa.findUnique({
+  
+  // Ambil data kegiatan (berita) berdasarkan slug
+  const berita = await prisma.kegiatan.findUnique({
     where: { slug: resolvedParams.slug },
   });
 
-  if (!potensi) {
+  if (!berita) {
     notFound();
   }
 
-  return <PotensiDetailView potensi={potensi} />;
+  return <BeritaDetailView berita={berita} />;
 }
