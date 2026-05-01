@@ -106,7 +106,7 @@ export default function LayananView({ banner }: any) {
                 id={layanan.id}
                 key={layanan.id}
                 // 👇 TINGGI DINAIKKAN KE 720PX UNTUK MENGHAPUS GAP BAWAH
-                className="flex min-h-[720px] flex-col justify-center rounded-[3rem] border border-slate-100 bg-white p-8 shadow-sm transition-all duration-300 scroll-mt-[200px] md:p-14"
+                className="flex min-h-[720px] flex-col justify-center rounded-xl border border-slate-100 bg-white p-8 shadow-sm transition-all duration-300 scroll-mt-[200px] md:p-14"
               >
                 <div className="flex flex-col gap-12">
                   <div className="mb-2">
@@ -131,7 +131,7 @@ export default function LayananView({ banner }: any) {
                         ].map((req, i) => (
                           <li
                             key={i}
-                            className="flex gap-4 rounded-3xl border border-slate-100 bg-slate-50 p-5 text-sm leading-relaxed font-bold text-slate-700"
+                            className="flex gap-4 rounded-xl border border-slate-100 bg-slate-50 p-5 text-sm leading-relaxed font-bold text-slate-700"
                           >
                             <CheckCircle size={22} className="shrink-0 text-emerald-500" /> {req}
                           </li>
@@ -151,7 +151,7 @@ export default function LayananView({ banner }: any) {
                           "Pengambilan dokumen yang sudah jadi",
                         ].map((step, i) => (
                           <div key={i} className="flex items-center gap-5">
-                            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-blue-100 bg-blue-50 font-black text-blue-600 shadow-sm">
+                            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-blue-100 bg-blue-50 font-black text-blue-600 shadow-sm">
                               {i + 1}
                             </div>
                             <p className="text-sm leading-snug font-bold text-slate-800">{step}</p>
@@ -167,7 +167,7 @@ export default function LayananView({ banner }: any) {
 
           {/* KOLOM KANAN: TUTORIAL & INFORMASI (STICKY 720PX) */}
           <div className="sticky top-[200px] lg:col-span-4">
-            <div className="flex min-h-[720px] flex-col rounded-[3rem] border border-slate-100 bg-white p-10 shadow-[0_30px_70px_rgba(0,0,0,0.12)]">
+            <div className="flex min-h-[720px] flex-col rounded-xl border border-slate-100 bg-white p-10 shadow-[0_30px_70px_rgba(0,0,0,0.12)]">
               <div className="mb-10">
                 <h3 className="mb-3 flex items-center gap-3 text-2xl font-black text-slate-800">
                   <FileText size={28} className="text-blue-600" /> Pusat Informasi
@@ -181,7 +181,7 @@ export default function LayananView({ banner }: any) {
               {/* Tata Cara Pengajuan */}
               <div className="flex-1 space-y-6">
                 {/* Card 1 */}
-                <div className="rounded-3xl border border-blue-100 bg-blue-50/50 p-6">
+                <div className="rounded-xl border border-blue-100 bg-blue-50/50 p-6">
                   <h4 className="mb-5 flex items-center gap-2 font-black text-slate-800">
                     <Clock size={18} className="text-blue-600" /> Alur Pengajuan
                   </h4>
@@ -214,12 +214,12 @@ export default function LayananView({ banner }: any) {
                 </div>
 
                 {/* Card 2 Agenda Mendatang */}
-                <div className="rounded-3xl border border-emerald-100 bg-emerald-50/50 p-6">
+                <div className="rounded-xl border border-emerald-100 bg-emerald-50/50 p-6">
                   <h4 className="mb-5 flex items-center gap-2 font-black text-slate-800">
                     <Clock size={18} className="text-emerald-600" /> Agenda Mendatang
                   </h4>
                   <div className="space-y-4">
-                    <div className="flex items-start gap-4 rounded-2xl border border-emerald-100/50 bg-white p-4 shadow-sm">
+                    <div className="flex items-start gap-4 rounded-xl border border-emerald-100/50 bg-white p-4 shadow-sm">
                       <div className="min-w-[60px] shrink-0 rounded-xl border border-emerald-100 bg-emerald-50 px-3 py-2 text-center text-emerald-600">
                         <p className="text-[10px] font-black uppercase">Agt</p>
                         <p className="text-xl font-black">24</p>
@@ -231,7 +231,7 @@ export default function LayananView({ banner }: any) {
                         </p>
                       </div>
                     </div>
-                    <div className="flex items-start gap-4 rounded-2xl border border-emerald-100/50 bg-white p-4 shadow-sm">
+                    <div className="flex items-start gap-4 rounded-xl border border-emerald-100/50 bg-white p-4 shadow-sm">
                       <div className="min-w-[60px] shrink-0 rounded-xl border border-emerald-100 bg-emerald-50 px-3 py-2 text-center text-emerald-600">
                         <p className="text-[10px] font-black uppercase">Sep</p>
                         <p className="text-xl font-black">02</p>
@@ -254,7 +254,7 @@ export default function LayananView({ banner }: any) {
                 </p>
                 <a
                   href="#"
-                  className="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-slate-800 px-8 py-5 font-bold text-white shadow-lg shadow-slate-200 transition-colors hover:bg-slate-900"
+                  className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-slate-800 px-8 py-5 font-bold text-white shadow-lg shadow-slate-200 transition-colors hover:bg-slate-900"
                 >
                   Hubungi Staf Pelayanan
                 </a>

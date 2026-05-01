@@ -49,11 +49,11 @@ export function ConfirmDeleteButton({
           onClick={() => !isPending && setIsOpen(false)}
         >
           <div
-            className="animate-in zoom-in-90 w-full max-w-sm rounded-3xl bg-white p-8 shadow-2xl duration-200"
+            className="animate-in zoom-in-90 w-full max-w-sm rounded-xl bg-white p-8 shadow-2xl duration-200"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Ikon Peringatan */}
-            <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-red-100 text-red-500">
+            <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-xl bg-red-100 text-red-500">
               <AlertTriangle size={28} />
             </div>
 
@@ -74,14 +74,14 @@ export function ConfirmDeleteButton({
               <button
                 onClick={() => setIsOpen(false)}
                 disabled={isPending}
-                className="flex-1 rounded-2xl bg-slate-100 py-3 font-bold text-slate-600 transition hover:bg-slate-200 disabled:opacity-60"
+                className="flex-1 rounded-xl bg-slate-100 py-3 font-bold text-slate-600 transition hover:bg-slate-200 disabled:opacity-60"
               >
                 Batal
               </button>
               <button
                 onClick={handleConfirm}
                 disabled={isPending}
-                className="flex flex-1 items-center justify-center gap-2 rounded-2xl bg-red-600 py-3 font-black text-white shadow-lg shadow-red-200 transition hover:bg-red-700 disabled:opacity-70"
+                className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-red-600 py-3 font-black text-white shadow-lg shadow-red-200 transition hover:bg-red-700 disabled:opacity-70"
               >
                 {isPending ? <Loader2 size={16} className="animate-spin" /> : <Trash2 size={16} />}
                 {isPending ? "Menghapus..." : "Ya, Hapus"}

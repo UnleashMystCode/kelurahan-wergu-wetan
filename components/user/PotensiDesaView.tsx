@@ -115,43 +115,48 @@ export default function PotensiDesaView({ banner, potensiItems = [] }: { banner?
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3, delay: i * 0.05 }}
-                className="group flex flex-col overflow-hidden rounded-[2rem] border border-slate-100 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-blue-100 hover:shadow-xl"
               >
-                <div className="relative h-[220px] w-full overflow-hidden">
-                  <img
-                    src={item.gambar || "/images/hero_office.png"}
-                    alt={item.judul}
-                    className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent opacity-80" />
+                <Link
+                  href={`/potensi-desa/${item.slug}`}
+                  className="group flex h-full flex-col overflow-hidden rounded-xl bg-white transition-all duration-500 hover:shadow-[0_8px_30px_rgb(0,0,0,0.06)]"
+                >
+                  <div className="relative h-[240px] w-full overflow-hidden">
+                    <img
+                      src={item.gambar || "/images/hero_office.png"}
+                      alt={item.judul}
+                      className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                    />
+                    {/* Very subtle overlay to make the image slightly deeper on hover */}
+                    <div className="absolute inset-0 bg-slate-900/0 transition-colors duration-500 group-hover:bg-slate-900/5" />
 
-                  {/* Minimalist Badge */}
-                  <div className="absolute top-5 left-5">
-                    <span className="rounded-full bg-white/90 px-4 py-1.5 text-[10px] font-black tracking-[0.1em] text-slate-800 uppercase shadow-sm backdrop-blur-md">
-                      {item.kategori}
-                    </span>
+                    {/* Minimalist Dark Badge */}
+                    <div className="absolute top-4 left-4">
+                      <span className="rounded-full bg-slate-900/60 px-3 py-1.5 text-[10px] font-semibold tracking-widest text-white backdrop-blur-md">
+                        {item.kategori}
+                      </span>
+                    </div>
                   </div>
 
-                  {/* Integrated Title over Image */}
-                  <div className="absolute right-5 bottom-5 left-5">
-                    <h4 className="text-xl leading-tight font-bold text-white drop-shadow-md">
-                      {item.judul}
-                    </h4>
+                  <div className="flex flex-1 flex-col justify-between p-6 md:p-8">
+                    <div>
+                      <h4 className="mb-3 text-xl leading-snug font-bold text-slate-800 transition-colors duration-300 group-hover:text-blue-600">
+                        {item.judul}
+                      </h4>
+                      <p className="mb-6 line-clamp-3 text-[14px] leading-relaxed text-slate-500">
+                        {item.deskripsiSingkat}
+                      </p>
+                    </div>
+
+                    {/* Minimalist Link Action */}
+                    <div className="mt-auto flex items-center text-[13px] font-bold text-slate-400 transition-colors duration-300 group-hover:text-blue-600">
+                      Baca Selengkapnya
+                      <ChevronRight
+                        size={16}
+                        className="ml-1 transition-transform duration-300 ease-out group-hover:translate-x-1"
+                      />
+                    </div>
                   </div>
-                </div>
-
-                <div className="flex flex-1 flex-col justify-between bg-white p-6 md:p-8">
-                  <p className="mb-6 line-clamp-3 text-[14px] leading-relaxed text-slate-600">
-                    {item.deskripsiSingkat}
-                  </p>
-
-                  <Link href={`/potensi-desa/${item.slug}`} className="group/btn flex w-full items-center justify-between text-[13px] font-bold text-slate-700 transition-colors hover:text-blue-600">
-                    Selengkapnya
-                    <span className="flex h-8 w-8 items-center justify-center rounded-full border border-slate-100 bg-slate-50 transition-colors group-hover/btn:bg-blue-50 group-hover/btn:text-blue-600">
-                      <ChevronRight size={16} />
-                    </span>
-                  </Link>
-                </div>
+                </Link>
               </motion.div>
             ))}
           </div>

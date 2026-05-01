@@ -165,7 +165,7 @@ export default function BeritaView({ banner, newsData = [] }: any) {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Cari Berita..."
-              className="w-full rounded-2xl bg-[#eaedf4] px-6 py-[18px] text-[17px] text-slate-800 placeholder-slate-500 shadow-xl transition-all outline-none focus:ring-4 focus:ring-blue-500/30"
+              className="w-full rounded-xl bg-[#eaedf4] px-6 py-[18px] text-[17px] text-slate-800 placeholder-slate-500 shadow-xl transition-all outline-none focus:ring-4 focus:ring-blue-500/30"
             />
             <button className="absolute top-1/2 right-5 -translate-y-1/2 text-slate-600 transition-colors hover:text-slate-900">
               <Search size={22} className="stroke-[2.5px]" />

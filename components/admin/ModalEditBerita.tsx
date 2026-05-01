@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useTransition } from "react";
 import { Save, X, Loader2 } from "lucide-react";
-import { ubahKegiatan } from "@/actions/kegiatan.action";
+import { editBerita } from "@/actions/berita.action";
 
 type BeritaItem = {
   id: number;
@@ -55,7 +55,7 @@ export function ModalEditBerita({ item }: { item: BeritaItem }) {
     const fd = new FormData();
     Object.entries(form).forEach(([k, v]) => fd.append(k, v));
     startTransition(async () => {
-      await ubahKegiatan(item.id, fd);
+      await editBerita(item.id, fd);
       setIsOpen(false);
     });
   };
@@ -65,7 +65,7 @@ export function ModalEditBerita({ item }: { item: BeritaItem }) {
       {/* Tombol Edit — dipanggil dari parent */}
       <button
         onClick={() => setIsOpen(true)}
-        className="rounded-2xl border border-slate-100 bg-slate-50 p-3 text-slate-500 shadow-sm transition-all hover:bg-white hover:text-amber-600"
+        className="rounded-xl border border-slate-100 bg-slate-50 p-3 text-slate-500 shadow-sm transition-all hover:bg-white hover:text-amber-600"
         title="Edit Berita"
       >
         ✏️
@@ -78,7 +78,7 @@ export function ModalEditBerita({ item }: { item: BeritaItem }) {
           onClick={() => !isPending && setIsOpen(false)}
         >
           <div
-            className="animate-in zoom-in-95 relative max-h-[90vh] w-full max-w-3xl overflow-y-auto rounded-[3rem] bg-white p-10 shadow-2xl duration-200"
+            className="animate-in zoom-in-95 relative max-h-[90vh] w-full max-w-3xl overflow-y-auto rounded-xl bg-white p-10 shadow-2xl duration-200"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Header */}
@@ -109,7 +109,7 @@ export function ModalEditBerita({ item }: { item: BeritaItem }) {
                   required
                   value={form.judul}
                   onChange={handleChange}
-                  className="w-full rounded-2xl border-2 border-transparent bg-slate-50 p-4 font-bold text-slate-900 transition outline-none focus:border-blue-500/20"
+                  className="w-full rounded-xl border-2 border-transparent bg-slate-50 p-4 font-bold text-slate-900 transition outline-none focus:border-blue-500/20"
                 />
               </div>
 
@@ -123,7 +123,7 @@ export function ModalEditBerita({ item }: { item: BeritaItem }) {
                     name="kategori"
                     value={form.kategori}
                     onChange={handleChange}
-                    className="w-full rounded-2xl border-2 border-transparent bg-slate-50 p-4 font-bold text-slate-900 transition outline-none focus:border-blue-500/20"
+                    className="w-full rounded-xl border-2 border-transparent bg-slate-50 p-4 font-bold text-slate-900 transition outline-none focus:border-blue-500/20"
                   >
                     {KATEGORI_OPTIONS.map((o) => (
                       <option key={o}>{o}</option>
@@ -138,7 +138,7 @@ export function ModalEditBerita({ item }: { item: BeritaItem }) {
                     name="penulis"
                     value={form.penulis}
                     onChange={handleChange}
-                    className="w-full rounded-2xl border-2 border-transparent bg-slate-50 p-4 font-bold text-slate-900 transition outline-none focus:border-blue-500/20"
+                    className="w-full rounded-xl border-2 border-transparent bg-slate-50 p-4 font-bold text-slate-900 transition outline-none focus:border-blue-500/20"
                   />
                 </div>
                 <div className="space-y-2">
@@ -149,7 +149,7 @@ export function ModalEditBerita({ item }: { item: BeritaItem }) {
                     name="status"
                     value={form.status}
                     onChange={handleChange}
-                    className="w-full rounded-2xl border-2 border-transparent bg-slate-50 p-4 font-bold text-slate-900 transition outline-none focus:border-blue-500/20"
+                    className="w-full rounded-xl border-2 border-transparent bg-slate-50 p-4 font-bold text-slate-900 transition outline-none focus:border-blue-500/20"
                   >
                     <option value="Aktif">🟢 Live (Aktif)</option>
                     <option value="Non-Aktif">⚫ Takedown</option>
@@ -167,14 +167,14 @@ export function ModalEditBerita({ item }: { item: BeritaItem }) {
                   type="url"
                   value={form.gambar}
                   onChange={handleChange}
-                  className="w-full rounded-2xl border-2 border-transparent bg-slate-50 p-4 font-medium text-slate-900 transition outline-none focus:border-blue-500/20"
+                  className="w-full rounded-xl border-2 border-transparent bg-slate-50 p-4 font-medium text-slate-900 transition outline-none focus:border-blue-500/20"
                   placeholder="https://..."
                 />
               </div>
 
               {/* Preview Gambar */}
               {form.gambar && (
-                <div className="h-40 overflow-hidden rounded-2xl border border-slate-100">
+                <div className="h-40 overflow-hidden rounded-xl border border-slate-100">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={form.gambar} alt="preview" className="h-full w-full object-cover" />
                 </div>
@@ -191,7 +191,7 @@ export function ModalEditBerita({ item }: { item: BeritaItem }) {
                   required
                   value={form.isi}
                   onChange={handleChange}
-                  className="w-full resize-none rounded-3xl border-2 border-transparent bg-slate-50 p-5 font-medium text-slate-900 transition outline-none focus:border-blue-500/20"
+                  className="w-full resize-none rounded-xl border-2 border-transparent bg-slate-50 p-5 font-medium text-slate-900 transition outline-none focus:border-blue-500/20"
                 />
               </div>
 
@@ -201,14 +201,14 @@ export function ModalEditBerita({ item }: { item: BeritaItem }) {
                   type="button"
                   disabled={isPending}
                   onClick={() => setIsOpen(false)}
-                  className="flex-1 rounded-2xl bg-slate-100 py-4 font-bold text-slate-500 transition hover:bg-slate-200"
+                  className="flex-1 rounded-xl bg-slate-100 py-4 font-bold text-slate-500 transition hover:bg-slate-200"
                 >
                   Batal
                 </button>
                 <button
                   type="submit"
                   disabled={isPending}
-                  className="flex flex-[2] items-center justify-center gap-2 rounded-2xl bg-amber-500 py-4 font-black text-white shadow-xl shadow-amber-500/20 transition hover:bg-amber-600 disabled:opacity-70"
+                  className="flex flex-[2] items-center justify-center gap-2 rounded-xl bg-amber-500 py-4 font-black text-white shadow-xl shadow-amber-500/20 transition hover:bg-amber-600 disabled:opacity-70"
                 >
                   {isPending ? <Loader2 size={20} className="animate-spin" /> : <Save size={20} />}
                   {isPending ? "Menyimpan..." : "Simpan Perubahan"}

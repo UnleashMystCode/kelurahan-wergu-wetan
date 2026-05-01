@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from "react";
 import { Plus, Save, X, Loader2 } from "lucide-react";
-import { tambahKegiatan } from "@/actions/kegiatan.action";
+import { simpanBerita } from "@/actions/berita.action";
 
 const KATEGORI = ["Kegiatan", "Pengumuman", "Pembangunan", "Ekonomi"];
 
@@ -14,7 +14,7 @@ export function ModalTambahBerita() {
     e.preventDefault();
     const fd = new FormData(e.currentTarget);
     startTransition(async () => {
-      await tambahKegiatan(fd);
+      await simpanBerita(fd);
       setIsOpen(false);
     });
   };
@@ -23,7 +23,7 @@ export function ModalTambahBerita() {
     <>
       <button
         onClick={() => setIsOpen(true)}
-        className="flex cursor-pointer items-center gap-2 rounded-2xl bg-blue-600 px-8 py-4 text-sm font-bold text-white shadow-xl shadow-blue-600/20 transition-all hover:bg-blue-700 active:scale-95"
+        className="flex cursor-pointer items-center gap-2 rounded-xl bg-blue-600 px-8 py-4 text-sm font-bold text-white shadow-xl shadow-blue-600/20 transition-all hover:bg-blue-700 active:scale-95"
       >
         <Plus size={20} strokeWidth={3} /> Tulis Berita Baru
       </button>
@@ -34,7 +34,7 @@ export function ModalTambahBerita() {
           onClick={() => !isPending && setIsOpen(false)}
         >
           <div
-            className="relative max-h-[90vh] w-full max-w-3xl overflow-y-auto rounded-[3rem] bg-white p-10 shadow-2xl"
+            className="relative max-h-[90vh] w-full max-w-3xl overflow-y-auto rounded-xl bg-white p-10 shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="mb-8 flex items-center justify-between border-b pb-4">
@@ -57,7 +57,7 @@ export function ModalTambahBerita() {
                     name="judul"
                     type="text"
                     required
-                    className="w-full rounded-2xl border-2 border-transparent bg-slate-50 p-4 font-bold text-slate-900 transition outline-none focus:border-blue-500/20"
+                    className="w-full rounded-xl border-2 border-transparent bg-slate-50 p-4 font-bold text-slate-900 transition outline-none focus:border-blue-500/20"
                     placeholder="Masukkan judul..."
                   />
                 </div>
@@ -67,7 +67,7 @@ export function ModalTambahBerita() {
                   </label>
                   <select
                     name="kategori"
-                    className="w-full rounded-2xl border-2 border-transparent bg-slate-50 p-4 font-bold text-slate-900 transition outline-none focus:border-blue-500/20"
+                    className="w-full rounded-xl border-2 border-transparent bg-slate-50 p-4 font-bold text-slate-900 transition outline-none focus:border-blue-500/20"
                   >
                     {KATEGORI.map((k) => (
                       <option key={k}>{k}</option>
@@ -83,7 +83,7 @@ export function ModalTambahBerita() {
                   <input
                     name="penulis"
                     defaultValue="Admin Desa"
-                    className="w-full rounded-2xl border-2 border-transparent bg-slate-50 p-4 font-bold text-slate-900 transition outline-none focus:border-blue-500/20"
+                    className="w-full rounded-xl border-2 border-transparent bg-slate-50 p-4 font-bold text-slate-900 transition outline-none focus:border-blue-500/20"
                   />
                 </div>
                 <div className="space-y-2">
@@ -93,7 +93,7 @@ export function ModalTambahBerita() {
                   <input
                     name="tanggal"
                     type="date"
-                    className="w-full rounded-2xl border-2 border-transparent bg-slate-50 p-4 font-bold text-slate-900 transition outline-none focus:border-blue-500/20"
+                    className="w-full rounded-xl border-2 border-transparent bg-slate-50 p-4 font-bold text-slate-900 transition outline-none focus:border-blue-500/20"
                   />
                 </div>
                 <div className="space-y-2">
@@ -102,7 +102,7 @@ export function ModalTambahBerita() {
                   </label>
                   <select
                     name="status"
-                    className="w-full rounded-2xl border-2 border-transparent bg-slate-50 p-4 font-bold text-slate-900 transition outline-none focus:border-blue-500/20"
+                    className="w-full rounded-xl border-2 border-transparent bg-slate-50 p-4 font-bold text-slate-900 transition outline-none focus:border-blue-500/20"
                   >
                     <option value="Aktif">🟢 Live (Aktif)</option>
                     <option value="Non-Aktif">⚫ Takedown (Draft)</option>
@@ -116,7 +116,7 @@ export function ModalTambahBerita() {
                 <input
                   name="gambar"
                   type="url"
-                  className="w-full rounded-2xl border-2 border-transparent bg-slate-50 p-4 font-medium text-slate-900 transition outline-none focus:border-blue-500/20"
+                  className="w-full rounded-xl border-2 border-transparent bg-slate-50 p-4 font-medium text-slate-900 transition outline-none focus:border-blue-500/20"
                   placeholder="https://..."
                 />
               </div>
@@ -128,7 +128,7 @@ export function ModalTambahBerita() {
                   name="isi"
                   rows={6}
                   required
-                  className="w-full resize-none rounded-3xl border-2 border-transparent bg-slate-50 p-5 font-medium text-slate-900 transition outline-none focus:border-blue-500/20"
+                  className="w-full resize-none rounded-xl border-2 border-transparent bg-slate-50 p-5 font-medium text-slate-900 transition outline-none focus:border-blue-500/20"
                   placeholder="Tulis konten di sini..."
                 />
               </div>
@@ -137,14 +137,14 @@ export function ModalTambahBerita() {
                   type="button"
                   disabled={isPending}
                   onClick={() => setIsOpen(false)}
-                  className="flex-1 rounded-2xl bg-slate-100 py-4 font-bold text-slate-500 transition hover:bg-slate-200"
+                  className="flex-1 rounded-xl bg-slate-100 py-4 font-bold text-slate-500 transition hover:bg-slate-200"
                 >
                   Batal
                 </button>
                 <button
                   type="submit"
                   disabled={isPending}
-                  className="flex flex-[2] items-center justify-center gap-2 rounded-2xl bg-blue-600 py-4 font-black text-white shadow-xl shadow-blue-500/20 transition hover:bg-blue-700 disabled:opacity-70"
+                  className="flex flex-[2] items-center justify-center gap-2 rounded-xl bg-blue-600 py-4 font-black text-white shadow-xl shadow-blue-500/20 transition hover:bg-blue-700 disabled:opacity-70"
                 >
                   {isPending ? <Loader2 size={20} className="animate-spin" /> : <Save size={20} />}
                   {isPending ? "Menyimpan..." : "Simpan Berita"}

@@ -100,7 +100,7 @@ export default function AdminBannerManager({
   };
 
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+    <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
       <div className="mb-8 flex flex-col items-start justify-between gap-4 md:flex-row md:items-center">
         <div>
           <h2 className="flex items-center gap-2 text-xl font-bold text-slate-800">
@@ -226,7 +226,7 @@ export default function AdminBannerManager({
 
       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm">
-          <div className="flex max-h-[90vh] w-full max-w-2xl flex-col overflow-hidden rounded-2xl bg-white shadow-2xl">
+          <div className="flex max-h-[90vh] w-full max-w-2xl flex-col overflow-hidden rounded-xl bg-white shadow-2xl">
             <div className="flex items-center justify-between border-b border-slate-100 p-5">
               <h3 className="text-lg font-bold text-slate-800">
                 {editData ? "Edit Banner" : `Tambah Banner (${activePage.toUpperCase()})`}

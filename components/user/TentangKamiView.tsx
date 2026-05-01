@@ -474,7 +474,7 @@ export default function TentangKamiView({ banners, perangkat, konten, stats = []
             {/* 1. Header & Map (contextual) */}
             <div className="mb-8 grid grid-cols-1 gap-6 lg:grid-cols-3">
               {/* Map Box */}
-              <div className="group relative h-[250px] overflow-hidden rounded-2xl border border-slate-100 bg-slate-200 shadow-sm lg:col-span-1">
+              <div className="group relative h-[250px] overflow-hidden rounded-xl border border-slate-100 bg-slate-200 shadow-sm lg:col-span-1">
                 <iframe
                   className="h-full w-full contrast-[1.05] filter"
                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3961.617775671155!2d110.84627417594305!3d-6.81625696667274!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e70c4e731de9701%3A0xc9561da6c650e3c4!2sKantor%20Kelurahan%20Wergu%20Wetan!5e0!3m2!1sen!2sus!4v1770589390255!5m2!1sen!2sus"
@@ -502,7 +502,7 @@ export default function TentangKamiView({ banners, perangkat, konten, stats = []
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-50px" }}
                     transition={{ delay: idx * 0.05, duration: 0.4 }}
-                    className="group flex cursor-default flex-col items-start justify-center rounded-2xl border border-slate-100 bg-white p-5 shadow-sm transition-all hover:-translate-y-1 hover:border-blue-200 hover:shadow-xl"
+                    className="group flex cursor-default flex-col items-start justify-center rounded-xl border border-slate-100 bg-white p-5 shadow-sm transition-all hover:-translate-y-1 hover:border-blue-200 hover:shadow-xl"
                   >
                     <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-blue-50 text-blue-600 transition-colors group-hover:bg-blue-600 group-hover:text-white">
                       {d.i}
@@ -524,19 +524,19 @@ export default function TentangKamiView({ banners, perangkat, konten, stats = []
             {/* 2. Bento Box of specific domains requested */}
             <div className="mb-8 grid grid-cols-1 gap-6 lg:grid-cols-2">
               {/* Laporan & Penanganan Kasus */}
-              <div className="rounded-[2rem] border border-blue-100 bg-blue-50/50 p-8 md:p-10">
+              <div className="rounded-xl border border-blue-100 bg-blue-50/50 p-8 md:p-10">
                 <h4 className="mb-6 flex items-center gap-3 text-[13px] font-black tracking-widest text-blue-700 uppercase">
                   <Activity size={20} className="text-blue-600" /> Laporan & Pengaduan Warga
                 </h4>
 
                 <div className="mb-8 grid grid-cols-2 gap-4">
-                  <div className="rounded-2xl border border-slate-100 bg-white p-5 text-center shadow-sm">
+                  <div className="rounded-xl border border-slate-100 bg-white p-5 text-center shadow-sm">
                     <p className="mb-1.5 text-[11px] font-bold tracking-widest text-slate-400 uppercase">
                       Total Bulan Ini
                     </p>
                     <p className="text-4xl font-black text-slate-800">42</p>
                   </div>
-                  <div className="rounded-2xl bg-emerald-500 p-5 text-center shadow-sm">
+                  <div className="rounded-xl bg-emerald-500 p-5 text-center shadow-sm">
                     <p className="mb-1.5 text-[11px] font-bold tracking-widest text-emerald-100 uppercase">
                       Status Selesai
                     </p>
@@ -582,7 +582,7 @@ export default function TentangKamiView({ banners, perangkat, konten, stats = []
               </div>
 
               {/* Fasilitas Publik & Ekonomi */}
-              <div className="flex flex-col rounded-[2rem] border border-slate-200/60 bg-slate-50 p-8 md:p-10">
+              <div className="flex flex-col rounded-xl border border-slate-200/60 bg-slate-50 p-8 md:p-10">
                 <h4 className="mb-6 flex items-center gap-3 text-[13px] font-black tracking-widest text-slate-700 uppercase">
                   <Building2 size={20} className="text-slate-500" /> Ketersediaan Fasilitas Dasar
                 </h4>
@@ -592,7 +592,7 @@ export default function TentangKamiView({ banners, perangkat, konten, stats = []
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true, margin: "-50px" }}
                     transition={{ duration: 0.4, delay: 0.05 }}
-                    className="group flex cursor-default items-center justify-between rounded-2xl border border-slate-100 bg-white p-5 shadow-sm transition-all hover:border-rose-100 hover:shadow-lg"
+                    className="group flex cursor-default items-center justify-between rounded-xl border border-slate-100 bg-white p-5 shadow-sm transition-all hover:border-rose-100 hover:shadow-lg"
                   >
                     <div>
                       <span className="mb-1 block text-[15px] font-black text-slate-800 transition-colors group-hover:text-rose-600">
@@ -611,7 +611,7 @@ export default function TentangKamiView({ banners, perangkat, konten, stats = []
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true, margin: "-50px" }}
                     transition={{ duration: 0.4, delay: 0.1 }}
-                    className="group flex cursor-default items-center justify-between rounded-2xl border border-slate-100 bg-white p-5 shadow-sm transition-all hover:border-blue-100 hover:shadow-lg"
+                    className="group flex cursor-default items-center justify-between rounded-xl border border-slate-100 bg-white p-5 shadow-sm transition-all hover:border-blue-100 hover:shadow-lg"
                   >
                     <div>
                       <span className="mb-1 block text-[15px] font-black text-slate-800 transition-colors group-hover:text-blue-600">
@@ -630,7 +630,7 @@ export default function TentangKamiView({ banners, perangkat, konten, stats = []
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true, margin: "-50px" }}
                     transition={{ duration: 0.4, delay: 0.15 }}
-                    className="group flex cursor-default items-center justify-between rounded-2xl border border-slate-100 bg-white p-5 shadow-sm transition-all hover:border-amber-100 hover:shadow-lg"
+                    className="group flex cursor-default items-center justify-between rounded-xl border border-slate-100 bg-white p-5 shadow-sm transition-all hover:border-amber-100 hover:shadow-lg"
                   >
                     <div>
                       <span className="mb-1 block text-[15px] font-black text-slate-800 transition-colors group-hover:text-amber-600">
@@ -650,7 +650,7 @@ export default function TentangKamiView({ banners, perangkat, konten, stats = []
             </div>
 
             {/* 3. Bottom Trending / Kunjungan */}
-            <div className="relative flex flex-col items-center justify-between gap-10 overflow-hidden rounded-[2rem] bg-[#0B132B] p-8 text-white shadow-xl shadow-blue-900/10 md:flex-row md:p-12">
+            <div className="relative flex flex-col items-center justify-between gap-10 overflow-hidden rounded-xl bg-[#0B132B] p-8 text-white shadow-xl shadow-blue-900/10 md:flex-row md:p-12">
               <div className="absolute top-0 right-0 p-8 opacity-5">
                 <BarChart size={180} />
               </div>
@@ -738,7 +738,7 @@ export default function TentangKamiView({ banners, perangkat, konten, stats = []
               ].map((item, i) => (
                 <div
                   key={i}
-                  className={`relative flex flex-col justify-between ${item.bg} group overflow-hidden rounded-[2rem] border border-black/5 p-8 transition-all duration-300 hover:border-black/10 hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)]`}
+                  className={`relative flex flex-col justify-between ${item.bg} group overflow-hidden rounded-xl border border-black/5 p-8 transition-all duration-300 hover:border-black/10 hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)]`}
                 >
                   <div
                     className={`absolute -top-10 -right-10 h-40 w-40 bg-gradient-to-br ${item.color} pointer-events-none rounded-full opacity-10 blur-2xl transition-transform duration-700 group-hover:scale-150`}
@@ -800,7 +800,7 @@ function SectionHeader({
 function CardPerangkat({ data, isLurah }: { data: any; isLurah?: boolean }) {
   return (
     <div
-      className={`group relative overflow-hidden rounded-3xl border bg-white shadow-sm transition-all duration-300 hover:shadow-xl ${
+      className={`group relative overflow-hidden rounded-xl border bg-white shadow-sm transition-all duration-300 hover:shadow-xl ${
         isLurah ? "border-blue-200 ring-2 ring-blue-100" : "border-slate-100 hover:border-blue-100"
       }`}
     >
@@ -812,7 +812,7 @@ function CardPerangkat({ data, isLurah }: { data: any; isLurah?: boolean }) {
       <div className={`flex items-center gap-5 p-6 ${isLurah ? "" : ""}`}>
         {/* Foto */}
         <div
-          className={`flex shrink-0 items-center justify-center overflow-hidden rounded-2xl border border-blue-100 bg-gradient-to-br from-blue-100 to-blue-50 text-blue-300 ${
+          className={`flex shrink-0 items-center justify-center overflow-hidden rounded-xl border border-blue-100 bg-gradient-to-br from-blue-100 to-blue-50 text-blue-300 ${
             isLurah ? "h-20 w-20" : "h-16 w-16"
           }`}
         >
@@ -854,7 +854,7 @@ function CardPerangkat({ data, isLurah }: { data: any; isLurah?: boolean }) {
 
 function StatCard({ label, value }: { label: string; value: string }) {
   return (
-    <div className="group rounded-2xl border border-slate-100 bg-white p-8 text-center shadow-sm transition-all duration-300 hover:bg-blue-600 hover:shadow-xl hover:shadow-blue-200">
+    <div className="group rounded-xl border border-slate-100 bg-white p-8 text-center shadow-sm transition-all duration-300 hover:bg-blue-600 hover:shadow-xl hover:shadow-blue-200">
       <h3 className="mb-1 text-3xl font-extrabold text-slate-800 transition-colors group-hover:text-white">
         {value}
       </h3>
@@ -907,7 +907,7 @@ function VisiMisiRenderer({
   const isContentEmpty = !html || html.trim().length < 20;
 
   return (
-    <div className="relative overflow-hidden rounded-[2rem] border border-slate-200/60 bg-white p-8 shadow-sm md:p-12">
+    <div className="relative overflow-hidden rounded-xl border border-slate-200/60 bg-white p-8 shadow-sm md:p-12">
       <div className="pointer-events-none absolute -top-10 -right-10 rotate-12 opacity-[0.02]">
         <Target size={400} />
       </div>
@@ -959,7 +959,7 @@ function TugasFungsiRenderer({
   const isContentEmpty = !html || html.trim().length < 20;
 
   return (
-    <div className="relative overflow-hidden rounded-[2rem] border border-slate-200/60 bg-white p-8 shadow-sm md:p-12">
+    <div className="relative overflow-hidden rounded-xl border border-slate-200/60 bg-white p-8 shadow-sm md:p-12">
       <div className="pointer-events-none absolute -right-10 -bottom-10 -rotate-6 opacity-[0.02]">
         <Briefcase size={350} />
       </div>

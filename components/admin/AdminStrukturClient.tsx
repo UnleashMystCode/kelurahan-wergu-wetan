@@ -33,10 +33,10 @@ function ConfirmDialog({
       onClick={() => !isPending && onCancel()}
     >
       <div
-        className="animate-in zoom-in-90 w-full max-w-sm rounded-3xl bg-white p-8 shadow-2xl duration-200"
+        className="animate-in zoom-in-90 w-full max-w-sm rounded-xl bg-white p-8 shadow-2xl duration-200"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-red-100 text-red-500">
+        <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-xl bg-red-100 text-red-500">
           <AlertTriangle size={28} />
         </div>
         <h3 className="mb-2 text-center text-lg font-black text-slate-800">{title}</h3>
@@ -48,14 +48,14 @@ function ConfirmDialog({
           <button
             onClick={onCancel}
             disabled={isPending}
-            className="flex-1 rounded-2xl bg-slate-100 py-3 font-bold text-slate-600 transition hover:bg-slate-200"
+            className="flex-1 rounded-xl bg-slate-100 py-3 font-bold text-slate-600 transition hover:bg-slate-200"
           >
             Batal
           </button>
           <button
             onClick={onConfirm}
             disabled={isPending}
-            className="flex flex-1 items-center justify-center gap-2 rounded-2xl bg-red-600 py-3 font-black text-white shadow-lg shadow-red-100 transition hover:bg-red-700"
+            className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-red-600 py-3 font-black text-white shadow-lg shadow-red-100 transition hover:bg-red-700"
           >
             {isPending ? <Loader2 size={16} className="animate-spin" /> : <Trash2 size={16} />}
             {isPending ? "Menghapus..." : "Ya, Hapus"}
@@ -185,7 +185,7 @@ function PerangkatFormModal({
             <img
               src={data.foto}
               alt="preview"
-              className="h-16 w-16 rounded-2xl border border-slate-100 object-cover"
+              className="h-16 w-16 rounded-xl border border-slate-100 object-cover"
             />
           )}
           <div className="flex gap-3 pt-2">
@@ -193,14 +193,14 @@ function PerangkatFormModal({
               type="button"
               onClick={onClose}
               disabled={isPending}
-              className="flex-1 rounded-2xl bg-slate-100 py-3.5 font-bold text-slate-500 transition hover:bg-slate-200"
+              className="flex-1 rounded-xl bg-slate-100 py-3.5 font-bold text-slate-500 transition hover:bg-slate-200"
             >
               Batal
             </button>
             <button
               type="submit"
               disabled={isPending}
-              className="flex flex-1 items-center justify-center gap-2 rounded-2xl bg-blue-600 py-3.5 font-black text-white shadow-lg shadow-blue-200 transition hover:bg-blue-700 disabled:opacity-70"
+              className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-blue-600 py-3.5 font-black text-white shadow-lg shadow-blue-200 transition hover:bg-blue-700 disabled:opacity-70"
             >
               {isPending ? <Loader2 size={18} className="animate-spin" /> : <Save size={18} />}
               {isPending
@@ -243,14 +243,14 @@ export default function AdminStrukturClient({ initialData }: { initialData: Pera
         </div>
         <button
           onClick={() => setShowTambah(true)}
-          className="flex cursor-pointer items-center gap-2 rounded-2xl bg-blue-600 px-6 py-3 text-sm font-bold text-white shadow-lg shadow-blue-600/20 transition-all hover:bg-blue-700 active:scale-95"
+          className="flex cursor-pointer items-center gap-2 rounded-xl bg-blue-600 px-6 py-3 text-sm font-bold text-white shadow-lg shadow-blue-600/20 transition-all hover:bg-blue-700 active:scale-95"
         >
           <Plus size={18} strokeWidth={3} /> Tambah Perangkat
         </button>
       </div>
 
       {/* Tabel */}
-      <div className="overflow-hidden rounded-3xl border border-slate-100 bg-white shadow-sm">
+      <div className="overflow-hidden rounded-xl border border-slate-100 bg-white shadow-sm">
         <table className="w-full text-left">
           <thead className="border-b border-slate-100 bg-slate-50 text-[10px] font-black tracking-widest text-slate-400 uppercase">
             <tr>
@@ -266,7 +266,7 @@ export default function AdminStrukturClient({ initialData }: { initialData: Pera
               <tr key={p.id} className="group transition-all hover:bg-blue-50/20">
                 <td className="p-6">
                   <div className="flex items-center gap-4">
-                    <div className="h-12 w-12 flex-shrink-0 overflow-hidden rounded-2xl border border-slate-200 bg-slate-100">
+                    <div className="h-12 w-12 flex-shrink-0 overflow-hidden rounded-xl border border-slate-200 bg-slate-100">
                       {p.foto ? (
                         // eslint-disable-next-line @next/next/no-img-element
                         <img src={p.foto} alt={p.nama} className="h-full w-full object-cover" />

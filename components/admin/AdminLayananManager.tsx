@@ -197,7 +197,7 @@ export default function AdminLayananManager() {
   );
 
   return (
-    <div className="mt-8 rounded-3xl border border-slate-100 bg-white p-8 shadow-sm">
+    <div className="mt-8 rounded-xl border border-slate-100 bg-white p-8 shadow-sm">
       <div className="mb-8 flex flex-col items-start justify-between gap-4 border-b border-slate-50 pb-4 md:flex-row md:items-center">
         <div>
           <h2 className="border-l-4 border-blue-600 pl-3 text-lg font-bold text-slate-700">
@@ -209,7 +209,7 @@ export default function AdminLayananManager() {
         </div>
 
         {/* Filter Tab Ringkas */}
-        <div className="flex rounded-2xl border border-slate-100 bg-slate-50 p-1.5">
+        <div className="flex rounded-xl border border-slate-100 bg-slate-50 p-1.5">
           {["semua", "menunggu", "proses", "selesai"].map((tab) => (
             <button
               key={tab}
@@ -226,7 +226,7 @@ export default function AdminLayananManager() {
         </div>
       </div>
 
-      <div className="overflow-x-auto rounded-2xl border border-slate-100">
+      <div className="overflow-x-auto rounded-xl border border-slate-100">
         <table className="w-full text-left">
           <thead className="border-b border-slate-100 bg-slate-50 text-[10px] font-black tracking-widest text-slate-400 uppercase">
             <tr>
@@ -326,7 +326,7 @@ export default function AdminLayananManager() {
       {/* === FITUR BARU: MODAL PENGATURAN CETAK (PRINT SETTINGS) === */}
       {modalPrint && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 p-4 backdrop-blur-sm">
-          <div className="animate-in zoom-in-95 no-scrollbar max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-[2rem] bg-white p-8 shadow-2xl duration-200">
+          <div className="animate-in zoom-in-95 no-scrollbar max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-xl bg-white p-8 shadow-2xl duration-200">
             <div className="mb-6 flex items-center gap-3 border-b border-slate-100 pb-4">
               <div className="rounded-xl bg-indigo-100 p-2 text-indigo-600">
                 <Printer size={24} />
@@ -341,7 +341,7 @@ export default function AdminLayananManager() {
 
             <form onSubmit={executePrint} className="mt-2 flex flex-col gap-4 text-sm">
               {/* BAGIAN KOP & JUDUL SURAT */}
-              <div className="space-y-4 rounded-2xl border border-slate-100 bg-slate-50/40 p-4">
+              <div className="space-y-4 rounded-xl border border-slate-100 bg-slate-50/40 p-4">
                 <div className="space-y-1.5">
                   <label className="ml-1 flex items-center gap-2 text-[10px] font-black tracking-widest text-slate-400 uppercase">
                     <div className="h-1.5 w-1.5 rounded-full bg-slate-300"></div> 1. Kop Surat: URL
@@ -373,7 +373,7 @@ export default function AdminLayananManager() {
               </div>
 
               {/* BAGIAN ISI SURAT (BIODATA PEMOHON) */}
-              <div className="space-y-4 rounded-2xl border border-slate-100 bg-slate-50/40 p-4">
+              <div className="space-y-4 rounded-xl border border-slate-100 bg-slate-50/40 p-4">
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-1.5">
                     <label className="ml-1 flex items-center gap-2 text-[10px] font-black tracking-widest text-slate-400 uppercase">
@@ -435,7 +435,7 @@ export default function AdminLayananManager() {
               </div>
 
               {/* BAGIAN TANDA TANGAN */}
-              <div className="space-y-4 rounded-2xl border border-slate-100 bg-slate-50/40 p-4">
+              <div className="space-y-4 rounded-xl border border-slate-100 bg-slate-50/40 p-4">
                 <div className="space-y-1.5">
                   <label className="ml-1 flex items-center gap-2 text-[10px] font-black tracking-widest text-slate-400 uppercase">
                     <div className="h-1.5 w-1.5 rounded-full bg-slate-300"></div> 4. Tanda Tangan:
@@ -485,14 +485,14 @@ export default function AdminLayananManager() {
                   type="button"
                   disabled={loading}
                   onClick={() => setModalPrint(null)}
-                  className="flex-1 rounded-2xl bg-slate-100 py-3.5 font-bold text-slate-600 transition hover:bg-slate-200 disabled:opacity-60"
+                  className="flex-1 rounded-xl bg-slate-100 py-3.5 font-bold text-slate-600 transition hover:bg-slate-200 disabled:opacity-60"
                 >
                   Batal
                 </button>
                 <button
                   type="submit"
                   disabled={loading}
-                  className="flex flex-1 items-center justify-center gap-2 rounded-2xl bg-indigo-600 py-3.5 font-bold text-white shadow-lg shadow-indigo-200 transition hover:bg-indigo-700 disabled:opacity-60"
+                  className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-indigo-600 py-3.5 font-bold text-white shadow-lg shadow-indigo-200 transition hover:bg-indigo-700 disabled:opacity-60"
                 >
                   <Printer size={18} /> Generate PDF
                 </button>
@@ -505,7 +505,7 @@ export default function AdminLayananManager() {
       {/* === FITUR BARU: MODAL TINDAK LANJUT ADMIN === */}
       {modalAksi && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 p-4 backdrop-blur-sm">
-          <div className="animate-in zoom-in-95 w-full max-w-md rounded-[2rem] bg-white p-8 shadow-2xl duration-200">
+          <div className="animate-in zoom-in-95 w-full max-w-md rounded-xl bg-white p-8 shadow-2xl duration-200">
             <div className="mb-6 flex items-center gap-3 border-b border-slate-100 pb-4">
               <div className="rounded-xl bg-blue-100 p-2 text-blue-600">
                 <FileText size={24} />
@@ -524,7 +524,7 @@ export default function AdminLayananManager() {
                 const data = pengajuanMasuk.find((p) => p.id === modalAksi.id)!;
                 return (
                   <form onSubmit={submitAksi} className="flex flex-col gap-6 text-sm">
-                    <div className="rounded-2xl border border-slate-100 bg-slate-50 p-4">
+                    <div className="rounded-xl border border-slate-100 bg-slate-50 p-4">
                       <div className="mb-1 text-[10px] font-black tracking-widest text-slate-400 uppercase">
                         Keperluan Pemohon
                       </div>
@@ -546,7 +546,7 @@ export default function AdminLayananManager() {
                         onChange={(e) => setCatatanInput(e.target.value)}
                         rows={3}
                         disabled={loading}
-                        className="w-full resize-none rounded-2xl border-2 border-transparent bg-slate-50 p-4 font-medium text-slate-800 transition outline-none placeholder:text-slate-300 focus:border-blue-500/20 disabled:opacity-60"
+                        className="w-full resize-none rounded-xl border-2 border-transparent bg-slate-50 p-4 font-medium text-slate-800 transition outline-none placeholder:text-slate-300 focus:border-blue-500/20 disabled:opacity-60"
                         placeholder="Tulis alasan jika ditolak, atau pesan jika selesai (Cth: Surat jadul bisa diambil besok)..."
                       />
                     </div>
@@ -556,14 +556,14 @@ export default function AdminLayananManager() {
                         type="button"
                         disabled={loading}
                         onClick={() => setModalAksi(null)}
-                        className="flex-1 rounded-2xl bg-slate-100 py-3.5 font-bold text-slate-600 transition hover:bg-slate-200 disabled:opacity-60"
+                        className="flex-1 rounded-xl bg-slate-100 py-3.5 font-bold text-slate-600 transition hover:bg-slate-200 disabled:opacity-60"
                       >
                         Batal
                       </button>
                       <button
                         type="submit"
                         disabled={loading}
-                        className="flex flex-1 items-center justify-center gap-2 rounded-2xl bg-blue-600 py-3.5 font-bold text-white shadow-lg shadow-blue-200 transition hover:bg-blue-700 disabled:opacity-60"
+                        className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-blue-600 py-3.5 font-bold text-white shadow-lg shadow-blue-200 transition hover:bg-blue-700 disabled:opacity-60"
                       >
                         {loading ? (
                           <Loader2 size={18} className="animate-spin" />

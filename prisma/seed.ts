@@ -183,6 +183,7 @@ Wassalamu'alaikum Wr. Wb.`,
   <li>Meningkatkan infrastruktur dan fasilitas umum yang merata dan berkualitas.</li>
   <li>Mewujudkan tata kelola pemerintahan yang bersih, akuntabel, dan berorientasi pelayanan.</li>
 </ul>`,
+          updatedAt: new Date(),
         },
         {
           kategori: "tugas_fungsi",
@@ -201,6 +202,7 @@ Wassalamu'alaikum Wr. Wb.`,
   <li>Pemeliharaan prasarana dan fasilitas pelayanan umum.</li>
   <li>Pembinaan lembaga kemasyarakatan di tingkat kelurahan.</li>
 </ul>`,
+          updatedAt: new Date(),
         },
         {
           kategori: "sejarah",
@@ -210,6 +212,7 @@ Wassalamu'alaikum Wr. Wb.`,
 <p>Secara historis, wilayah Wergu Wetan telah menjadi bagian dari perkembangan Kota Kudus sejak era kolonial. Nama "Wergu Wetan" sendiri berasal dari bahasa Jawa yang berarti kawasan di sisi timur ("wetan") yang kemudian berkembang menjadi permukiman padat dan terorganisir.</p>
 
 <p>Seiring berjalannya waktu, Kelurahan Wergu Wetan terus berkembang dan bertransformasi mengikuti dinamika pembangunan Kota Kudus. Kini, kelurahan ini telah menjadi area pemukiman yang tertata dengan infrastruktur yang terus ditingkatkan demi kesejahteraan warganya.</p>`,
+          updatedAt: new Date(),
         },
       ],
     });
@@ -223,11 +226,12 @@ Wassalamu'alaikum Wr. Wb.`,
   if (configCount === 0) {
     await prisma.siteConfig.createMany({
       data: [
-        { key: "phone", value: "(0291) 430xxx / 0812-3456-7890" },
-        { key: "email", value: "pemdes.werguwetan@kudus.go.id" },
+        { key: "phone", value: "(0291) 430xxx / 0812-3456-7890", updatedAt: new Date() },
+        { key: "email", value: "pemdes.werguwetan@kudus.go.id", updatedAt: new Date() },
         {
           key: "alamat",
           value: "Jl. Jendral Sudirman No. 12, Wergu Wetan, Kec. Kota, Kudus, Jawa Tengah 59316",
+          updatedAt: new Date(),
         },
       ],
     });
@@ -273,6 +277,58 @@ Wassalamu'alaikum Wr. Wb.`,
     console.log("✅ Berita contoh selesai");
   } else {
     console.log("⏩ Berita sudah ada, skip.");
+  }
+
+  // ===== 8. POTENSI DESA CONTOH =====
+  const potensiCount = await prisma.potensiDesa.count();
+  if (potensiCount === 0) {
+    await prisma.potensiDesa.createMany({
+      data: [
+        {
+          judul: "Pasar Tradisional Wergu",
+          slug: "pasar-tradisional-wergu",
+          deskripsiSingkat: "Pusat perniagaan warga lokal dengan beragam bahan kebutuhan pokok, sayuran segar, dan komoditas harian.",
+          isi: "Pasar Tradisional Wergu merupakan jantung ekonomi warga kelurahan. Terletak strategis di jalan utama, pasar ini beroperasi sejak fajar menyingsing, menyediakan bahan pangan segar langsung dari petani sekitar. Pasar ini tidak hanya menjadi tempat jual beli, tetapi juga ruang interaksi sosial warga sehari-hari.",
+          gambar: "/images/hero_office.png",
+          kategori: "Ekonomi & UMKM",
+          penulis: "Admin Kelurahan",
+          status: "Aktif",
+        },
+        {
+          judul: "Karang Taruna Tunas Muda",
+          slug: "karang-taruna-tunas-muda",
+          deskripsiSingkat: "Wadah pengembangan generasi muda yang aktif dalam kegiatan sosial, olahraga, dan kreativitas lingkungan.",
+          isi: "Karang Taruna Tunas Muda adalah organisasi kepemudaan unggulan di Kelurahan Wergu Wetan. Mereka secara rutin menyelenggarakan kegiatan yang bermanfaat, seperti kerja bakti, turnamen olahraga antar RT, dan pelatihan kewirausahaan untuk pemuda. Organisasi ini telah mencetak banyak inovator muda yang berkontribusi bagi desa.",
+          gambar: "/images/hero_community.png",
+          kategori: "Sosial & Organisasi",
+          penulis: "Admin Kelurahan",
+          status: "Aktif",
+        },
+        {
+          judul: "Taman Balai Jagong",
+          slug: "taman-balai-jagong",
+          deskripsiSingkat: "Ruang terbuka hijau terbesar di Kudus yang menjadi pusat interaksi warga, olahraga, dan rekreasi keluarga.",
+          isi: "Taman Balai Jagong bukan sekadar ikon Kelurahan Wergu Wetan, melainkan kebanggaan seluruh warga Kudus. Dengan area yang luas, jogging track yang nyaman, serta sentra kuliner yang tertata rapi, tempat ini selalu dipadati pengunjung pada akhir pekan. Taman ini menjadi bukti nyata komitmen pemerintah dalam menyediakan ruang publik yang sehat dan ramah keluarga.",
+          gambar: "/images/hero_neighborhood.png",
+          kategori: "Ikonik & Fasilitas",
+          penulis: "Admin Kelurahan",
+          status: "Aktif",
+        },
+        {
+          judul: "Masjid Baitul Muttaqin",
+          slug: "masjid-baitul-muttaqin",
+          deskripsiSingkat: "Pusat kegiatan ibadah utama bagi warga muslim, rutin mengadakan kajian, TPQ, dan kegiatan amaliyah lainnya.",
+          isi: "Sebagai pusat keagamaan warga, Masjid Baitul Muttaqin berdiri megah dan selalu makmur oleh aktivitas peribadatan jamaah. Selain menjadi tempat shalat lima waktu, masjid ini juga memiliki program Taman Pendidikan Al-Qur'an (TPQ) yang aktif mendidik anak-anak desa. Setiap bulan, diselenggarakan kajian keislaman yang mempererat ukhuwah islamiyah antar warga.",
+          gambar: "/images/hero_digital.png",
+          kategori: "Keagamaan",
+          penulis: "Admin Kelurahan",
+          status: "Aktif",
+        },
+      ],
+    });
+    console.log("✅ Potensi Desa contoh selesai");
+  } else {
+    console.log("⏩ Potensi Desa sudah ada, skip.");
   }
 
   console.log("\n🎉 Seeding selesai!");

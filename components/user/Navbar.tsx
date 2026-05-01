@@ -205,7 +205,7 @@ export default function Navbar() {
                   initial="hidden"
                   animate="visible"
                   exit="exit"
-                  className={`absolute right-0 z-30 flex h-[48px] items-center overflow-hidden rounded-2xl ${
+                  className={`absolute right-0 z-30 flex h-[48px] items-center overflow-hidden rounded-xl ${
                     scrolled
                       ? "bg-slate-100 shadow-inner"
                       : "border border-white/20 bg-white/20 backdrop-blur-md"

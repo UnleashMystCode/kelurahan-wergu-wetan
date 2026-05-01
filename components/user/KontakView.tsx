@@ -74,7 +74,7 @@ export default function KontakView({
         {/* ===== KOLOM KIRI: INFO KONTAK ===== */}
         <div className="space-y-6 lg:col-span-4">
           {/* Card Info Kontak */}
-          <div className="rounded-[3rem] border border-slate-100 bg-white p-10 shadow-xl">
+          <div className="rounded-xl border border-slate-100 bg-white p-10 shadow-xl">
             <h3 className="mb-6 border-b border-slate-100 pb-4 text-xl font-black text-slate-800">
               Informasi Kontak
             </h3>
@@ -91,7 +91,7 @@ export default function KontakView({
           </div>
 
           {/* Peta Google Maps */}
-          <div className="h-72 overflow-hidden rounded-[3rem] border-8 border-white shadow-xl">
+          <div className="h-72 overflow-hidden rounded-xl border-8 border-white shadow-xl">
             <iframe
               className="h-full w-full"
               loading="lazy"
@@ -105,7 +105,7 @@ export default function KontakView({
             href={`https://wa.me/${info.phone.replace(/\D/g, "")}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex w-full items-center justify-center gap-3 rounded-2xl bg-emerald-500 py-4 font-black text-white shadow-lg shadow-emerald-200 transition hover:bg-emerald-600 active:scale-95"
+            className="flex w-full items-center justify-center gap-3 rounded-xl bg-emerald-500 py-4 font-black text-white shadow-lg shadow-emerald-200 transition hover:bg-emerald-600 active:scale-95"
           >
             <Phone size={20} /> Hubungi via WhatsApp
           </a>
@@ -129,7 +129,7 @@ export default function KontakView({
               </p>
               <button
                 onClick={() => setFormStatus("idle")}
-                className="rounded-2xl bg-blue-600 px-10 py-4 font-black text-white shadow-lg shadow-blue-200 transition-all active:scale-95"
+                className="rounded-xl bg-blue-600 px-10 py-4 font-black text-white shadow-lg shadow-blue-200 transition-all active:scale-95"
               >
                 Kirim Pesan Lagi
               </button>
@@ -138,7 +138,7 @@ export default function KontakView({
             <>
               <div className="mb-10">
                 <div className="mb-2 flex items-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-blue-100 text-blue-600">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-100 text-blue-600">
                     <MessageSquare size={20} />
                   </div>
                   <h2 className="text-2xl font-black text-slate-800">Formulir Aspirasi</h2>
@@ -159,7 +159,7 @@ export default function KontakView({
                       name="nama"
                       type="text"
                       required
-                      className="w-full rounded-2xl border-2 border-transparent bg-slate-50 px-5 py-4 font-bold text-slate-900 transition outline-none focus:border-blue-500/20"
+                      className="w-full rounded-xl border-2 border-transparent bg-slate-50 px-5 py-4 font-bold text-slate-900 transition outline-none focus:border-blue-500/20"
                       placeholder="Budi Santoso"
                     />
                   </div>
@@ -171,7 +171,7 @@ export default function KontakView({
                       name="whatsapp"
                       type="tel"
                       required
-                      className="w-full rounded-2xl border-2 border-transparent bg-slate-50 px-5 py-4 font-bold text-slate-900 transition outline-none focus:border-blue-500/20"
+                      className="w-full rounded-xl border-2 border-transparent bg-slate-50 px-5 py-4 font-bold text-slate-900 transition outline-none focus:border-blue-500/20"
                       placeholder="08xxxxxxxxxx"
                     />
                   </div>
@@ -184,7 +184,7 @@ export default function KontakView({
                     name="pesan"
                     rows={7}
                     required
-                    className="w-full resize-none rounded-3xl border-2 border-transparent bg-slate-50 p-5 font-medium text-slate-800 transition outline-none focus:border-blue-500/20"
+                    className="w-full resize-none rounded-xl border-2 border-transparent bg-slate-50 p-5 font-medium text-slate-800 transition outline-none focus:border-blue-500/20"
                     placeholder="Tuliskan saran, keluhan, atau pertanyaan Anda di sini..."
                   />
                 </div>
@@ -195,7 +195,7 @@ export default function KontakView({
                 <button
                   type="submit"
                   disabled={isPending}
-                  className="flex w-full items-center justify-center gap-3 rounded-3xl bg-blue-600 py-5 text-lg font-black text-white shadow-2xl shadow-blue-500/20 transition hover:bg-blue-700 active:scale-95 disabled:opacity-70"
+                  className="flex w-full items-center justify-center gap-3 rounded-xl bg-blue-600 py-5 text-lg font-black text-white shadow-2xl shadow-blue-500/20 transition hover:bg-blue-700 active:scale-95 disabled:opacity-70"
                 >
                   {isPending ? <Loader2 size={24} className="animate-spin" /> : <Send size={24} />}
                   {isPending ? "Mengirim..." : "Kirim Aspirasi"}
@@ -212,7 +212,7 @@ export default function KontakView({
 function ContactInfoItem({ Icon, label, value }: any) {
   return (
     <div className="flex gap-4">
-      <div className="mt-0.5 flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-blue-50 text-blue-600">
+      <div className="mt-0.5 flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
         <Icon size={18} />
       </div>
       <div>

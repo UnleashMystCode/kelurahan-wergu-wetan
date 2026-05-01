@@ -105,7 +105,7 @@ export default function AdminHomeFeatures({ stats, services, welcome, onlyTab }:
   };
 
   return (
-    <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+    <div className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
       {/* TAB MENU (Hanya Tampil Jika Tidak Di-Lock ke 1 Tab Tentu Saja) */}
       {!onlyTab && (
         <div className="flex overflow-x-auto border-b border-slate-200">
@@ -174,7 +174,7 @@ export default function AdminHomeFeatures({ stats, services, welcome, onlyTab }:
 
               {/* FORM UPDATE STATISTIK (MANUAL & EXCEL) */}
               <div className="space-y-8">
-                <div className="rounded-2xl border border-slate-200 bg-slate-50 p-6">
+                <div className="rounded-xl border border-slate-200 bg-slate-50 p-6">
                   <h4 className="mb-4 flex items-center gap-2 font-bold text-slate-800">
                     {editStat ? (
                       <Pencil size={16} className="text-amber-500" />

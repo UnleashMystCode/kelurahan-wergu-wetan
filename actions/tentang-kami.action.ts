@@ -50,7 +50,7 @@ export async function simpanProfilKonten(formData: FormData) {
   await prisma.profilKonten.upsert({
     where: { kategori },
     update: { judul, isi },
-    create: { kategori, judul, isi },
+    create: { kategori, judul, isi, updatedAt: new Date() },
   });
   revalidatePath("/admin/halaman/tentang-kami/teks");
   revalidatePath("/tentang-kami");

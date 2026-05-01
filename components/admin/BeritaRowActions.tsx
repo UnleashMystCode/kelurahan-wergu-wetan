@@ -3,7 +3,7 @@
 import { useTransition } from "react";
 import { Eye } from "lucide-react";
 import Link from "next/link";
-import { hapusKegiatan } from "@/actions/kegiatan.action";
+import { hapusBerita } from "@/actions/berita.action";
 import { ModalEditBerita } from "./ModalEditBerita";
 import { ConfirmDeleteButton } from "./ConfirmDeleteButton";
 
@@ -37,7 +37,7 @@ export function BeritaRowActions({ item }: { item: BeritaItem }) {
       {/* Hapus — dengan dialog konfirmasi */}
       <ConfirmDeleteButton
         action={async () => {
-          await hapusKegiatan(item.id);
+          await hapusBerita(item.id);
         }}
         itemName={`"${item.judul}"`}
         title="Hapus Berita?"
