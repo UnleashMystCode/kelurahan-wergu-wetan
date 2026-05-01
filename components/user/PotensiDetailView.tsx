@@ -1,10 +1,16 @@
 "use client";
 
+import { useEffect } from "react";
 import { motion } from "framer-motion";
 import { ArrowLeft, Calendar, Tag } from "lucide-react";
 import Link from "next/link";
 
 export default function PotensiDetailView({ potensi }: { potensi: any }) {
+  // Pastikan layar selalu tergulung ke atas saat artikel baru dibuka
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "instant" });
+  }, [potensi?.id]);
+
   return (
     <div className="min-h-screen bg-slate-50 pb-20">
       {/* 1. HERO HEADER (Dark background for navbar & text) */}

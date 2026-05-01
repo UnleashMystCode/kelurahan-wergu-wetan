@@ -1,10 +1,16 @@
 "use client";
 
+import { useEffect } from "react";
 import { motion } from "framer-motion";
-import { ArrowLeft, Calendar, Tag } from "lucide-react";
+import { ArrowLeft, Calendar, Tag, FileClock } from "lucide-react";
 import Link from "next/link";
 
 export default function BeritaDetailView({ berita }: { berita: any }) {
+  // Pastikan layar selalu tergulung ke atas saat artikel baru dibuka
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "instant" });
+  }, [berita?.id]);
+
   return (
     <div className="min-h-screen bg-slate-50 pb-20">
       {/* 1. HERO HEADER (Dark background for navbar & text) */}
@@ -77,12 +83,26 @@ export default function BeritaDetailView({ berita }: { berita: any }) {
             prose-p:text-[16px] md:prose-p:text-[18px] ensures legible reading sizes
             break-words and overflow-wrap ensure long URLs or words don't break the mobile layout 
           */}
-          <article 
-            className="prose prose-slate prose-headings:font-bold prose-a:text-blue-600 prose-img:w-full prose-img:max-w-full prose-img:rounded-xl md:prose-lg w-full max-w-none break-words overflow-wrap-anywhere prose-p:leading-relaxed prose-p:text-slate-700" 
-            style={{ fontFamily: "Georgia, 'Times New Roman', Times, serif" }}
-          >
-            <div dangerouslySetInnerHTML={{ __html: berita.isi }} />
-          </article>
+          {(!berita.isi || berita.isi.trim() === '' || berita.isi === '<p></p>' || berita.isi === '<p><br></p>') ? (
+            <div className="flex flex-col items-center justify-center rounded-3xl border border-dashed border-slate-300 bg-slate-100/50 px-6 py-20 text-center shadow-sm">
+              <div className="mb-6 flex h-24 w-24 items-center justify-center rounded-full bg-white shadow-sm ring-4 ring-slate-50">
+                <FileClock className="h-10 w-10 text-slate-400" />
+              </div>
+              <h2 className="mb-3 text-2xl font-black text-slate-800">
+                Konten Sedang Disiapkan
+              </h2>
+              <p className="mx-auto max-w-md text-slate-500 leading-relaxed">
+                Redaksi kami sedang menyusun dan meninjau isi dari artikel berita ini. Silakan kunjungi kembali halaman ini dalam waktu dekat untuk membaca informasi selengkapnya.
+              </p>
+            </div>
+          ) : (
+            <article 
+              className="prose prose-slate prose-headings:font-bold prose-a:text-blue-600 prose-img:w-full prose-img:max-w-full prose-img:rounded-xl md:prose-lg w-full max-w-none break-words overflow-wrap-anywhere prose-p:leading-relaxed prose-p:text-slate-700" 
+              style={{ fontFamily: "Georgia, 'Times New Roman', Times, serif" }}
+            >
+              <div dangerouslySetInnerHTML={{ __html: berita.isi }} />
+            </article>
+          )}
 
           {/* 3. FOOTER / SHARE */}
           <div className="mt-16 flex items-center justify-between border-t border-slate-200 pt-8">
