@@ -40,7 +40,7 @@ export default function PotensiDesaView({ banner, potensiItems = [] }: { banner?
   return (
     <div className="min-h-screen bg-slate-50 pb-20">
       {/* 1. HERO HEADER (Disesuaikan dengan TentangKamiView & HomeView) */}
-      <div className="relative mt-[-100px] min-h-[500px] w-full overflow-hidden bg-slate-900 md:min-h-[600px]">
+      <div className="relative mt-[-100px] flex w-full flex-col items-center justify-center overflow-hidden bg-slate-900 px-4 pt-[260px] pb-[100px] text-center md:pt-[300px] md:pb-[140px]">
         {/* Background Image */}
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
@@ -49,9 +49,8 @@ export default function PotensiDesaView({ banner, potensiItems = [] }: { banner?
         {/* Overlay Gelap */}
         <div className="absolute inset-0 bg-black/50 bg-gradient-to-t from-black/80 via-transparent to-black/30" />
 
-        {/* Konten Teks (Visual Centering sama persis dengan TentangKamiView) */}
-        <div className="absolute inset-0 z-20 flex items-center justify-center px-4 pt-[100px] text-center">
-          <div className="mx-auto max-w-4xl">
+        {/* Konten Teks */}
+        <div className="relative z-20 mx-auto max-w-4xl">
             <motion.h1
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
@@ -71,7 +70,6 @@ export default function PotensiDesaView({ banner, potensiItems = [] }: { banner?
                 "Eksplorasi keberagaman aset, potensi unggulan UMKM, wisata ikonik, hingga dinamika sosial masyarakat Wergu Wetan."}
             </motion.p>
           </div>
-        </div>
       </div>
 
       {/* 2. STICKY SUB-NAVBAR (Seragam dengan page lainnya) */}
@@ -99,8 +97,7 @@ export default function PotensiDesaView({ banner, potensiItems = [] }: { banner?
         </div>
       </div>
 
-      {/* 3. MASONRY / BENTO GRID KONTEN (Tanpa Flickering / Layout Bugs) */}
-      <div className="container mx-auto mt-12 mb-20 min-h-[800px] max-w-6xl px-4">
+      <div className="relative z-30 container mx-auto px-6 pt-12 pb-20 max-w-[1200px]">
         {filteredData.length === 0 ? (
           <div className="flex flex-col items-center py-20 text-center">
             <Search size={48} className="mb-4 text-slate-300" />
@@ -110,57 +107,104 @@ export default function PotensiDesaView({ banner, potensiItems = [] }: { banner?
             </p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {filteredData.map((item, i) => (
+          <div className="flex flex-col">
+            {/* FEATURED / HOT TOPIC ARTICLE */}
+            {filteredData.length > 0 && (
+              <motion.div
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4 }}
+                className="group mb-10"
+              >
+                <Link
+                  href={`/potensi-desa/${filteredData[0].slug}`}
+                  className="flex flex-col bg-[#f0f4f8] md:flex-row group"
+                >
+                  <div className="relative h-[280px] w-full shrink-0 overflow-hidden md:h-[340px] md:w-[52%]">
+                    <img
+                      src={filteredData[0].gambar || "/images/hero_office.png"}
+                      alt={filteredData[0].judul}
+                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      onError={(e) => { e.currentTarget.src = "/images/hero_office.png" }}
+                    />
+                  </div>
+                  <div className="flex flex-col justify-center p-8 md:w-[48%] md:p-14">
+                    <h3 className="mb-5 text-[26px] leading-[1.3] font-bold text-slate-900 transition-colors duration-300 group-hover:text-blue-700 md:text-[32px]">
+                      {filteredData[0].judul}
+                    </h3>
+                    <div className="mt-auto text-[14px] font-medium tracking-wide text-slate-400">
+                      {new Date(filteredData[0].createdAt || Date.now()).toLocaleDateString("en-US", {
+                        month: "long",
+                        day: "numeric",
+                        year: "numeric",
+                      })}
+                    </div>
+                  </div>
+                </Link>
+              </motion.div>
+            )}
+
+            {/* REGULAR LIST */}
+            {filteredData.slice(1).map((item, i) => (
               <motion.div
                 key={`${activeCategory}-${item.id}`}
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3, delay: i * 0.05 }}
+                className="group border-b border-slate-300 py-8 first:pt-0 last:border-0"
               >
                 <Link
                   href={`/potensi-desa/${item.slug}`}
-                  className="group flex h-full flex-col overflow-hidden rounded-xl bg-white transition-all duration-500 hover:shadow-[0_8px_30px_rgb(0,0,0,0.06)]"
+                  className="flex flex-col gap-6 md:flex-row md:items-start md:gap-8 group transition-transform duration-300 hover:translate-x-4"
                 >
-                  <div className="relative h-[240px] w-full overflow-hidden">
+                  {/* Thumbnail Kiri */}
+                  <div className="relative h-[240px] w-full shrink-0 bg-slate-100 md:h-[220px] md:w-[360px]">
                     <img
                       src={item.gambar || "/images/hero_office.png"}
                       alt={item.judul}
-                      className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                      className="h-full w-full object-cover"
+                      onError={(e) => { e.currentTarget.src = "/images/hero_office.png" }}
                     />
-                    {/* Very subtle overlay to make the image slightly deeper on hover */}
-                    <div className="absolute inset-0 bg-slate-900/0 transition-colors duration-500 group-hover:bg-slate-900/5" />
-
-                    {/* Minimalist Dark Badge */}
-                    <div className="absolute top-4 left-4">
-                      <span className="rounded-full bg-slate-900/60 px-3 py-1.5 text-[10px] font-semibold tracking-widest text-white backdrop-blur-md">
-                        {item.kategori}
-                      </span>
-                    </div>
                   </div>
 
-                  <div className="flex flex-1 flex-col justify-between p-6 md:p-8">
-                    <div>
-                      <h4 className="mb-3 text-xl leading-snug font-bold text-slate-800 transition-colors duration-300 group-hover:text-blue-600">
-                        {item.judul}
-                      </h4>
-                      <p className="mb-6 line-clamp-3 text-[14px] leading-relaxed text-slate-500">
-                        {item.deskripsiSingkat}
-                      </p>
-                    </div>
-
-                    {/* Minimalist Link Action */}
-                    <div className="mt-auto flex items-center text-[13px] font-bold text-slate-400 transition-colors duration-300 group-hover:text-blue-600">
-                      Baca Selengkapnya
-                      <ChevronRight
-                        size={16}
-                        className="ml-1 transition-transform duration-300 ease-out group-hover:translate-x-1"
-                      />
+                  {/* Konten Kanan */}
+                  <div className="flex flex-col justify-start md:pt-1">
+                    <h4 className="mb-3 text-[22px] leading-[1.3] font-bold text-slate-900 transition-colors duration-300 group-hover:text-blue-700 md:text-[26px]">
+                      {item.judul}
+                    </h4>
+                    <p className="mb-4 line-clamp-3 text-[16px] leading-[1.6] text-slate-500">
+                      {item.deskripsiSingkat || "Deskripsi singkat mengenai potensi desa ini belum tersedia."}
+                    </p>
+                    
+                    <div className="mt-2 text-[14px] font-medium tracking-wide text-slate-400">
+                      {new Date(item.createdAt || Date.now()).toLocaleDateString("en-US", {
+                        month: "long",
+                        day: "numeric",
+                        year: "numeric",
+                      })}
                     </div>
                   </div>
                 </Link>
               </motion.div>
             ))}
+
+            {/* Pagination / Show More */}
+            <div className="mt-14 flex flex-wrap items-center justify-center gap-2">
+              <button className="flex h-[42px] w-[42px] items-center justify-center bg-[#1a56db] text-[15px] text-white transition-colors">
+                1
+              </button>
+              {[2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
+                <button
+                  key={num}
+                  className="flex h-[42px] w-[42px] items-center justify-center border border-slate-200 bg-white text-[15px] text-slate-500 transition-all duration-300 hover:-translate-y-1 hover:border-[#1a56db] hover:bg-[#1a56db]/90 hover:text-white hover:shadow-md"
+                >
+                  {num}
+                </button>
+              ))}
+              <button className="flex h-[42px] items-center justify-center border border-slate-200 bg-white px-5 text-[15px] text-slate-500 transition-all duration-300 hover:-translate-y-1 hover:border-[#1a56db] hover:bg-[#1a56db]/90 hover:text-white hover:shadow-md">
+                Next
+              </button>
+            </div>
           </div>
         )}
       </div>

@@ -30,7 +30,7 @@ export default function BeritaView({ banner, newsData = [] }: any) {
   return (
     <div className="min-h-screen bg-slate-50 pb-20">
       {/* 1. HERO HEADER (Minimalist Dark Search Style) */}
-      <div className="relative mt-[-100px] flex min-h-[500px] w-full flex-col items-center justify-center bg-[#0B132B] px-4 pt-[100px] text-center md:min-h-[600px]">
+      <div className="relative mt-[-100px] flex w-full flex-col items-center justify-center bg-[#0B132B] px-4 pt-[260px] pb-[100px] text-center md:pt-[300px] md:pb-[140px]">
         <div className="mx-auto w-full max-w-4xl">
           <motion.h1
             initial={{ y: 20, opacity: 0 }}

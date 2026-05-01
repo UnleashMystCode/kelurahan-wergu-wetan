@@ -14,12 +14,12 @@ export default function PotensiDetailView({ potensi }: { potensi: any }) {
   return (
     <div className="min-h-screen bg-slate-50 pb-20">
       {/* 1. HERO HEADER (Dark background for navbar & text) */}
-      <div className="relative flex min-h-[400px] md:min-h-[500px] w-full flex-col justify-center bg-slate-900 pb-12 pt-[140px] md:pt-[160px]">
+      <div className="relative flex w-full flex-col justify-center bg-slate-900 px-4 pt-[160px] pb-[100px] md:pt-[200px] md:pb-[140px]">
         {/* Background Image */}
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-50 mix-blend-overlay"
           style={{
-            backgroundImage: `url('${potensi.gambar || "/images/hero_neighborhood.png"}')`,
+            backgroundImage: `url('${potensi.gambar || "/images/hero_neighborhood.png"}'), url('/images/hero_neighborhood.png')`,
           }}
         />
         {/* Gradient Overlay */}
@@ -54,7 +54,7 @@ export default function PotensiDetailView({ potensi }: { potensi: any }) {
               </span>
             </div>
 
-            <h1 className="mb-8 text-3xl leading-tight font-extrabold text-white md:text-5xl lg:text-6xl">
+            <h1 className="mb-8 text-3xl leading-tight font-extrabold text-white md:text-5xl lg:text-6xl" style={{ fontFamily: "Georgia, 'Times New Roman', Times, serif" }}>
               {potensi.judul}
             </h1>
 
@@ -92,7 +92,10 @@ export default function PotensiDetailView({ potensi }: { potensi: any }) {
               </p>
             </div>
           ) : (
-            <article className="prose prose-slate prose-headings:font-bold prose-a:text-blue-600 prose-img:w-full prose-img:max-w-full prose-img:rounded-xl md:prose-lg w-full max-w-none break-words overflow-wrap-anywhere prose-p:leading-relaxed prose-p:text-slate-700">
+            <article 
+              className="prose prose-slate prose-headings:font-bold prose-a:text-blue-600 prose-img:w-full prose-img:max-w-full prose-img:rounded-xl md:prose-lg w-full max-w-none break-words overflow-wrap-anywhere prose-p:leading-relaxed prose-p:text-slate-700"
+              style={{ fontFamily: "Georgia, 'Times New Roman', Times, serif" }}
+            >
               <div dangerouslySetInnerHTML={{ __html: potensi.isi }} />
             </article>
           )}

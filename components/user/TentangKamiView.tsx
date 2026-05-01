@@ -92,7 +92,7 @@ export default function TentangKamiView({ banners, perangkat, konten, stats = []
   return (
     <div className="min-h-screen bg-slate-50 pb-20">
       {/* === 1. HERO HEADER (STATIS - Serasi dengan Beranda) === */}
-      <div className="relative mt-[-100px] min-h-[500px] w-full overflow-hidden bg-slate-900 md:min-h-[600px]">
+      <div className="relative mt-[-100px] flex w-full flex-col items-center justify-center overflow-hidden bg-slate-900 px-4 pt-[260px] pb-[100px] text-center md:pt-[300px] md:pb-[140px]">
         {/* Background Image Statis dari Admin */}
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
@@ -101,11 +101,8 @@ export default function TentangKamiView({ banners, perangkat, konten, stats = []
         {/* Overlay Gelap */}
         <div className="absolute inset-0 bg-black/50 bg-gradient-to-t from-black/80 via-transparent to-black/30" />
 
-        {/* Pindah ke bawah submenu */}
-
-        {/* Konten Teks (Visual Centering) */}
-        <div className="absolute inset-0 z-20 flex items-center justify-center px-4 pt-[100px] text-center">
-          <div className="mx-auto max-w-4xl">
+        {/* Konten Teks */}
+        <div className="relative z-20 mx-auto max-w-4xl">
             <motion.h1
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
@@ -125,7 +122,6 @@ export default function TentangKamiView({ banners, perangkat, konten, stats = []
                 "Mengenal lebih dekat struktur organisasi, visi, misi, dan sarana prasarana Kelurahan Wergu Wetan."}
             </motion.p>
           </div>
-        </div>
       </div>
 
       {/* === 2. STICKY SUB-NAVBAR === */}
