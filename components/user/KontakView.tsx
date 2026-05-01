@@ -48,29 +48,29 @@ export default function KontakView({
   return (
     <div className="min-h-screen bg-slate-50 pb-20">
       {/* 1. HERO HEADER (Minimalist Dark Style) */}
-      <div className="relative mt-[-100px] flex w-full flex-col items-center justify-center bg-[#0B132B] px-4 pt-[200px] pb-[100px] text-center md:pt-[240px] md:pb-[140px]">
-        <motion.h1
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          style={{ fontFamily: "Georgia, 'Times New Roman', Times, serif" }}
-          className="mb-6 text-6xl leading-none tracking-tight text-white md:text-[80px]"
-        >
-          Kontak
-        </motion.h1>
+      <div className="relative mt-[-100px] flex h-[500px] w-full flex-col items-center justify-center bg-[#0B132B] px-4 pt-[100px] text-center md:h-[600px]">
+        <div className="mx-auto max-w-4xl">
+          <motion.h1
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            style={{ fontFamily: "Georgia, 'Times New Roman', Times, serif" }}
+            className="mb-6 text-5xl leading-tight tracking-tight text-white drop-shadow-lg md:text-6xl lg:text-[80px]"
+          >
+            Kontak
+          </motion.h1>
 
-        <motion.div
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.1 }}
-          className="w-full max-w-2xl"
-        >
-          <p className="text-lg font-medium tracking-wide text-slate-300 md:text-xl">
+          <motion.p
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.1 }}
+            className="mx-auto max-w-2xl text-lg font-medium tracking-wide text-slate-300 md:text-xl"
+          >
             Hubungi kami atau sampaikan aspirasi Anda secara daring.
-          </p>
-        </motion.div>
+          </motion.p>
+        </div>
       </div>
 
-      <div className="relative z-30 container mx-auto grid grid-cols-1 gap-10 px-6 pt-16 lg:grid-cols-12">
+      <div className="relative z-30 container mx-auto mt-[-60px] grid grid-cols-1 gap-10 px-6 lg:grid-cols-12">
         {/* ===== KOLOM KIRI: INFO KONTAK ===== */}
         <div className="space-y-6 lg:col-span-4">
           {/* Card Info Kontak */}

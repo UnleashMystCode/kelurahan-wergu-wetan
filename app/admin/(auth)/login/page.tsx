@@ -35,13 +35,15 @@ export default function AdminLoginPage() {
     // Simulasi Login
     console.log(`Login sebagai: ${role.toUpperCase()}`);
 
-    // PENTING: Simpan role ke LocalStorage agar Sidebar di dashboard tahu
-    // apakah harus menampilkan menu Super Admin atau tidak.
-    localStorage.setItem("userRole", role);
+    // PENTING: Simpan role ke Cookie agar Layout Server bisa langsung membaca
+    // tanpa ada jeda/kedip saat halaman direload.
+    document.cookie = `userRole=${role}; path=/; max-age=86400`; // Expire 1 hari
 
     setTimeout(() => {
       setLoading(false);
+      // Pindah halaman DAN paksa refresh router agar cookie baru langsung dibaca Server
       router.push("/admin/dashboard");
+      router.refresh();
     }, 2000);
   };
 

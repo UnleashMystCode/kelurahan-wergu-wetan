@@ -1,19 +1,10 @@
 "use client";
 
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState, useRef } from "react";
+import { motion } from "framer-motion";
 import {
-  Building2,
-  Users,
-  Store,
-  BookOpen,
-  Target,
-  MapPin,
   ChevronRight,
-  Activity,
   Search,
-  Heart,
-  ShoppingBag,
 } from "lucide-react";
 
 import Link from "next/link";
@@ -35,6 +26,16 @@ export default function PotensiDesaView({ banner, potensiItems = [] }: { banner?
   const filteredData = potensiItems.filter((item) => {
     return activeCategory === "Semua" || item.kategori === activeCategory;
   });
+
+  const stickyRef = useRef<HTMLDivElement>(null);
+
+  const handleCategoryClick = (cat: string) => {
+    setActiveCategory(cat);
+    if (stickyRef.current) {
+      const y = stickyRef.current.offsetTop - HEADER_OFFSET;
+      window.scrollTo({ top: y, behavior: "smooth" });
+    }
+  };
 
   return (
     <div className="min-h-screen bg-slate-50 pb-20">
@@ -75,6 +76,7 @@ export default function PotensiDesaView({ banner, potensiItems = [] }: { banner?
 
       {/* 2. STICKY SUB-NAVBAR (Seragam dengan page lainnya) */}
       <div
+        ref={stickyRef}
         className={`sticky z-40 border-b border-slate-200 bg-white/95 shadow-sm backdrop-blur-md transition-all duration-300`}
         style={{ top: `${HEADER_OFFSET}px`, height: `${SUBMENU_HEIGHT}px` }}
       >
@@ -83,7 +85,7 @@ export default function PotensiDesaView({ banner, potensiItems = [] }: { banner?
             {categories.map((cat) => (
               <button
                 key={cat}
-                onClick={() => setActiveCategory(cat)}
+                onClick={() => handleCategoryClick(cat)}
                 className={`group relative flex h-full items-center gap-2 border-b-[3px] px-6 text-[13px] font-bold whitespace-nowrap transition-all md:text-sm ${
                   activeCategory === cat
                     ? "border-blue-600 bg-blue-50/50 text-blue-600 rounded-t-lg"

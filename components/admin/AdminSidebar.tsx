@@ -25,25 +25,13 @@ import {
   BarChart,
   Megaphone,
   Briefcase,
-  ClipboardList
+  ClipboardList,
+  UserCog
 } from "lucide-react";
 import { useState, useEffect } from "react";
 
-export default function AdminSidebar() {
+export default function AdminSidebar({ role }: { role: "admin" | "super" }) {
   const pathname = usePathname();
-
-  // 1. State Role & Mounted (Anti-Kedip)
-  const [role, setRole] = useState<"admin" | "super">("admin");
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    // Cek LocalStorage
-    const savedRole = localStorage.getItem("userRole") as "admin" | "super";
-    if (savedRole) {
-      setRole(savedRole);
-    }
-    setMounted(true);
-  }, []);
 
   const isActive = (path: string) => pathname === path;
   
@@ -53,21 +41,18 @@ export default function AdminSidebar() {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem("userRole");
+    document.cookie = "userRole=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
   };
 
   const isSuper = role === "super";
-  const isLoading = !mounted;
 
-  const accentColor = isLoading ? "slate" : isSuper ? "red" : "blue";
+  const accentColor = isSuper ? "red" : "blue";
 
-  const logoBgClass = isLoading
-    ? "bg-slate-800 text-slate-500"
-    : isSuper
-      ? "bg-red-500/20 text-red-400 shadow-red-900/20"
-      : "bg-blue-500/20 text-blue-400 shadow-blue-900/20";
+  const logoBgClass = isSuper
+    ? "bg-red-500/20 text-red-400 shadow-red-900/20"
+    : "bg-blue-500/20 text-blue-400 shadow-blue-900/20";
 
-  const roleTextClass = isLoading ? "text-slate-600" : isSuper ? "text-red-400" : "text-blue-400";
+  const roleTextClass = isSuper ? "text-red-400" : "text-blue-400";
 
   return (
     <aside className="fixed top-0 left-0 z-40 flex h-screen w-64 flex-col justify-between border-r border-slate-800 bg-slate-900 text-white transition-colors duration-300">
@@ -78,9 +63,7 @@ export default function AdminSidebar() {
             <div
               className={`flex h-10 w-10 items-center justify-center rounded-xl shadow-lg transition-all duration-300 ${logoBgClass}`}
             >
-              {isLoading ? (
-                <Loader2 size={20} className="animate-spin" />
-              ) : isSuper ? (
+              {isSuper ? (
                 <ShieldAlert size={22} />
               ) : (
                 <ShieldCheck size={22} />
@@ -94,7 +77,7 @@ export default function AdminSidebar() {
               <span
                 className={`text-[10px] font-bold tracking-widest uppercase transition-colors duration-300 ${roleTextClass}`}
               >
-                {isLoading ? "Memuat..." : isSuper ? "Super Access" : "Petugas Area"}
+                {isSuper ? "Super Access" : "Petugas Area"}
               </span>
             </div>
           </div>
@@ -108,35 +91,8 @@ export default function AdminSidebar() {
             label="Dashboard"
             isActive={isActive("/admin/dashboard")}
             accent={accentColor}
-            isLoading={isLoading}
+            isLoading={false}
           />
-
-          <SidebarDropdown
-            label="Manajemen Banner"
-            icon={ImageIcon}
-            accent={accentColor}
-            isLoading={isLoading}
-            isActive={isPathGroupActive("/admin/halaman/beranda") && !isActive("/admin/halaman/beranda/sambutan") && !isActive("/admin/halaman/beranda/layanan-icon") || pathname === "/admin/halaman/tentang-kami"}
-          >
-            <SidebarLink
-              href="/admin/halaman/beranda"
-              icon={MonitorPlay}
-              label="Banner Beranda"
-              isActive={isActive("/admin/halaman/beranda")}
-              accent={accentColor}
-              isLoading={isLoading}
-              isSub={true}
-            />
-            <SidebarLink
-              href="/admin/halaman/tentang-kami"
-              icon={MonitorPlay}
-              label="Banner Tentang Kami"
-              isActive={pathname === "/admin/halaman/tentang-kami"}
-              accent={accentColor}
-              isLoading={isLoading}
-              isSub={true}
-            />
-          </SidebarDropdown>
 
           <div className="my-4 h-px bg-slate-800/60" />
 
@@ -144,16 +100,25 @@ export default function AdminSidebar() {
             label="Tampilan Beranda"
             icon={Home}
             accent={accentColor}
-            isLoading={isLoading}
-            isActive={isPathGroupActive("/admin/halaman/beranda/sambutan") || isPathGroupActive("/admin/halaman/beranda/layanan-icon")}
+            isLoading={false}
+            isActive={isPathGroupActive("/admin/halaman/beranda")}
           >
+            <SidebarLink
+              href="/admin/halaman/beranda"
+              icon={ImageIcon}
+              label="Kelola Banner"
+              isActive={isActive("/admin/halaman/beranda")}
+              accent={accentColor}
+              isLoading={false}
+              isSub={true}
+            />
             <SidebarLink
               href="/admin/halaman/beranda/sambutan"
               icon={MessageSquareQuote}
               label="Teks Sambutan"
               isActive={isActive("/admin/halaman/beranda/sambutan")}
               accent={accentColor}
-              isLoading={isLoading}
+              isLoading={false}
               isSub={true}
             />
             <SidebarLink
@@ -162,7 +127,7 @@ export default function AdminSidebar() {
               label="Menu Layanan"
               isActive={isActive("/admin/halaman/beranda/layanan-icon")}
               accent={accentColor}
-              isLoading={isLoading}
+              isLoading={false}
               isSub={true}
             />
           </SidebarDropdown>
@@ -171,16 +136,25 @@ export default function AdminSidebar() {
             label="Tentang Kami"
             icon={Building}
             accent={accentColor}
-            isLoading={isLoading}
-            isActive={isPathGroupActive("/admin/halaman/tentang-kami") && pathname !== "/admin/halaman/tentang-kami"}
+            isLoading={false}
+            isActive={isPathGroupActive("/admin/halaman/tentang-kami")}
           >
+            <SidebarLink
+              href="/admin/halaman/tentang-kami"
+              icon={ImageIcon}
+              label="Kelola Banner"
+              isActive={pathname === "/admin/halaman/tentang-kami"}
+              accent={accentColor}
+              isLoading={false}
+              isSub={true}
+            />
             <SidebarLink
               href="/admin/halaman/tentang-kami/teks"
               icon={Target}
               label="Visi Misi & Tugas"
               isActive={isActive("/admin/halaman/tentang-kami/teks")}
               accent={accentColor}
-              isLoading={isLoading}
+              isLoading={false}
               isSub={true}
             />
             <SidebarLink
@@ -189,7 +163,7 @@ export default function AdminSidebar() {
               label="Struktur Organisasi"
               isActive={isActive("/admin/halaman/tentang-kami/struktur")}
               accent={accentColor}
-              isLoading={isLoading}
+              isLoading={false}
               isSub={true}
             />
             <SidebarLink
@@ -198,78 +172,130 @@ export default function AdminSidebar() {
               label="Statistik Warga"
               isActive={isActive("/admin/halaman/tentang-kami/statistik")}
               accent={accentColor}
-              isLoading={isLoading}
+              isLoading={false}
               isSub={true}
             />
           </SidebarDropdown>
 
           <SidebarDropdown
-            label="Publikasi & Info"
+            label="Halaman Berita"
             icon={Newspaper}
             accent={accentColor}
-            isLoading={isLoading}
-            isActive={isPathGroupActive("/admin/halaman/berita") || isPathGroupActive("/admin/halaman/potensi-desa")}
+            isLoading={false}
+            isActive={isPathGroupActive("/admin/halaman/berita")}
           >
             <SidebarLink
               href="/admin/halaman/berita"
-              icon={Megaphone}
-              label="Berita Utama"
-              isActive={isActive("/admin/halaman/berita")}
+              icon={ImageIcon}
+              label="Kelola Banner"
+              isActive={pathname === "/admin/halaman/berita"}
               accent={accentColor}
-              isLoading={isLoading}
+              isLoading={false}
               isSub={true}
             />
             <SidebarLink
-              href="/admin/halaman/potensi-desa"
-              icon={Store}
-              label="Potensi Desa (UMKM)"
-              isActive={isActive("/admin/halaman/potensi-desa")}
+              href="/admin/halaman/berita/daftar"
+              icon={Megaphone}
+              label="Daftar Berita"
+              isActive={isActive("/admin/halaman/berita/daftar")}
               accent={accentColor}
-              isLoading={isLoading}
+              isLoading={false}
               isSub={true}
             />
           </SidebarDropdown>
 
           <SidebarDropdown
-            label="Layanan Publik"
+            label="Halaman Potensi Desa"
+            icon={Store}
+            accent={accentColor}
+            isLoading={false}
+            isActive={isPathGroupActive("/admin/halaman/potensi-desa")}
+          >
+            <SidebarLink
+              href="/admin/halaman/potensi-desa"
+              icon={ImageIcon}
+              label="Kelola Banner"
+              isActive={pathname === "/admin/halaman/potensi-desa"}
+              accent={accentColor}
+              isLoading={false}
+              isSub={true}
+            />
+            <SidebarLink
+              href="/admin/halaman/potensi-desa/daftar"
+              icon={Target}
+              label="Daftar UMKM"
+              isActive={isActive("/admin/halaman/potensi-desa/daftar")}
+              accent={accentColor}
+              isLoading={false}
+              isSub={true}
+            />
+          </SidebarDropdown>
+
+          <SidebarDropdown
+            label="Halaman Layanan"
             icon={Briefcase}
             accent={accentColor}
-            isLoading={isLoading}
+            isLoading={false}
             isActive={isPathGroupActive("/admin/halaman/layanan")}
           >
             <SidebarLink
               href="/admin/halaman/layanan"
+              icon={ImageIcon}
+              label="Kelola Banner"
+              isActive={pathname === "/admin/halaman/layanan"}
+              accent={accentColor}
+              isLoading={false}
+              isSub={true}
+            />
+            <SidebarLink
+              href="/admin/halaman/layanan/daftar"
               icon={ClipboardList}
               label="Daftar Layanan"
-              isActive={isActive("/admin/halaman/layanan")}
+              isActive={isActive("/admin/halaman/layanan/daftar")}
               accent={accentColor}
-              isLoading={isLoading}
+              isLoading={false}
               isSub={true}
             />
           </SidebarDropdown>
 
-          <div className="my-4 h-px bg-slate-800/60" />
-
           <SidebarDropdown
-            label="Pengaturan Sistem"
-            icon={Settings}
+            label="Halaman Kontak"
+            icon={Phone}
             accent={accentColor}
-            isLoading={isLoading}
-            isActive={isPathGroupActive("/admin/halaman/kontak")}
+            isLoading={false}
+            isActive={isPathGroupActive("/admin/halaman/kontak") || isPathGroupActive("/admin/pesan-masuk")}
           >
             <SidebarLink
               href="/admin/halaman/kontak"
-              icon={Phone}
-              label="Informasi Kontak"
-              isActive={isActive("/admin/halaman/kontak")}
+              icon={ImageIcon}
+              label="Kelola Banner"
+              isActive={pathname === "/admin/halaman/kontak"}
               accent={accentColor}
-              isLoading={isLoading}
+              isLoading={false}
+              isSub={true}
+            />
+            <SidebarLink
+              href="/admin/halaman/kontak/daftar"
+              icon={Settings}
+              label="Informasi Kontak"
+              isActive={isActive("/admin/halaman/kontak/daftar")}
+              accent={accentColor}
+              isLoading={false}
+              isSub={true}
+            />
+            <SidebarLink
+              href="/admin/pesan-masuk"
+              icon={MessageSquareQuote}
+              label="Kotak Masuk Warga"
+              isActive={isActive("/admin/pesan-masuk")}
+              accent={accentColor}
+              isLoading={false}
               isSub={true}
             />
           </SidebarDropdown>
 
           {/* === NAVIGASI KHUSUS SUPER ADMIN === */}
-          {mounted && isSuper && (
+          {isSuper && (
             <div className="animate-in fade-in slide-in-from-left-4 mt-6 border-t border-white/5 pt-4 duration-500">
               <div className="mb-2 px-4 text-[10px] font-bold tracking-wider text-slate-500 uppercase">
                 Super Admin Area
@@ -283,11 +309,11 @@ export default function AdminSidebar() {
                     : "text-slate-400 hover:bg-red-500/10 hover:text-red-300"
                 }`}
               >
-                <Settings
+                <UserCog
                   size={18}
-                  className={`transition-transform duration-500 group-hover:rotate-90 ${isActive("/admin/settings") ? "text-red-400" : ""}`}
+                  className={`shrink-0 transition-transform duration-500 group-hover:rotate-12 ${isActive("/admin/settings") ? "text-red-400" : ""}`}
                 />
-                <span className="relative z-10">Manajemen Admin</span>
+                <span className="relative z-10 truncate">Manajemen Admin</span>
                 {isActive("/admin/settings") && (
                   <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-red-500/10 to-transparent" />
                 )}
@@ -316,7 +342,7 @@ export default function AdminSidebar() {
 }
 
 // --- COMPONENT DROPDOWN ---
-function SidebarDropdown({ label, icon: Icon, isActive, accent, isLoading, children }: any) {
+function SidebarDropdown({ label, icon: Icon, isActive, accent, children }: any) {
   const [isOpen, setIsOpen] = useState(isActive);
 
   useEffect(() => {
@@ -370,7 +396,7 @@ function SidebarDropdown({ label, icon: Icon, isActive, accent, isLoading, child
 }
 
 // --- COMPONENT KECIL UTK LINK ---
-function SidebarLink({ href, icon: Icon, label, isActive, accent, isLoading, isSub }: any) {
+function SidebarLink({ href, icon: Icon, label, isActive, accent, isSub = false }: any) {
   let activeClass = "";
   let iconClass = "";
   let hoverClass = "";
@@ -399,7 +425,7 @@ function SidebarLink({ href, icon: Icon, label, isActive, accent, isLoading, isS
         className={`shrink-0 transition-transform duration-300 ${isActive ? iconClass : "opacity-70 group-hover:opacity-100"} ${!isSub && "group-hover:scale-110"}`}
       />
       <span className="relative z-10 truncate">{label}</span>
-      {isActive && !isLoading && !isSub && (
+      {isActive && !isSub && (
         <div
           className={`absolute inset-0 pointer-events-none bg-gradient-to-r ${accent === "red" ? "from-red-500/10" : "from-blue-500/10"} to-transparent`}
         />

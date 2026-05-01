@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --experimental-https",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
@@ -20,6 +20,7 @@
     "react-dom": "19.2.3",
     "react-hot-toast": "^2.6.0",
     "react-to-print": "^3.3.0",
+    "use-debounce": "^10.1.1",
     "xlsx": "^0.18.5",
     "zod": "^4.3.6"
   },

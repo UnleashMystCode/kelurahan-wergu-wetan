@@ -1,13 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Calendar, ChevronRight, FileText, User, Tag, Search, Loader2 } from "lucide-react";
 import Link from "next/link";
 
 export default function BeritaView({ banner, newsData = [] }: any) {
   const [activeTag, setActiveTag] = useState("Semua");
-  const [searchQuery, setSearchQuery] = useState("");
 
   const tags = ["Semua", "Kegiatan", "Pengumuman", "Ekonomi", "Pembangunan"];
   const HEADER_OFFSET = 120; // Sesuai ClientLayout (Topbar 40 + Navbar 80)
@@ -120,11 +119,20 @@ export default function BeritaView({ banner, newsData = [] }: any) {
   // Gunakan ID unik Set agar data db tidak duplicate dengan dummy jika slug/id kebetulan bentrok.
   const baseData = [...(newsData || []), ...dummyNews].slice(0, 10);
 
-  // Filter: Hanya menampilkan yang 'Aktif', sesuai Tag yang dipilih, dan keyword
+  // Filter: Hanya menampilkan yang 'Aktif', sesuai Tag yang dipilih
   const filtered = baseData
     .filter((n: any) => n.status === "Aktif")
-    .filter((n: any) => activeTag === "Semua" || n.kategori === activeTag)
-    .filter((n: any) => n.judul.toLowerCase().includes(searchQuery.toLowerCase()));
+    .filter((n: any) => activeTag === "Semua" || n.kategori === activeTag);
+
+  const stickyRef = useRef<HTMLDivElement>(null);
+
+  const handleTagClick = (tag: string) => {
+    setActiveTag(tag);
+    if (stickyRef.current) {
+      const y = stickyRef.current.offsetTop - HEADER_OFFSET;
+      window.scrollTo({ top: y, behavior: "smooth" });
+    }
+  };
 
   return (
     <div className="min-h-screen bg-slate-50 pb-20">
@@ -153,29 +161,12 @@ export default function BeritaView({ banner, newsData = [] }: any) {
           </motion.div>
         </div>
 
-        <div className="w-full max-w-2xl px-6">
-          <motion.div
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.2 }}
-            className="relative"
-          >
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Cari Berita..."
-              className="w-full rounded-xl bg-[#eaedf4] px-6 py-[18px] text-[17px] text-slate-800 placeholder-slate-500 shadow-xl transition-all outline-none focus:ring-4 focus:ring-blue-500/30"
-            />
-            <button className="absolute top-1/2 right-5 -translate-y-1/2 text-slate-600 transition-colors hover:text-slate-900">
-              <Search size={22} className="stroke-[2.5px]" />
-            </button>
-          </motion.div>
-        </div>
+
       </div>
 
       {/* 2. STICKY SUB-NAVBAR (Gaya Sinkron dengan Profil & Beranda) */}
       <div
+        ref={stickyRef}
         className="sticky z-40 border-b border-slate-200 bg-white/95 shadow-sm backdrop-blur-md transition-all"
         style={{ top: `${HEADER_OFFSET}px`, height: `${SUBMENU_HEIGHT}px` }}
       >
@@ -184,7 +175,7 @@ export default function BeritaView({ banner, newsData = [] }: any) {
             {tags.map((tag) => (
               <button
                 key={tag}
-                onClick={() => setActiveTag(tag)}
+                onClick={() => handleTagClick(tag)}
                 className={`group relative flex h-full items-center gap-2 border-b-[3px] px-6 text-[13px] font-bold whitespace-nowrap transition-all lg:text-sm ${
                   activeTag === tag
                     ? "border-blue-600 bg-blue-50/50 text-blue-600 rounded-t-lg"
@@ -243,13 +234,13 @@ export default function BeritaView({ banner, newsData = [] }: any) {
             ) : (
               <div className="flex flex-col items-center justify-center py-24 text-center">
                 <div className="mb-6 flex h-24 w-24 items-center justify-center rounded-full border border-slate-200 bg-slate-100 shadow-sm">
-                  <Loader2 className="animate-spin text-slate-400" size={40} />
+                  <FileText className="text-slate-400" size={40} />
                 </div>
-                <h2 className="mb-4 text-3xl font-black text-slate-800">Sinkronisasi Konten</h2>
+                <h2 className="mb-4 text-2xl font-black text-slate-800">
+                  Belum Ada Publikasi
+                </h2>
                 <p className="mx-auto max-w-lg text-[15px] leading-relaxed text-slate-500">
-                  Modul publikasi untuk kategori{" "}
-                  <span className="font-bold text-slate-700">{activeTag}</span> sedang dalam tahap
-                  penataan sistem birokrasi terpadu. Periksa kembali secara berkala.
+                  Modul publikasi untuk kategori "{activeTag}" saat ini belum memiliki konten. Periksa kembali secara berkala.
                 </p>
               </div>
             )}

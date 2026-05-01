@@ -7,6 +7,7 @@ import { Menu, X, Search, ChevronRight } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { useLanguage } from "@/context/LanguageContext";
 import Image from "next/image";
+import GlobalSearchModal from "./GlobalSearchModal";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -128,8 +129,6 @@ export default function Navbar() {
           {/* --- BAGIAN KANAN: MENU DESKTOP / SEARCH BAR --- */}
           <div className="relative ml-4 hidden h-full flex-1 items-center justify-end md:flex lg:ml-8">
             <AnimatePresence mode="wait">
-              {!isSearchOpen ? (
-                // === TAMPILAN 1: MENU NORMAL ===
                 <motion.div
                   key="normal-menu"
                   variants={containerVariants}
@@ -196,49 +195,6 @@ export default function Navbar() {
                     </Link>
                   </div>
                 </motion.div>
-              ) : (
-                // === TAMPILAN 2: SEARCH BAR EXPANDED (IBM STYLE) ===
-                <motion.div
-                  key="search-bar"
-                  ref={searchContainerRef}
-                  variants={searchBarVariants}
-                  initial="hidden"
-                  animate="visible"
-                  exit="exit"
-                  className={`absolute right-0 z-30 flex h-[48px] items-center overflow-hidden rounded-xl ${
-                    scrolled
-                      ? "bg-slate-100 shadow-inner"
-                      : "border border-white/20 bg-white/20 backdrop-blur-md"
-                  }`}
-                >
-                  {/* Input Field */}
-                  <input
-                    ref={inputRef}
-                    type="text"
-                    placeholder="Cari layanan, berita, atau informasi..."
-                    className={`h-full w-full flex-1 border-none bg-transparent pr-2 pl-6 font-medium outline-none ${
-                      scrolled
-                        ? "text-slate-800 placeholder:text-slate-400"
-                        : "text-white placeholder:text-white/60"
-                    }`}
-                    onKeyDown={(e) => e.key === "Escape" && setIsSearchOpen(false)}
-                  />
-
-                  {/* GROUP BUTTONS ON THE RIGHT (Search) */}
-                  <div className="flex shrink-0 items-center gap-1 pr-1.5">
-                    <button
-                      className={`rounded-xl p-2.5 transition-all ${
-                        scrolled
-                          ? "text-slate-500 hover:bg-slate-200 hover:text-blue-600"
-                          : "text-white/80 hover:bg-white/20 hover:text-white"
-                      }`}
-                      aria-label="Submit Search"
-                    >
-                      <Search size={20} />
-                    </button>
-                  </div>
-                </motion.div>
-              )}
             </AnimatePresence>
           </div>
 
@@ -267,6 +223,23 @@ export default function Navbar() {
             className="overflow-hidden border-b border-slate-100 bg-white shadow-xl md:hidden"
           >
             <div className="container mx-auto flex flex-col gap-6 px-6 py-8">
+              {/* MOBILE SEARCH BAR */}
+              <div className="relative mb-2 border-b-2 border-slate-100 pb-6">
+                <div className="absolute inset-y-0 left-0 flex items-center pl-4 pb-6">
+                  <Search size={18} className="text-slate-400" />
+                </div>
+                <input
+                  readOnly
+                  onClick={() => {
+                    setIsOpen(false);
+                    setIsSearchOpen(true);
+                  }}
+                  type="text"
+                  placeholder="Cari layanan, berita..."
+                  className="cursor-pointer w-full rounded-xl border-2 border-slate-200 bg-slate-50 py-3.5 pl-11 pr-4 text-sm font-medium text-slate-800 shadow-sm outline-none transition-all hover:bg-white hover:border-blue-500 placeholder:text-slate-400"
+                />
+              </div>
+
               {menuItems.map((item, idx) => (
                 <motion.div
                   key={item.path}
@@ -301,6 +274,8 @@ export default function Navbar() {
           </motion.div>
         )}
       </AnimatePresence>
+
+      <GlobalSearchModal isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
     </>
   );
 }

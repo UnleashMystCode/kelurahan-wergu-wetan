@@ -43,9 +43,9 @@ export default function AdminHomeFeatures({ stats, services, welcome, onlyTab }:
     actionFunc: (fd: FormData) => Promise<any>,
     successMessage: string
   ) => {
-    // VALIDASI KHUSUS STATISTIK: CEK KEKOSONGAN DI CLIENT
-    // Agar tidak perlu memanggil server jika sudah pasti kosong
-    if (successMessage.includes("Statistik")) {
+    // VALIDASI KHUSUS STATISTIK EXCEL: CEK KEKOSONGAN DI CLIENT
+    // Menggunakan string matching karena Server Action proxies bisa dianggap identik oleh React
+    if (successMessage === "Data Statistik Berhasil Diupdate!") {
       const file = formData.get("excelFile") as File;
       const url = formData.get("excelUrl") as string;
       if ((!file || file.size === 0) && (!url || url.trim() === "")) {
@@ -59,7 +59,10 @@ export default function AdminHomeFeatures({ stats, services, welcome, onlyTab }:
     await toast
       .promise(
         (async () => {
-          await actionFunc(formData);
+          const res = await actionFunc(formData);
+          if (res && res.success === false) {
+            throw new Error(res.message);
+          }
           router.refresh();
         })(),
         {
@@ -135,127 +138,149 @@ export default function AdminHomeFeatures({ stats, services, welcome, onlyTab }:
         {activeTab === "statistik" && (
           <div className="grid gap-8 md:grid-cols-2">
             <div className="space-y-6">
-              <div className="rounded-xl border border-blue-100 bg-blue-50 p-5">
-                <div className="mb-3 flex items-start gap-3">
-                  <AlertCircle className="shrink-0 text-blue-600" size={20} />
+              {/* === MANUAL INPUT === */}
+              <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+                <h4 className="mb-4 flex items-center gap-2 text-base font-bold text-slate-800">
+                  {editStat ? (
+                    <Pencil size={18} className="text-amber-500" />
+                  ) : (
+                    <Plus size={18} className="text-blue-500" />
+                  )}
+                  {editStat ? "Edit Statistik Manual" : "Tambah Statistik Manual"}
+                </h4>
+                <form
+                  action={(fd) => handleAction(fd, saveStatistic, "Statistik Berhasil Disimpan!")}
+                  className="grid grid-cols-1 gap-3 md:grid-cols-[1fr_1fr_auto]"
+                >
+                  {editStat && <input type="hidden" name="id" value={editStat.id} />}
+                  <input
+                    name="label"
+                    required
+                    defaultValue={editStat?.label || ""}
+                    placeholder="Nama Data (Contoh: RT/RW)"
+                    className="w-full rounded-xl border border-slate-300 p-3 text-sm outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20"
+                  />
+                  <input
+                    name="value"
+                    required
+                    defaultValue={editStat?.value || ""}
+                    placeholder="Nilai (Contoh: 28/4)"
+                    className="w-full rounded-xl border border-slate-300 p-3 text-sm outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20"
+                  />
+                  <div className="flex gap-2">
+                    <button
+                      type="submit"
+                      className="flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 px-6 py-3 text-sm font-bold text-white shadow-md transition hover:bg-blue-700 md:w-auto"
+                    >
+                      <Save size={16} /> Simpan
+                    </button>
+                    {editStat && (
+                      <button
+                        type="button"
+                        onClick={() => setEditStat(null)}
+                        className="flex items-center justify-center rounded-xl bg-slate-100 px-4 py-3 text-slate-500 transition hover:bg-slate-200 hover:text-slate-700"
+                      >
+                        <X size={16} />
+                      </button>
+                    )}
+                  </div>
+                </form>
+              </div>
+
+              {/* === EXCEL MASSAL (PANDUAN + FORM) === */}
+              <div className="rounded-2xl border border-green-200 bg-green-50 p-6 shadow-sm">
+                <div className="mb-5 flex items-center gap-3">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-green-100 text-green-600">
+                    <FileSpreadsheet size={20} />
+                  </div>
                   <div>
-                    <h4 className="text-sm font-bold text-blue-800">Panduan Format File</h4>
-                    <p className="mt-1 text-xs text-blue-600">
-                      Pastikan header Excel baris pertama adalah: <b>label</b> dan <b>value</b>.
+                    <h4 className="text-base font-bold text-green-900">Upload Massal (Excel)</h4>
+                    <p className="text-xs text-green-700">Ganti semua data sekaligus via file Excel</p>
+                  </div>
+                </div>
+
+                <div className="mb-5 grid grid-cols-1 gap-4 md:grid-cols-2">
+                  {/* STEP 1 */}
+                  <div className="rounded-xl border border-green-100 bg-white p-4 shadow-sm">
+                    <h5 className="mb-1 flex items-center gap-2 text-xs font-bold text-green-800">
+                      <span className="flex h-5 w-5 items-center justify-center rounded-full bg-green-600 text-[10px] text-white">1</span>
+                      Download Template
+                    </h5>
+                    <p className="mb-3 text-[11px] text-slate-500 leading-relaxed">
+                      Sistem akan mendownload <b>Data Aktif</b> jika ada data. Jika database kosong, sistem otomatis memberikan <b>Template Dummy</b>.
+                    </p>
+                    <a
+                      href="/api/template/stats"
+                      download
+                      className="flex w-full items-center justify-center gap-2 rounded-lg bg-green-600 py-2.5 text-[11px] font-bold text-white shadow transition hover:bg-green-700 active:scale-95"
+                    >
+                      <Download size={14} /> Download Template Excel
+                    </a>
+                  </div>
+
+                  {/* STEP 2 */}
+                  <div className="rounded-xl border border-green-100 bg-white p-4 shadow-sm">
+                    <h5 className="mb-1 flex items-center gap-2 text-xs font-bold text-green-800">
+                      <span className="flex h-5 w-5 items-center justify-center rounded-full bg-green-600 text-[10px] text-white">2</span>
+                      Isi & Simpan Data
+                    </h5>
+                    <p className="text-[11px] text-slate-500 leading-relaxed">
+                      Buka file Excel, isi data Anda:<br/>
+                      • Kolom A untuk <b>Label</b> (Cth: Penduduk)<br/>
+                      • Kolom B untuk <b>Value</b> (Cth: 3.500+)<br/>
+                      Simpan file setelah selesai diedit.
                     </p>
                   </div>
                 </div>
-                {/* Visual Tabel Excel */}
-                <div className="mx-auto w-full max-w-xs overflow-hidden rounded-lg border border-slate-200 bg-white text-xs shadow-sm">
-                  <div className="grid grid-cols-2 border-b border-slate-200 bg-slate-100 py-1 text-center font-bold text-slate-500">
-                    <div>A (label)</div>
-                    <div>B (value)</div>
-                  </div>
-                  <div className="grid grid-cols-2 border-b border-slate-100 px-2 py-1">
-                    <div className="text-slate-800">Penduduk</div>
-                    <div className="text-slate-600">3.500+</div>
-                  </div>
-                  <div className="grid grid-cols-2 border-b border-slate-100 px-2 py-1">
-                    <div className="text-slate-800">RT / RW</div>
-                    <div className="text-slate-600">28 / 4</div>
-                  </div>
-                </div>
 
-                <div className="mt-4 text-center">
-                  <a
-                    href="/api/template/stats"
-                    target="_blank"
-                    className="inline-flex items-center gap-2 rounded-lg border border-blue-200 bg-white px-4 py-2 text-xs font-bold text-blue-700 shadow-sm transition hover:bg-blue-50"
-                  >
-                    <Download size={14} /> Download Template Excel (.xlsx)
-                  </a>
-                </div>
-              </div>
-
-              {/* FORM UPDATE STATISTIK (MANUAL & EXCEL) */}
-              <div className="space-y-8">
-                <div className="rounded-xl border border-slate-200 bg-slate-50 p-6">
-                  <h4 className="mb-4 flex items-center gap-2 font-bold text-slate-800">
-                    {editStat ? (
-                      <Pencil size={16} className="text-amber-500" />
-                    ) : (
-                      <Plus size={16} className="text-blue-500" />
-                    )}
-                    {editStat ? "Edit Statistik Manual" : "Tambah Statistik Manual"}
-                  </h4>
+                {/* STEP 3 (FORM UPLOAD) */}
+                <div className="rounded-xl border border-green-100 bg-white p-5 shadow-sm">
+                  <h5 className="mb-4 flex items-center gap-2 text-sm font-bold text-green-800">
+                    <span className="flex h-6 w-6 items-center justify-center rounded-full bg-green-600 text-xs text-white">3</span>
+                    Upload & Timpa Data
+                  </h5>
                   <form
-                    action={(fd) => handleAction(fd, saveStatistic, "Statistik Berhasil Disimpan!")}
-                    className="flex flex-col gap-3 md:flex-row"
-                  >
-                    {editStat && <input type="hidden" name="id" value={editStat.id} />}
-                    <input
-                      name="label"
-                      required
-                      defaultValue={editStat?.label || ""}
-                      placeholder="Nama Data (Contoh: RT/RW)"
-                      className="flex-1 rounded-xl border p-3 text-sm outline-none focus:ring-2 focus:ring-blue-500"
-                    />
-                    <input
-                      name="value"
-                      required
-                      defaultValue={editStat?.value || ""}
-                      placeholder="Nilai (Contoh: 28/4)"
-                      className="flex-1 rounded-xl border p-3 text-sm outline-none focus:ring-2 focus:ring-blue-500"
-                    />
-                    <div className="flex gap-2">
-                      <button
-                        type="submit"
-                        className="flex items-center gap-2 rounded-xl bg-blue-600 px-6 py-3 text-sm font-bold text-white shadow-lg transition hover:bg-blue-700"
-                      >
-                        <Save size={16} /> Simpan
-                      </button>
-                      {editStat && (
-                        <button
-                          type="button"
-                          onClick={() => setEditStat(null)}
-                          className="rounded-xl bg-slate-200 px-4 py-3 text-sm font-bold text-slate-600 transition hover:bg-slate-300"
-                        >
-                          <X size={16} />
-                        </button>
-                      )}
-                    </div>
-                  </form>
-                </div>
-
-                <div className="border-t border-slate-200 pt-6">
-                  <h3 className="mb-4 flex items-center gap-2 font-bold text-slate-800">
-                    <FileSpreadsheet className="text-green-600" /> Upload Massal (Excel)
-                  </h3>
-                  <form
+                    onSubmit={(e) => {
+                      if (!confirm("PERINGATAN: Semua data statistik aktif saat ini akan DIHAPUS dan ditimpa dengan data dari Excel baru ini!\n\nYakin ingin menimpa data?")) {
+                        e.preventDefault();
+                      }
+                    }}
                     action={(fd) =>
                       handleAction(fd, uploadStatisticsExcel, "Data Statistik Berhasil Diupdate!")
                     }
                     className="space-y-4"
                   >
-                    <div className="rounded-xl border border-green-100 bg-green-50 p-4">
-                      <label className="mb-2 flex items-center gap-2 text-xs font-bold text-green-800">
-                        <LinkIcon size={14} /> Link Google Sheets (CSV)
-                      </label>
-                      <input
-                        type="text"
-                        name="excelUrl"
-                        placeholder="Link CSV Google Sheets..."
-                        className="w-full rounded-lg border border-green-200 bg-white p-2 text-sm outline-none focus:ring-2 focus:ring-green-500"
-                      />
+                    <div className="grid gap-4 md:grid-cols-2">
+                      <div className="rounded-xl border border-slate-200 bg-slate-50 p-3">
+                        <label className="mb-1.5 flex items-center gap-1.5 text-xs font-bold text-slate-700">
+                          <Upload size={14} className="text-slate-400" /> Upload File (.xlsx)
+                        </label>
+                        <input
+                          type="file"
+                          name="excelFile"
+                          accept=".xlsx, .xls, .csv"
+                          className="block w-full text-xs text-slate-500 file:mr-3 file:rounded-full file:border-0 file:bg-green-100 file:px-3 file:py-1.5 file:text-xs file:font-semibold file:text-green-700 hover:file:bg-green-200"
+                        />
+                      </div>
+                      
+                      <div className="rounded-xl border border-slate-200 bg-slate-50 p-3">
+                        <label className="mb-1.5 flex items-center gap-1.5 text-xs font-bold text-slate-700">
+                          <LinkIcon size={14} className="text-slate-400" /> Atau Link G-Sheets (CSV)
+                        </label>
+                        <input
+                          type="text"
+                          name="excelUrl"
+                          placeholder="https://docs.google.com/..."
+                          className="w-full rounded-lg border border-slate-300 bg-white p-2 text-xs outline-none transition focus:border-green-500 focus:ring-2 focus:ring-green-500/20"
+                        />
+                      </div>
                     </div>
-                    <div className="rounded-xl border-2 border-dashed border-slate-300 p-6 text-center transition hover:bg-slate-50">
-                      <input
-                        type="file"
-                        name="excelFile"
-                        accept=".xlsx, .xls, .csv"
-                        className="block w-full text-sm text-slate-500 file:mr-4 file:rounded-full file:border-0 file:bg-blue-50 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-blue-700 hover:file:bg-blue-100"
-                      />
-                    </div>
+
                     <button
                       type="submit"
-                      className="w-full rounded-xl bg-green-600 px-6 py-3 text-sm font-bold text-white shadow-lg transition hover:bg-green-700"
+                      className="w-full rounded-xl bg-green-600 px-6 py-3 text-sm font-bold text-white shadow-md transition hover:bg-green-700 active:scale-95"
                     >
-                      Bersihkan & Timpa Data via Excel
+                      Proses & Timpa Semua Data
                     </button>
                   </form>
                 </div>

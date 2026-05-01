@@ -12,52 +12,29 @@ import {
   Loader2,
 } from "lucide-react";
 
-export default function AdminHeader() {
+export default function AdminHeader({ role }: { role: "admin" | "super" }) {
   const [isSearchFocused, setIsSearchFocused] = useState(false);
-
-  // 1. STATE ROLE
-  const [role, setRole] = useState<"admin" | "super">("admin");
-
-  // 2. STATE MOUNTED (Anti-Kedip)
-  // Kita pakai ini untuk tau apakah browser sudah selesai baca localStorage atau belum
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    // Cek LocalStorage
-    const savedRole = localStorage.getItem("userRole") as "admin" | "super";
-    if (savedRole) {
-      setRole(savedRole);
-    }
-    // Beritahu sistem bahwa komponen sudah "siap" (mounted)
-    setMounted(true);
-  }, []);
 
   // --- LOGIKA WARNA DINAMIS ---
   const isSuper = role === "super";
 
-  // Kalau belum siap (mounted = false), pakai warna NETRAL (Slate/Abu).
-  // Kalau sudah siap, baru pakai warna Merah/Biru.
-  const themeColor = !mounted ? "slate" : isSuper ? "red" : "blue";
+  const themeColor = isSuper ? "red" : "blue";
 
   // Class Tailwind Dinamis
-  const logoBg = !mounted
-    ? "bg-slate-200 text-slate-400"
-    : isSuper
+  const logoBg = isSuper
       ? "bg-red-600 shadow-red-600/20 text-white"
       : "bg-blue-600 shadow-blue-600/20 text-white";
-  const titleColor = !mounted ? "text-slate-400" : isSuper ? "text-red-600" : "text-blue-600";
-  const ringColor = !mounted
-    ? ""
-    : isSuper
+  const titleColor = isSuper ? "text-red-600" : "text-blue-600";
+  const ringColor = isSuper
       ? "border-red-500 ring-red-500/10"
       : "border-blue-500 ring-blue-500/10";
-  const hoverText = !mounted ? "" : isSuper ? "hover:text-red-600" : "hover:text-blue-600";
-  const hoverBg = !mounted ? "" : isSuper ? "hover:bg-red-50" : "hover:bg-blue-50";
+  const hoverText = isSuper ? "hover:text-red-600" : "hover:text-blue-600";
+  const hoverBg = isSuper ? "hover:bg-red-50" : "hover:bg-blue-50";
 
   // Text Label
-  const portalTitle = !mounted ? "LOADING..." : isSuper ? "SUPER ADMIN" : "ADMINISTRATOR";
-  const userLabel = !mounted ? "..." : isSuper ? "Root User" : "Petugas Admin";
-  const userInitial = !mounted ? "?" : isSuper ? "S" : "A";
+  const portalTitle = isSuper ? "SUPER ADMIN" : "ADMINISTRATOR";
+  const userLabel = isSuper ? "Root User" : "Petugas Admin";
+  const userInitial = isSuper ? "S" : "A";
 
   return (
     <header className="sticky top-0 z-30 flex h-20 items-center justify-between border-b border-slate-200 bg-white/90 px-8 shadow-sm backdrop-blur-md transition-all duration-300">
@@ -67,9 +44,7 @@ export default function AdminHeader() {
         <div
           className={`flex h-12 w-12 items-center justify-center rounded-xl shadow-lg transition-colors duration-300 ${logoBg}`}
         >
-          {!mounted ? (
-            <Loader2 size={24} className="animate-spin" />
-          ) : isSuper ? (
+          {isSuper ? (
             <ShieldAlert size={24} />
           ) : (
             <ShieldCheck size={24} />
@@ -104,10 +79,9 @@ export default function AdminHeader() {
           <input
             type="text"
             placeholder={
-              !mounted ? "Memuat..." : isSuper ? "Cari data sensitif..." : "Cari menu..."
+              isSuper ? "Cari data sensitif..." : "Cari menu..."
             }
             className="ml-3 w-full border-none bg-transparent text-sm font-medium text-slate-700 outline-none placeholder:text-slate-400"
-            disabled={!mounted}
             onFocus={() => setIsSearchFocused(true)}
             onBlur={() => setIsSearchFocused(false)}
           />
@@ -130,34 +104,28 @@ export default function AdminHeader() {
             className={`relative flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-slate-50 text-slate-500 transition ${hoverBg} ${hoverText}`}
           >
             <Bell size={20} />
-            {mounted && (
-              <span
-                className={`absolute top-2 right-2.5 h-2 w-2 animate-pulse rounded-full border border-white ${isSuper ? "bg-orange-500" : "bg-red-500"}`}
-              ></span>
-            )}
+            <span
+              className={`absolute top-2 right-2.5 h-2 w-2 animate-pulse rounded-full border border-white ${isSuper ? "bg-orange-500" : "bg-red-500"}`}
+            ></span>
           </button>
 
           {/* User Profile */}
           <div className="flex cursor-pointer items-center gap-3 pl-2 transition hover:opacity-80">
             <div className="hidden text-right lg:block">
               <p className="text-sm leading-none font-bold text-slate-800">{userLabel}</p>
-              {mounted && (
-                <p
-                  className={`mt-1 inline-block rounded-full border px-2 py-0.5 text-[10px] font-bold transition-colors ${isSuper ? "border-red-100 bg-red-50 text-red-600" : "border-blue-100 bg-blue-50 text-blue-600"}`}
-                >
-                  Online
-                </p>
-              )}
+              <p
+                className={`mt-1 inline-block rounded-full border px-2 py-0.5 text-[10px] font-bold transition-colors ${isSuper ? "border-red-100 bg-red-50 text-red-600" : "border-blue-100 bg-blue-50 text-blue-600"}`}
+              >
+                Online
+              </p>
             </div>
 
             {/* AVATAR: Abu -> Warna Role */}
             <div
               className={`flex h-10 w-10 items-center justify-center rounded-full border-2 border-white font-bold text-white shadow-md transition-colors duration-500 ${
-                !mounted
-                  ? "bg-slate-200 text-slate-400"
-                  : isSuper
-                    ? "bg-gradient-to-tr from-red-600 to-orange-500"
-                    : "bg-gradient-to-tr from-blue-600 to-cyan-400"
+                isSuper
+                  ? "bg-gradient-to-tr from-red-600 to-orange-500"
+                  : "bg-gradient-to-tr from-blue-600 to-cyan-400"
               }`}
             >
               {userInitial}

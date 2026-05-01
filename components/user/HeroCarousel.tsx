@@ -83,9 +83,9 @@ export default function HeroCarousel({
   const currentBanner = activeBanners[index] || activeBanners[0];
 
   return (
-    // Memakai calc(100vh+100px) untuk menutupi margin-top negatif (-100px) dari navbar transparan
-    // sehingga slider benar-benar fix mentok di dasar layar tanpa ada kebocoran submenu di bawahnya.
-    <div className="group relative h-[calc(100vh+100px)] min-h-[700px] w-full overflow-hidden bg-slate-900">
+    // Di layar HP, kita gunakan calc(100dvh+100px) agar benar-benar "mentok" bawah layar HP (100dvh) 
+    // sekaligus mengimbangi margin-top negatif dari navbar transparan.
+    <div className="group relative h-[calc(100dvh+100px)] md:h-[calc(100vh+100px)] md:min-h-[700px] w-full overflow-hidden bg-slate-900">
       {/* 1. GAMBAR BACKGROUND */}
       <AnimatePresence mode="wait" initial={false}>
         <motion.div
@@ -127,7 +127,7 @@ export default function HeroCarousel({
               initial={{ y: 40, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-              className="mb-5 text-3xl leading-tight font-bold tracking-tight text-white drop-shadow-lg md:text-4xl lg:text-5xl"
+              className="mb-4 text-[28px] leading-[1.15] font-extrabold tracking-tight text-white drop-shadow-lg md:mb-5 md:text-4xl lg:text-5xl"
             >
               {currentBanner.judul || "Selamat Datang"}
             </motion.h1>
@@ -170,7 +170,7 @@ export default function HeroCarousel({
 
       {/* 3. NAVIGASI (GARIS & JUDUL) */}
       {activeBanners.length > 1 && (
-        <div className="pointer-events-none absolute right-0 bottom-0 left-0 z-30 bg-gradient-to-t from-black/80 to-transparent pt-12 pb-6">
+        <div className="pointer-events-none absolute right-0 bottom-0 left-0 z-30 bg-gradient-to-t from-black/80 to-transparent pt-12 pb-10 md:pb-6">
           <div className="pointer-events-auto container mx-auto px-4 md:px-6">
             <div className="flex w-full gap-4 md:gap-8">
               {activeBanners.map((banner, i) => (
