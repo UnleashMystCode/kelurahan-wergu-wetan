@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { motion } from "framer-motion";
-import { ArrowLeft, Calendar, Tag } from "lucide-react";
+import { ArrowLeft, Calendar, Tag, FileClock } from "lucide-react";
 import Link from "next/link";
 
 export default function PotensiDetailView({ potensi }: { potensi: any }) {
@@ -14,7 +14,7 @@ export default function PotensiDetailView({ potensi }: { potensi: any }) {
   return (
     <div className="min-h-screen bg-slate-50 pb-20">
       {/* 1. HERO HEADER (Dark background for navbar & text) */}
-      <div className="relative flex min-h-[60vh] w-full flex-col justify-center bg-slate-900 pb-12 pt-[140px] md:pt-[160px]">
+      <div className="relative flex min-h-[400px] md:min-h-[500px] w-full flex-col justify-center bg-slate-900 pb-12 pt-[140px] md:pt-[160px]">
         {/* Background Image */}
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-50 mix-blend-overlay"
@@ -79,9 +79,23 @@ export default function PotensiDetailView({ potensi }: { potensi: any }) {
           transition={{ duration: 0.5, delay: 0.2 }}
           className="mx-auto w-full max-w-3xl overflow-hidden"
         >
-          <article className="prose prose-slate prose-headings:font-bold prose-a:text-blue-600 prose-img:w-full prose-img:max-w-full prose-img:rounded-xl md:prose-lg w-full max-w-none break-words overflow-wrap-anywhere prose-p:leading-relaxed prose-p:text-slate-700">
-            <div dangerouslySetInnerHTML={{ __html: potensi.isi }} />
-          </article>
+          {(!potensi.isi || potensi.isi.trim() === '' || potensi.isi === '<p></p>' || potensi.isi === '<p><br></p>') ? (
+            <div className="flex flex-col items-center justify-center rounded-3xl border border-dashed border-slate-300 bg-slate-100/50 px-6 py-20 text-center shadow-sm">
+              <div className="mb-6 flex h-24 w-24 items-center justify-center rounded-full bg-white shadow-sm ring-4 ring-slate-50">
+                <FileClock className="h-10 w-10 text-slate-400" />
+              </div>
+              <h2 className="mb-3 text-2xl font-black text-slate-800">
+                Konten Sedang Disiapkan
+              </h2>
+              <p className="mx-auto max-w-md text-slate-500 leading-relaxed">
+                Redaksi kami sedang menyusun dan meninjau isi dari artikel potensi desa ini. Silakan kunjungi kembali halaman ini dalam waktu dekat untuk membaca informasi selengkapnya.
+              </p>
+            </div>
+          ) : (
+            <article className="prose prose-slate prose-headings:font-bold prose-a:text-blue-600 prose-img:w-full prose-img:max-w-full prose-img:rounded-xl md:prose-lg w-full max-w-none break-words overflow-wrap-anywhere prose-p:leading-relaxed prose-p:text-slate-700">
+              <div dangerouslySetInnerHTML={{ __html: potensi.isi }} />
+            </article>
+          )}
 
           {/* 3. FOOTER / SHARE */}
           <div className="mt-16 flex items-center justify-between border-t border-slate-200 pt-8">

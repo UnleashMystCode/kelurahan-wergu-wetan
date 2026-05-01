@@ -92,7 +92,7 @@ export default function TentangKamiView({ banners, perangkat, konten, stats = []
   return (
     <div className="min-h-screen bg-slate-50 pb-20">
       {/* === 1. HERO HEADER (STATIS - Serasi dengan Beranda) === */}
-      <div className="relative mt-[-100px] h-[600px] w-full overflow-hidden bg-slate-900 md:h-[700px]">
+      <div className="relative mt-[-100px] min-h-[500px] w-full overflow-hidden bg-slate-900 md:min-h-[600px]">
         {/* Background Image Statis dari Admin */}
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
