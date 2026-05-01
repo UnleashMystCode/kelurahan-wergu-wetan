@@ -100,7 +100,7 @@ export default function LayananView({ banner }: any) {
       {layananCategory === "umum" ? (
         <div id="layanan-grid" className="container mx-auto mt-16 grid grid-cols-1 items-start gap-10 px-4 scroll-mt-[180px] lg:grid-cols-12">
           {/* KOLOM KIRI: CARD TUTORIAL (UKURAN 720PX BIAR PAS) */}
-          <div className="space-y-16 lg:col-span-8">
+          <div className="space-y-16 lg:col-span-8 pb-[300px]">
             {listLayanan.map((layanan) => (
               <section
                 id={layanan.id}
@@ -165,9 +165,33 @@ export default function LayananView({ banner }: any) {
             ))}
           </div>
 
-          {/* KOLOM KANAN: TUTORIAL & INFORMASI (STICKY 720PX) */}
-          <div className="sticky top-[200px] lg:col-span-4">
-            <div className="flex min-h-[720px] flex-col rounded-xl border border-slate-100 bg-white p-10 shadow-[0_30px_70px_rgba(0,0,0,0.12)]">
+          {/* KOLOM KANAN: TUTORIAL & INFORMASI (STICKY) */}
+          <div className="sticky top-[200px] lg:col-span-4 self-start max-h-[calc(100vh-220px)] overflow-y-auto no-scrollbar rounded-xl pb-2">
+            {/* QUICK NAVIGATION / DAFTAR LAYANAN */}
+            <div className="mb-6 rounded-xl border border-slate-100 bg-white p-8 shadow-[0_20px_60px_rgba(0,0,0,0.06)]">
+              <h3 className="mb-5 flex items-center gap-2 text-[12px] font-black tracking-[0.15em] text-slate-800 uppercase">
+                <FileText size={16} className="text-blue-600" /> Indeks Layanan
+              </h3>
+              <div className="flex flex-wrap gap-2.5">
+                {listLayanan.map((layanan) => (
+                  <button
+                    key={`nav-${layanan.id}`}
+                    onClick={() => {
+                      const el = document.getElementById(layanan.id);
+                      if (el) {
+                        const y = el.getBoundingClientRect().top + window.scrollY - 200;
+                        window.scrollTo({ top: y, behavior: "smooth" });
+                      }
+                    }}
+                    className="rounded-full border border-slate-200 bg-white px-4 py-2 text-[13px] font-bold text-[#1a56db] transition-all hover:scale-105 hover:border-blue-300 hover:bg-blue-50 hover:shadow-md"
+                  >
+                    {layanan.name}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="flex flex-col rounded-xl border border-slate-100 bg-white p-10 shadow-[0_30px_70px_rgba(0,0,0,0.12)]">
               <div className="mb-10">
                 <h3 className="mb-3 flex items-center gap-3 text-2xl font-black text-slate-800">
                   <FileText size={28} className="text-blue-600" /> Pusat Informasi

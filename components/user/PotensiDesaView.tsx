@@ -27,14 +27,18 @@ export default function PotensiDesaView({ banner, potensiItems = [] }: { banner?
     return activeCategory === "Semua" || item.kategori === activeCategory;
   });
 
-  const stickyRef = useRef<HTMLDivElement>(null);
+  const anchorRef = useRef<HTMLDivElement>(null);
 
   const handleCategoryClick = (cat: string) => {
     setActiveCategory(cat);
-    if (stickyRef.current) {
-      const y = stickyRef.current.offsetTop - HEADER_OFFSET;
-      window.scrollTo({ top: y, behavior: "smooth" });
-    }
+    // Use a small timeout to allow React to update the DOM (in case list gets shorter)
+    setTimeout(() => {
+      if (anchorRef.current) {
+        // Find the absolute Y position of the anchor in the document
+        const y = anchorRef.current.getBoundingClientRect().top + window.scrollY - HEADER_OFFSET;
+        window.scrollTo({ top: y, behavior: "smooth" });
+      }
+    }, 10);
   };
 
   return (
@@ -46,9 +50,6 @@ export default function PotensiDesaView({ banner, potensiItems = [] }: { banner?
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: `url('${banner?.gambarURL || "/images/hero_neighborhood.png"}')` }}
         />
-        {/* Overlay Gelap */}
-        <div className="absolute inset-0 bg-black/50 bg-gradient-to-t from-black/80 via-transparent to-black/30" />
-
         {/* Konten Teks */}
         <div className="relative z-20 mx-auto max-w-4xl">
             <motion.h1
@@ -72,10 +73,12 @@ export default function PotensiDesaView({ banner, potensiItems = [] }: { banner?
           </div>
       </div>
 
-      {/* 2. STICKY SUB-NAVBAR (Seragam dengan page lainnya) */}
+      {/* Anchor for scrolling to tabs */}
+      <div ref={anchorRef} className="w-full h-0" />
+
+      {/* 2. STICKY SUB-NAVBAR (Sinkron dengan BeritaView) */}
       <div
-        ref={stickyRef}
-        className={`sticky z-40 border-b border-slate-200 bg-white/95 shadow-sm backdrop-blur-md transition-all duration-300`}
+        className="sticky z-40 border-b border-slate-200 bg-white/95 shadow-sm backdrop-blur-md transition-all duration-300"
         style={{ top: `${HEADER_OFFSET}px`, height: `${SUBMENU_HEIGHT}px` }}
       >
         <div className="container mx-auto h-full px-4">
