@@ -44,7 +44,7 @@ export default function PotensiDesaView({ banner, potensiItems = [] }: { banner?
   return (
     <div className="min-h-screen bg-slate-50 pb-20">
       {/* 1. HERO HEADER (Disesuaikan dengan TentangKamiView & HomeView) */}
-      <div className="relative mt-[-100px] flex w-full flex-col items-center justify-center overflow-hidden bg-slate-900 px-4 pt-[260px] pb-[100px] text-center md:pt-[300px] md:pb-[140px]">
+      <div className="relative mt-[-100px] flex w-full flex-col items-center justify-center overflow-hidden bg-slate-900 px-4 pt-[220px] pb-[60px] text-center md:pt-[240px] md:pb-[80px]">
         {/* Background Image */}
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
@@ -131,7 +131,7 @@ export default function PotensiDesaView({ banner, potensiItems = [] }: { banner?
                       onError={(e) => { e.currentTarget.src = "/images/hero_office.png" }}
                     />
                   </div>
-                  <div className="flex flex-col justify-center p-8 md:w-[48%] md:p-14">
+                  <div className="flex flex-col justify-center p-6 md:w-[48%] md:p-14">
                     <h3 className="mb-5 text-[26px] leading-[1.3] font-bold text-slate-900 transition-colors duration-300 group-hover:text-blue-700 md:text-[32px]">
                       {filteredData[0].judul}
                     </h3>

@@ -14,7 +14,7 @@ export default function BeritaDetailView({ berita }: { berita: any }) {
   return (
     <div className="min-h-screen bg-slate-50 pb-20">
       {/* 1. HERO HEADER (Dark background for navbar & text) */}
-      <div className="relative flex w-full flex-col justify-center bg-slate-900 px-4 pt-[160px] pb-[100px] md:pt-[200px] md:pb-[140px]">
+      <div className="relative flex w-full flex-col justify-center bg-slate-900 px-4 pt-[180px] pb-[100px] md:pt-[220px] md:pb-[140px]">
         {/* Background Image */}
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-50 mix-blend-overlay"

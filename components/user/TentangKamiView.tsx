@@ -21,6 +21,10 @@ import {
   X,
   ExternalLink,
   ChevronRight,
+  Landmark,
+  Flower2,
+  Sparkles,
+  Trees,
 } from "lucide-react";
 
 type Props = {
@@ -37,7 +41,7 @@ export default function TentangKamiView({ banners, perangkat, konten, stats = []
   // === 🔧 KALKULASI HEADER (Sesuai ClientLayout) ===
   const HEADER_OFFSET = 120; // Topbar 40px + Navbar 80px
   const SUBMENU_HEIGHT = 60;
-  const SCROLL_OFFSET = HEADER_OFFSET + SUBMENU_HEIGHT;
+  const SCROLL_OFFSET = HEADER_OFFSET + SUBMENU_HEIGHT + 20;
 
   const getKonten = (kategori: string): string | null => {
     return konten.find((k) => k.kategori === kategori)?.isi || null;
@@ -92,7 +96,7 @@ export default function TentangKamiView({ banners, perangkat, konten, stats = []
   return (
     <div className="min-h-screen bg-slate-50 pb-20">
       {/* === 1. HERO HEADER (STATIS - Serasi dengan Beranda) === */}
-      <div className="relative mt-[-100px] flex w-full flex-col items-center justify-center overflow-hidden bg-slate-900 px-4 pt-[260px] pb-[100px] text-center md:pt-[300px] md:pb-[140px]">
+      <div className="relative mt-[-100px] flex w-full flex-col items-center justify-center overflow-hidden bg-slate-900 px-4 pt-[220px] pb-[60px] text-center md:pt-[240px] md:pb-[80px]">
         {/* Background Image Statis dari Admin */}
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
@@ -148,26 +152,34 @@ export default function TentangKamiView({ banners, perangkat, konten, stats = []
         </div>
       </div>
 
-      {/* === 2.5 ANIMASI CUTOUT BANNER (DARI BERANDA AWAL) === */}
+      {/* === 2.5 ANIMASI CUTOUT BANNER (BUNGA JATUH & MONUMEN) === */}
       <style>{`
+         @keyframes scroll-monument {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+         }
          @keyframes bgScroll {
             0% { transform: translateX(0); }
             100% { transform: translateX(-50%); }
+         }
+         .bg-monument-track {
+            animation: scroll-monument 40s linear infinite;
          }
          .bg-text-track { animation: bgScroll 40s linear infinite; }
          .bg-text-track-rev { animation: bgScroll 50s linear infinite reverse; }
       `}</style>
 
-      {/* Layer 1: Dark base dengan scrolling text */}
+      {/* Container Utama Cutout */}
       <div
-        className="relative z-20 overflow-hidden"
-        style={{ minHeight: "200px", boxShadow: "0 2px 6px 0 rgba(0,0,0,0.08)" }}
+        className="relative z-20 overflow-hidden bg-white"
+        style={{ minHeight: "240px", boxShadow: "0 2px 6px 0 rgba(0,0,0,0.08)" }}
       >
+        {/* Layer 1: Animasi di DALAM teks (Background Teks Berjalan Bening Kaca) */}
         <div className="pointer-events-none absolute inset-0 overflow-hidden bg-[#0f172a] select-none">
           <div className="bg-text-track absolute flex whitespace-nowrap" style={{ top: "5%" }}>
             {[...Array(8)].map((_, i) => (
               <span
-                key={i}
+                key={`t1-${i}`}
                 className="shrink-0 px-8 font-black tracking-widest text-blue-400 uppercase"
                 style={{ fontSize: "2.8rem", opacity: 0.6 }}
               >
@@ -181,7 +193,7 @@ export default function TentangKamiView({ banners, perangkat, konten, stats = []
           >
             {[...Array(6)].map((_, i) => (
               <span
-                key={i}
+                key={`t2-${i}`}
                 className="shrink-0 px-12 font-black tracking-[0.4em] text-blue-300 uppercase"
                 style={{ fontSize: "1.6rem", opacity: 0.5 }}
               >
@@ -195,7 +207,7 @@ export default function TentangKamiView({ banners, perangkat, konten, stats = []
           >
             {[...Array(10)].map((_, i) => (
               <span
-                key={i}
+                key={`t3-${i}`}
                 className="shrink-0 px-6 font-black tracking-widest text-blue-500 uppercase"
                 style={{ fontSize: "3.5rem", opacity: 0.45 }}
               >
@@ -209,7 +221,7 @@ export default function TentangKamiView({ banners, perangkat, konten, stats = []
           >
             {[...Array(8)].map((_, i) => (
               <span
-                key={i}
+                key={`t4-${i}`}
                 className="shrink-0 px-10 font-black tracking-[0.3em] text-blue-400 uppercase"
                 style={{ fontSize: "1.9rem", opacity: 0.55 }}
               >
@@ -221,26 +233,36 @@ export default function TentangKamiView({ banners, perangkat, konten, stats = []
 
         {/* Layer 2: White overlay absolute inset-0 → mix-blend-mode: screen */}
         <div
-          className="absolute inset-0 z-10 flex flex-col items-center justify-center px-4"
+          className="absolute inset-0 z-10 flex flex-col items-center justify-center px-4 text-center overflow-hidden"
           style={{ background: "#eef2ff", mixBlendMode: "screen" }}
         >
+          {/* Subtle Grid Pattern Background */}
+          <div 
+            className="absolute inset-0 opacity-20 pointer-events-none"
+            style={{ 
+              backgroundImage: 'radial-gradient(#94a3b8 1.5px, transparent 1.5px)',
+              backgroundSize: '24px 24px',
+              animation: 'scroll-monument 20s linear infinite',
+              width: '200%'
+            }} 
+          />
+
+          <p
+            className="relative z-10 mb-1 sm:mb-2 text-[10px] sm:text-xs font-black tracking-[0.3em] md:tracking-[0.4em] uppercase text-slate-800 md:text-sm lg:text-base drop-shadow-sm"
+          >
+            Selamat Datang di Website Resmi
+          </p>
           <h2
-            className="text-4xl leading-tight font-black tracking-tight md:text-6xl lg:text-7xl"
+            className="relative z-10 text-[36px] leading-[1.05] sm:text-5xl font-black tracking-tight uppercase md:text-[70px] lg:text-[85px]"
             style={{ color: "#000" }}
           >
-            SELAMAT DATANG DI WEBSITE
-          </h2>
-          <h2
-            className="text-center text-4xl font-black tracking-tight md:text-6xl lg:text-7xl"
-            style={{ color: "#000" }}
-          >
-            KELURAHAN WERGU WETAN
+            KELURAHAN<br className="sm:hidden" /> WERGU WETAN
           </h2>
         </div>
       </div>
 
       {/* === 3. KONTEN UTAMA === */}
-      <div className="relative z-30 container mx-auto max-w-5xl space-y-24 px-4 py-12 pt-16">
+      <div className="relative z-30 container mx-auto max-w-5xl space-y-16 px-4 py-12 pt-16">
         {/* SECTION: VISI MISI */}
         <section id="visi" className="scroll-mt-[200px]">
           <SectionHeader
@@ -520,7 +542,7 @@ export default function TentangKamiView({ banners, perangkat, konten, stats = []
             {/* 2. Bento Box of specific domains requested */}
             <div className="mb-8 grid grid-cols-1 gap-6 lg:grid-cols-2">
               {/* Laporan & Penanganan Kasus */}
-              <div className="rounded-xl border border-blue-100 bg-blue-50/50 p-8 md:p-10">
+              <div className="rounded-xl border border-blue-100 bg-blue-50/50 p-5 md:p-10">
                 <h4 className="mb-6 flex items-center gap-3 text-[13px] font-black tracking-widest text-blue-700 uppercase">
                   <Activity size={20} className="text-blue-600" /> Laporan & Pengaduan Warga
                 </h4>
@@ -578,7 +600,7 @@ export default function TentangKamiView({ banners, perangkat, konten, stats = []
               </div>
 
               {/* Fasilitas Publik & Ekonomi */}
-              <div className="flex flex-col rounded-xl border border-slate-200/60 bg-slate-50 p-8 md:p-10">
+              <div className="flex flex-col rounded-xl border border-slate-200/60 bg-slate-50 p-5 md:p-10">
                 <h4 className="mb-6 flex items-center gap-3 text-[13px] font-black tracking-widest text-slate-700 uppercase">
                   <Building2 size={20} className="text-slate-500" /> Ketersediaan Fasilitas Dasar
                 </h4>
@@ -646,7 +668,7 @@ export default function TentangKamiView({ banners, perangkat, konten, stats = []
             </div>
 
             {/* 3. Bottom Trending / Kunjungan */}
-            <div className="relative flex flex-col items-center justify-between gap-10 overflow-hidden rounded-xl bg-[#0B132B] p-8 text-white shadow-xl shadow-blue-900/10 md:flex-row md:p-12">
+            <div className="relative flex flex-col items-center justify-between gap-10 overflow-hidden rounded-xl bg-[#0B132B] p-6 md:p-12 text-white shadow-xl shadow-blue-900/10 md:flex-row">
               <div className="absolute top-0 right-0 p-8 opacity-5">
                 <BarChart size={180} />
               </div>
@@ -734,7 +756,7 @@ export default function TentangKamiView({ banners, perangkat, konten, stats = []
               ].map((item, i) => (
                 <div
                   key={i}
-                  className={`relative flex flex-col justify-between ${item.bg} group overflow-hidden rounded-xl border border-black/5 p-8 transition-all duration-300 hover:border-black/10 hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)]`}
+                  className={`relative flex flex-col justify-between ${item.bg} group overflow-hidden rounded-xl border border-black/5 p-5 md:p-8 transition-all duration-300 hover:border-black/10 hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)]`}
                 >
                   <div
                     className={`absolute -top-10 -right-10 h-40 w-40 bg-gradient-to-br ${item.color} pointer-events-none rounded-full opacity-10 blur-2xl transition-transform duration-700 group-hover:scale-150`}
@@ -805,7 +827,7 @@ function CardPerangkat({ data, isLurah }: { data: any; isLurah?: boolean }) {
           Pimpinan
         </div>
       )}
-      <div className={`flex items-center gap-5 p-6 ${isLurah ? "" : ""}`}>
+      <div className={`flex items-center gap-5 p-4 md:p-6 ${isLurah ? "" : ""}`}>
         {/* Foto */}
         <div
           className={`flex shrink-0 items-center justify-center overflow-hidden rounded-xl border border-blue-100 bg-gradient-to-br from-blue-100 to-blue-50 text-blue-300 ${
@@ -850,7 +872,7 @@ function CardPerangkat({ data, isLurah }: { data: any; isLurah?: boolean }) {
 
 function StatCard({ label, value }: { label: string; value: string }) {
   return (
-    <div className="group rounded-xl border border-slate-100 bg-white p-8 text-center shadow-sm transition-all duration-300 hover:bg-blue-600 hover:shadow-xl hover:shadow-blue-200">
+    <div className="group rounded-xl border border-slate-100 bg-white p-5 md:p-8 text-center shadow-sm transition-all duration-300 hover:bg-blue-600 hover:shadow-xl hover:shadow-blue-200">
       <h3 className="mb-1 text-3xl font-extrabold text-slate-800 transition-colors group-hover:text-white">
         {value}
       </h3>
@@ -903,7 +925,7 @@ function VisiMisiRenderer({
   const isContentEmpty = !html || html.trim().length < 20;
 
   return (
-    <div className="relative overflow-hidden rounded-xl border border-slate-200/60 bg-white p-8 shadow-sm md:p-12">
+    <div className="relative overflow-hidden rounded-xl border border-slate-200/60 bg-white p-5 md:p-12 shadow-sm">
       <div className="pointer-events-none absolute -top-10 -right-10 rotate-12 opacity-[0.02]">
         <Target size={400} />
       </div>
@@ -955,7 +977,7 @@ function TugasFungsiRenderer({
   const isContentEmpty = !html || html.trim().length < 20;
 
   return (
-    <div className="relative overflow-hidden rounded-xl border border-slate-200/60 bg-white p-8 shadow-sm md:p-12">
+    <div className="relative overflow-hidden rounded-xl border border-slate-200/60 bg-white p-5 md:p-12 shadow-sm">
       <div className="pointer-events-none absolute -right-10 -bottom-10 -rotate-6 opacity-[0.02]">
         <Briefcase size={350} />
       </div>

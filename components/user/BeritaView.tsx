@@ -34,7 +34,7 @@ export default function BeritaView({ banner, newsData = [] }: any) {
   return (
     <div className="min-h-screen bg-slate-50 pb-20">
       {/* 1. HERO HEADER (Minimalist Dark Search Style) */}
-      <div className="relative mt-[-100px] flex w-full flex-col items-center justify-center bg-[#0B132B] px-4 pt-[260px] pb-[100px] text-center md:pt-[300px] md:pb-[140px]">
+      <div className="relative mt-[-100px] flex w-full flex-col items-center justify-center bg-[#0B132B] px-4 pt-[220px] pb-[60px] text-center md:pt-[240px] md:pb-[80px]">
         <div className="mx-auto w-full max-w-4xl">
           <motion.h1
             initial={{ y: 20, opacity: 0 }}
@@ -129,7 +129,7 @@ export default function BeritaView({ banner, newsData = [] }: any) {
                           onError={(e) => { e.currentTarget.src = "/images/hero_office.png" }}
                         />
                       </div>
-                      <div className="flex flex-col justify-center bg-[#1a56db] p-8 md:w-1/2 md:p-14">
+                      <div className="flex flex-col justify-center bg-[#1a56db] p-6 md:w-1/2 md:p-14">
                         <h3 className="mb-auto text-[28px] leading-[1.3] font-bold text-white md:text-[34px]">
                           {filtered[0].judul}
                         </h3>
@@ -152,7 +152,7 @@ export default function BeritaView({ banner, newsData = [] }: any) {
                           <Link
                             key={`featured-sub-${item.id}`}
                             href={`/berita/${item.slug}`}
-                            className="group relative flex flex-col p-6 md:p-8 transition-all duration-300 bg-slate-100 hover:z-10 hover:-translate-y-2 hover:scale-[1.03] hover:shadow-2xl"
+                            className="group relative flex flex-col p-5 md:p-8 transition-all duration-300 bg-slate-100 hover:z-10 hover:-translate-y-2 hover:scale-[1.03] hover:shadow-2xl"
                           >
                             <div className="flex items-start">
                               <div className="mr-3 mt-[7px] h-2 w-2 shrink-0 bg-[#1a56db]"></div>

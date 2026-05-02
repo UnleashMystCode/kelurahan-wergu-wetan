@@ -11,14 +11,14 @@ type StaticBannerProps = {
 
 export default function StaticBanner({ title, desc, imageURL, Icon }: StaticBannerProps) {
   return (
-    <div className="relative mt-[-100px] h-[600px] w-full overflow-hidden bg-slate-900 md:h-[700px]">
+    <div className="relative mt-[-100px] h-[400px] w-full overflow-hidden bg-slate-900 md:h-[480px]">
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: `url(${imageURL})` }}
       />
       <div className="absolute inset-0 bg-black/50 bg-gradient-to-t from-black/80 via-transparent to-black/30" />
 
-      <div className="absolute inset-0 z-20 flex items-center justify-center px-4 pt-[100px] text-center">
+      <div className="absolute inset-0 z-20 flex items-center justify-center px-4 pt-[140px] md:pt-[160px] text-center">
         <div className="mx-auto max-w-4xl">
           <motion.div
             initial={{ scale: 0.9, opacity: 0 }}

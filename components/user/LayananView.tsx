@@ -45,7 +45,7 @@ export default function LayananView({ banner }: any) {
   return (
     <div className="min-h-screen bg-slate-50 pb-20">
       {/* 1. HERO HEADER (Minimalist Dark Style) */}
-      <div className="relative mt-[-100px] flex w-full flex-col items-center justify-center bg-[#0B132B] px-4 pt-[260px] pb-[100px] text-center md:pt-[300px] md:pb-[140px]">
+      <div className="relative mt-[-100px] flex w-full flex-col items-center justify-center bg-[#0B132B] px-4 pt-[220px] pb-[60px] text-center md:pt-[240px] md:pb-[80px]">
         <div className="mx-auto max-w-4xl">
           <motion.h1
             initial={{ y: 20, opacity: 0 }}
@@ -77,11 +77,13 @@ export default function LayananView({ banner }: any) {
                 key={item.id}
                 onClick={() => {
                   setLayananCategory(item.id);
-                  const el = document.getElementById("layanan-grid");
-                  if (el) {
-                    const y = el.getBoundingClientRect().top + window.scrollY - 180;
-                    window.scrollTo({ top: y, behavior: "smooth" });
-                  }
+                  setTimeout(() => {
+                    const el = document.getElementById("layanan-grid") || document.getElementById("layanan-fallback");
+                    if (el) {
+                      const y = el.getBoundingClientRect().top + window.scrollY - 200;
+                      window.scrollTo({ top: y, behavior: "smooth" });
+                    }
+                  }, 100);
                 }}
                 className={`relative flex h-full items-center gap-2 border-b-[3px] px-6 text-[13px] font-bold whitespace-nowrap transition-all outline-none lg:text-sm ${
                   layananCategory === item.id
@@ -98,22 +100,22 @@ export default function LayananView({ banner }: any) {
 
       {/* 3. GRID UTAMA */}
       {layananCategory === "umum" ? (
-        <div id="layanan-grid" className="container mx-auto mt-16 grid grid-cols-1 items-start gap-10 px-4 scroll-mt-[180px] lg:grid-cols-12">
+        <div id="layanan-grid" className="container mx-auto mt-8 lg:mt-16 grid grid-cols-1 items-start gap-6 lg:gap-10 px-4 scroll-mt-[180px] lg:grid-cols-12">
           {/* KOLOM KIRI: CARD TUTORIAL (UKURAN 720PX BIAR PAS) */}
-          <div className="space-y-16 lg:col-span-8 pb-[300px]">
+          <div className="space-y-6 lg:space-y-16 lg:col-span-8 lg:pb-[300px]">
             {listLayanan.map((layanan) => (
               <section
                 id={layanan.id}
                 key={layanan.id}
-                // 👇 TINGGI DINAIKKAN KE 720PX UNTUK MENGHAPUS GAP BAWAH
-                className="flex min-h-[720px] flex-col justify-center rounded-xl border border-slate-100 bg-white p-8 shadow-sm transition-all duration-300 scroll-mt-[200px] md:p-14"
+                // 👇 TINGGI DINAIKKAN KE 720PX UNTUK MENGHAPUS GAP BAWAH (HANYA DESKTOP)
+                className="flex flex-col justify-center rounded-xl border border-slate-100 bg-white p-5 md:p-14 shadow-sm transition-all duration-300 scroll-mt-[200px] lg:min-h-[720px]"
               >
-                <div className="flex flex-col gap-12">
+                <div className="flex flex-col gap-8 md:gap-12">
                   <div className="mb-2">
                     <p className="mb-3 text-[10px] font-bold tracking-widest text-blue-600 uppercase">
                       LAYANAN ADMINISTRASI
                     </p>
-                    <h2 className="text-3xl leading-tight font-extrabold text-slate-800 md:text-4xl">
+                    <h2 className="text-2xl leading-tight font-extrabold text-slate-800 md:text-4xl">
                       {layanan.name}
                     </h2>
                   </div>
@@ -131,7 +133,7 @@ export default function LayananView({ banner }: any) {
                         ].map((req, i) => (
                           <li
                             key={i}
-                            className="flex gap-4 rounded-xl border border-slate-100 bg-slate-50 p-5 text-sm leading-relaxed font-bold text-slate-700"
+                            className="flex gap-4 rounded-xl border border-slate-100 bg-slate-50 p-4 md:p-5 text-xs md:text-sm leading-relaxed font-bold text-slate-700"
                           >
                             <CheckCircle size={22} className="shrink-0 text-emerald-500" /> {req}
                           </li>
@@ -166,9 +168,9 @@ export default function LayananView({ banner }: any) {
           </div>
 
           {/* KOLOM KANAN: TUTORIAL & INFORMASI (STICKY) */}
-          <div className="sticky top-[200px] lg:col-span-4 self-start max-h-[calc(100vh-220px)] overflow-y-auto no-scrollbar rounded-xl pb-2">
+          <div className="sticky top-[200px] lg:col-span-4 self-start max-h-none overflow-visible lg:max-h-[calc(100vh-220px)] lg:overflow-y-auto no-scrollbar rounded-xl pb-2">
             {/* QUICK NAVIGATION / DAFTAR LAYANAN */}
-            <div className="mb-6 rounded-xl border border-slate-100 bg-white p-8 shadow-[0_20px_60px_rgba(0,0,0,0.06)]">
+            <div className="mb-6 rounded-xl border border-slate-100 bg-white p-5 md:p-8 shadow-[0_20px_60px_rgba(0,0,0,0.06)]">
               <h3 className="mb-5 flex items-center gap-2 text-[12px] font-black tracking-[0.15em] text-slate-800 uppercase">
                 <FileText size={16} className="text-blue-600" /> Indeks Layanan
               </h3>
@@ -191,7 +193,7 @@ export default function LayananView({ banner }: any) {
               </div>
             </div>
 
-            <div className="flex flex-col rounded-xl border border-slate-100 bg-white p-10 shadow-[0_30px_70px_rgba(0,0,0,0.12)]">
+            <div className="flex flex-col rounded-xl border border-slate-100 bg-white p-5 md:p-10 shadow-[0_30px_70px_rgba(0,0,0,0.12)]">
               <div className="mb-10">
                 <h3 className="mb-3 flex items-center gap-3 text-2xl font-black text-slate-800">
                   <FileText size={28} className="text-blue-600" /> Pusat Informasi
@@ -205,7 +207,7 @@ export default function LayananView({ banner }: any) {
               {/* Tata Cara Pengajuan */}
               <div className="flex-1 space-y-6">
                 {/* Card 1 */}
-                <div className="rounded-xl border border-blue-100 bg-blue-50/50 p-6">
+                <div className="rounded-xl border border-blue-100 bg-blue-50/50 p-4 md:p-6">
                   <h4 className="mb-5 flex items-center gap-2 font-black text-slate-800">
                     <Clock size={18} className="text-blue-600" /> Alur Pengajuan
                   </h4>
@@ -238,7 +240,7 @@ export default function LayananView({ banner }: any) {
                 </div>
 
                 {/* Card 2 Agenda Mendatang */}
-                <div className="rounded-xl border border-emerald-100 bg-emerald-50/50 p-6">
+                <div className="rounded-xl border border-emerald-100 bg-emerald-50/50 p-4 md:p-6">
                   <h4 className="mb-5 flex items-center gap-2 font-black text-slate-800">
                     <Clock size={18} className="text-emerald-600" /> Agenda Mendatang
                   </h4>
@@ -287,7 +289,7 @@ export default function LayananView({ banner }: any) {
           </div>
         </div>
       ) : (
-        <div className="container mx-auto mt-24 mb-32 flex flex-col items-center justify-center px-4 text-center">
+        <div id="layanan-fallback" className="container mx-auto mt-16 mb-20 flex flex-col items-center justify-center px-4 text-center">
           <div className="mb-6 flex h-24 w-24 items-center justify-center rounded-full border border-slate-200 bg-slate-100 shadow-sm">
             <Loader2 className="animate-spin text-slate-400" size={40} />
           </div>

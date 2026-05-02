@@ -11,6 +11,7 @@ type Banner = {
   judul: string | null;
   deskripsi: string | null;
   tagline?: string | null;
+  linkHref?: string;
 };
 
 type HeroCarouselProps = {
@@ -153,7 +154,7 @@ export default function HeroCarousel({
                 className="flex flex-col gap-4 sm:flex-row"
               >
                 <Link
-                  href="/layanan"
+                  href={currentBanner.linkHref || "/layanan"}
                   className="group flex w-fit items-center gap-2 rounded-full border border-white bg-transparent px-8 py-3 text-sm font-bold text-white transition-all hover:bg-white hover:text-slate-900"
                 >
                   Selengkapnya{" "}
@@ -172,13 +173,16 @@ export default function HeroCarousel({
       {activeBanners.length > 1 && (
         <div className="pointer-events-none absolute right-0 bottom-0 left-0 z-30 bg-gradient-to-t from-black/80 to-transparent pt-12 pb-10 md:pb-6">
           <div className="pointer-events-auto container mx-auto px-4 md:px-6">
+            {/* Unified Desktop & Mobile Navigation */}
             <div className="flex w-full gap-4 md:gap-8">
               {activeBanners.map((banner, i) => (
                 <button
                   key={i}
                   onClick={() => setIndex(i)}
                   aria-label={`Slide ${i + 1}`}
-                  className="group flex flex-1 flex-col items-start gap-3"
+                  className={`group flex-col items-start gap-3 w-full md:flex-1 ${
+                    i === index ? "flex" : "hidden md:flex"
+                  }`}
                 >
                   <div className="flex w-full items-center gap-2.5">
                     {/* Buletan biasa (clean look) */}
@@ -187,7 +191,7 @@ export default function HeroCarousel({
                     />
                     {/* Judul Slide */}
                     <span
-                      className={`overflow-hidden text-[10px] font-semibold text-ellipsis whitespace-nowrap transition-all duration-300 md:text-sm ${i === index ? "text-white" : "text-white/40 group-hover:text-white/70"}`}
+                      className={`overflow-hidden text-[12px] font-semibold text-ellipsis whitespace-nowrap transition-all duration-300 md:text-sm ${i === index ? "text-white" : "text-white/40 group-hover:text-white/70"}`}
                     >
                       {banner.tagline || banner.judul || `Slide ${i + 1}`}
                     </span>

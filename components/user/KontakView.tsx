@@ -48,7 +48,7 @@ export default function KontakView({
   return (
     <div className="min-h-screen bg-slate-50 pb-20">
       {/* 1. HERO HEADER (Minimalist Dark Style) */}
-      <div className="relative mt-[-100px] flex w-full flex-col items-center justify-center bg-[#0B132B] px-4 pt-[260px] pb-[100px] text-center md:pt-[300px] md:pb-[140px]">
+      <div className="relative mt-[-100px] flex w-full flex-col items-center justify-center bg-[#0B132B] px-4 pt-[220px] pb-[60px] text-center md:pt-[240px] md:pb-[80px]">
         <div className="mx-auto max-w-4xl">
           <motion.h1
             initial={{ y: 20, opacity: 0 }}
@@ -70,11 +70,11 @@ export default function KontakView({
         </div>
       </div>
 
-      <div className="relative z-30 container mx-auto mt-[-60px] md:mt-[-80px] grid grid-cols-1 gap-6 px-4 md:px-8 lg:grid-cols-12 lg:gap-8">
+      <div className="relative z-30 container mx-auto mt-8 lg:mt-16 grid grid-cols-1 gap-6 lg:gap-10 px-4 md:px-8 lg:grid-cols-12">
         {/* ===== KOLOM KIRI: INFO KONTAK & MAP ===== */}
-        <div className="flex flex-col gap-6 lg:col-span-5">
+        <div className="flex flex-col gap-10 lg:col-span-5">
           {/* Card Info Kontak */}
-          <div className="rounded-3xl border border-slate-100 bg-white/90 p-6 shadow-xl backdrop-blur-xl md:p-10">
+          <div className="rounded-xl border border-slate-100 bg-white p-6 md:p-10 shadow-[0_20px_60px_rgba(0,0,0,0.06)]">
             <h3 className="mb-6 flex items-center gap-3 text-xl font-black text-slate-800">
               <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-600 text-white shadow-md shadow-blue-200">
                 <MapPin size={20} />
@@ -94,8 +94,8 @@ export default function KontakView({
           </div>
 
           {/* Peta & Tombol WA dalam satu card untuk kekompakan */}
-          <div className="flex flex-col gap-4 rounded-3xl border border-slate-100 bg-white p-4 shadow-xl md:p-6">
-            <div className="h-64 w-full overflow-hidden rounded-2xl bg-slate-100">
+          <div className="flex flex-col gap-6 rounded-xl border border-slate-100 bg-white p-5 md:p-8 shadow-[0_20px_60px_rgba(0,0,0,0.06)]">
+            <div className="h-64 w-full overflow-hidden rounded-xl bg-slate-100">
               <iframe
                 className="h-full w-full border-0"
                 loading="lazy"
@@ -107,7 +107,7 @@ export default function KontakView({
               href={`https://wa.me/${info.phone.replace(/\D/g, "")}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex w-full items-center justify-center gap-3 rounded-2xl bg-emerald-500 py-4 font-bold text-white shadow-lg shadow-emerald-200 transition-all hover:bg-emerald-600 active:scale-95"
+              className="group flex w-full items-center justify-center gap-3 rounded-xl bg-emerald-500 py-4 font-bold text-white shadow-lg shadow-emerald-200 transition-all hover:bg-emerald-600 active:scale-95"
             >
               <PhoneCall size={20} className="transition-transform group-hover:rotate-12" />
               Hubungi via WhatsApp
@@ -116,8 +116,8 @@ export default function KontakView({
         </div>
 
         {/* ===== KOLOM KANAN: FORM ASPIRASI ===== */}
-        <div className="flex flex-col rounded-3xl border border-slate-100 bg-white shadow-2xl lg:col-span-7">
-          <div className="p-6 md:p-10 lg:p-12">
+        <div className="flex flex-col rounded-xl border border-slate-100 bg-white shadow-[0_20px_60px_rgba(0,0,0,0.06)] lg:col-span-7">
+          <div className="p-5 md:p-10 lg:p-12">
             {formStatus === "success" ? (
               <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}

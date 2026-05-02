@@ -5,6 +5,7 @@ import { motion, useInView } from "framer-motion";
 import Link from "next/link";
 import { Instrument_Serif } from "next/font/google";
 import HeroCarousel from "./HeroCarousel";
+import SorotanDesa from "./SorotanDesa";
 
 const instrumentSerif = Instrument_Serif({ weight: "400", subsets: ["latin"] });
 import {
@@ -16,6 +17,7 @@ import {
   ArrowRight,
   ArrowUpRight,
   ChevronRight,
+  ChevronLeft,
   MapPin,
   Calendar,
   Loader2,
@@ -226,7 +228,7 @@ export default function HomeView({
 
   const subMenus = [
     { id: "sambutan", label: "Sambutan Lurah", icon: MessageSquareQuote },
-    { id: "statistik", label: "Statistik", icon: BarChart },
+    { id: "sorotan", label: "Sorotan Desa", icon: BarChart },
     { id: "layanan", label: "Layanan Kelurahan", icon: ConciergeBell },
     { id: "program", label: "Program & Kegiatan", icon: CalendarDays },
     { id: "berita", label: "Berita Terkini", icon: Newspaper },
@@ -242,10 +244,46 @@ export default function HomeView({
     }
   };
 
+  // Banners statis yang mencakup 4 halaman utama di navbar
+  const hardcodedBanners = [
+    {
+      id: 1,
+      gambarURL: "/images/hero_community.png",
+      tagline: "Informasi Publik",
+      judul: "Berita Desa Terkini",
+      deskripsi: "Dapatkan informasi terbaru mengenai agenda, pengumuman, dan kejadian penting di lingkungan Kelurahan Wergu Wetan.",
+      linkHref: "/berita"
+    },
+    {
+      id: 2,
+      gambarURL: profilBanner?.gambarURL || "/images/hero_office.png",
+      tagline: "Sekilas Profil",
+      judul: "Tentang Kami",
+      deskripsi: "Lebih dari enam dekade menyediakan pilar pelayanan birokrasi dan ruang hidup komunal untuk seluruh elemen masyarakat dan tata kelola di wilayah Kelurahan Wergu Wetan.",
+      linkHref: "/tentang-kami"
+    },
+    {
+      id: 3,
+      gambarURL: "/images/hero_neighborhood.png",
+      tagline: "Inovasi & Karya",
+      judul: "Potensi Desa",
+      deskripsi: "Jelajahi berbagai potensi sumber daya, UMKM unggulan, dan kekayaan budaya yang membanggakan dari desa kami.",
+      linkHref: "/potensi-desa"
+    },
+    {
+      id: 4,
+      gambarURL: "/images/hero_digital.png",
+      tagline: "Pelayanan Terpadu",
+      judul: "Layanan Kelurahan",
+      deskripsi: "Akses mudah ke berbagai layanan administrasi, kependudukan, dan perizinan secara cepat dan transparan.",
+      linkHref: "/layanan"
+    }
+  ];
+
   return (
     <div className="relative min-h-screen bg-slate-50 pb-20">
       <div className="relative z-10 mt-[-100px]">
-        <HeroCarousel banners={banners} showButtons={true} />
+        <HeroCarousel banners={hardcodedBanners} showButtons={true} />
       </div>
 
       <div
@@ -275,7 +313,7 @@ export default function HomeView({
         {/* SEKSI 1: SAMBUTAN LURAH (SURAT RESMI STYLE) */}
         <section
           id="sambutan"
-          className="flex scroll-mt-[180px] flex-col items-center justify-center py-16 md:py-24"
+          className="flex scroll-mt-[100px] flex-col items-center justify-center py-16 md:py-16"
         >
           <div className="mx-auto w-full max-w-5xl bg-transparent text-center">
             {welcome ? (
@@ -377,260 +415,14 @@ export default function HomeView({
         </section>
       </div>
 
-      {/* SEKSI 1.5: TENTANG KAMI BANNER SEDANG (Pertamina Style Layout) */}
-      <section
-        id="tentang-kami"
-        className="relative w-full overflow-hidden bg-slate-900 text-left"
-        style={{ minHeight: "550px" }}
-      >
-        <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{
-            backgroundImage: `url(${profilBanner?.gambarURL || "/images/hero_office.png"})`,
-          }}
-        />
-
-        {/* Base Dark Overlay matching ProfilView */}
-        <div className="absolute inset-0 bg-black/40 bg-gradient-to-t from-black/80 via-transparent to-black/30" />
-
-        {/* Content aligned to Left */}
-        <div className="relative z-10 container mx-auto flex h-full flex-col justify-center px-6 py-16 md:px-16 md:py-24">
-          <div className="max-w-xl">
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.6, ease: "easeOut" }}
-              className="mb-3 text-[11px] font-black tracking-widest text-white/70 uppercase drop-shadow-md"
-            >
-              Sekilas Profil
-            </motion.p>
-
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-              className="mb-6 text-4xl leading-tight font-bold tracking-tight text-white drop-shadow-lg md:text-5xl lg:text-6xl"
-            >
-              Tentang Kami
-            </motion.h2>
-
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
-              className="mb-10 max-w-xl text-base leading-relaxed font-medium text-white/90 drop-shadow-md md:text-lg"
-            >
-              Lebih dari enam dekade menyediakan pilar pelayanan birokrasi dan ruang hidup komunal
-              untuk seluruh elemen masyarakat dan tata kelola di wilayah Kelurahan Wergu Wetan.
-            </motion.p>
-
-            {/* Outline Buttons */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
-              className="flex flex-wrap items-center gap-4"
-            >
-              <Link
-                href="/tentang-kami"
-                className="group flex w-max items-center justify-between gap-6 rounded-full border border-white/60 bg-transparent px-7 py-3 text-sm font-semibold text-white transition hover:bg-white hover:text-slate-900"
-              >
-                Selengkapnya{" "}
-                <ArrowUpRight
-                  size={18}
-                  className="transition-transform group-hover:translate-x-1 group-hover:-translate-y-1"
-                />
-              </Link>
-              <Link
-                href="/tentang-kami"
-                className="group flex w-max items-center justify-between gap-6 rounded-full border border-white/60 bg-transparent px-7 py-3 text-sm font-semibold text-white transition hover:bg-white hover:text-slate-900"
-              >
-                Direksi dan Perangkat Desa{" "}
-                <ArrowUpRight
-                  size={18}
-                  className="transition-transform group-hover:translate-x-1 group-hover:-translate-y-1"
-                />
-              </Link>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
       <div className="relative z-30 container mx-auto px-6">
-        {/* SEKSI 2: STATISTIK (PERTAMINA STYLE) */}
-        <section id="statistik" className="scroll-mt-[180px] py-16 md:py-24">
-          <div className="mb-12 flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
-            <div className="max-w-2xl">
-              <motion.p
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                className="mb-3 text-[11px] font-black tracking-widest text-[#0f3b9e] uppercase"
-              >
-                Statistik Kelurahan
-              </motion.p>
-              <motion.h2
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ delay: 0.1 }}
-                className="text-3xl leading-tight font-extrabold text-slate-800 md:text-4xl"
-              >
-                Kependudukan & Capaian Kelurahan Wergu Wetan
-              </motion.h2>
-            </div>
-            <div className="flex flex-col items-start gap-4 md:items-end">
-              <motion.p
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ delay: 0.1 }}
-                className="max-w-sm text-sm font-medium text-slate-500 md:text-right"
-              >
-                Data kependudukan terbaru yang mencakup distribusi penduduk, jenis kelamin, dan
-                profil layanan Kelurahan.
-              </motion.p>
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ delay: 0.2 }}
-              >
-                <Link
-                  href="/tentang-kami#monografi"
-                  className="group flex items-center gap-2 rounded-full border border-slate-300 px-6 py-2.5 text-xs font-bold text-slate-700 transition-all hover:border-slate-900 hover:bg-slate-900 hover:text-white"
-                >
-                  Selengkapnya{" "}
-                  <ArrowRight
-                    size={14}
-                    className="transition-transform group-hover:translate-x-1"
-                  />
-                </Link>
-              </motion.div>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-2 gap-8 md:gap-12 lg:grid-cols-4">
-            {stats?.slice(0, 4).map((stat: any, index: number) => (
-              <motion.div
-                key={stat.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ delay: index * 0.05, duration: 0.5 }}
-                className="flex flex-col gap-2"
-              >
-                <div className="flex flex-col">
-                  <div className="flex items-end gap-1 text-4xl font-black tracking-tighter text-slate-900 md:text-6xl">
-                    <Counter value={parseInt(stat.value)} />
-                    {stat.value.includes("+") && <span className="text-blue-600">+</span>}
-                    {stat.value.includes("%") && (
-                      <span className="ml-[-4px] text-2xl text-blue-600 md:text-3xl">%</span>
-                    )}
-                  </div>
-                  <p className="mt-2 border-l-2 border-blue-600 pl-3 text-[9px] font-bold tracking-widest text-slate-400 uppercase">
-                    {stat.label}
-                  </p>
-                </div>
-                <p className="mt-2 text-[11px] leading-relaxed text-slate-500 opacity-80">
-                  {index === 0
-                    ? "Jumlah penduduk aktif terdata."
-                    : index === 1
-                      ? "Total kepala keluarga terdaftar."
-                      : index === 2
-                        ? "Persentase kepuasan layanan."
-                        : "Capaian literasi masyarakat."}
-                </p>
-              </motion.div>
-            ))}
-          </div>
-        </section>
-
-        {/* SEKSI EKSTRA: PENCAPAIAN DESA (FULL BLEED CAROUSEL) */}
-        <section
-          id="pencapaian"
-          className="relative right-1/2 left-1/2 -mr-[50vw] -ml-[50vw] w-[100vw] overflow-hidden bg-slate-900 text-left"
-        >
-          <div className="no-scrollbar flex h-[500px] w-full snap-x snap-mandatory overflow-x-auto md:h-[600px]">
-            {[
-              {
-                id: "p1",
-                kategori: "PENGHARGAAN",
-                judul: "Desa Digital Terbaik 2025",
-                gambar: "/images/hero_digital.png",
-              },
-              {
-                id: "p2",
-                kategori: "INFRASTRUKTUR",
-                judul: "Pembangunan Balai Warga Terpadu",
-                gambar: "/images/hero_community.png",
-              },
-              {
-                id: "p3",
-                kategori: "EKONOMI",
-                judul: "Pemberdayaan 100+ UMKM Lokal",
-                gambar: "/images/hero_neighborhood.png",
-              },
-              {
-                id: "p4",
-                kategori: "LINGKUNGAN",
-                judul: "Program Penghijauan Lingkungan",
-                gambar: "/images/hero_neighborhood.png",
-              },
-            ].map((card) => (
-              <Link
-                key={card.id}
-                href="/berita"
-                className="group relative block h-full min-w-[85vw] flex-shrink-0 cursor-pointer snap-start overflow-hidden border-r border-white/10 last:border-0 md:min-w-[50vw] lg:min-w-[25vw]"
-              >
-                {/* Background Image */}
-                <div
-                  className="absolute inset-0 bg-cover bg-center"
-                  style={{ backgroundImage: `url(${card.gambar})` }}
-                />
-
-                {/* Base Gradient Overlay */}
-                <div className="pointer-events-none absolute right-0 bottom-0 left-0 h-[60%] bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
-
-                {/* Hover Gradient Overlay (Fade in menggelap HANYA di bagian bawah, atas bening) */}
-                <div className="pointer-events-none absolute right-0 bottom-0 left-0 h-[60%] bg-gradient-to-t from-black via-black/60 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-80" />
-
-                {/* Content aligned to bottom (Tanpa efek ease out slide) */}
-                <div className="absolute right-0 bottom-0 left-0 flex flex-col justify-end p-8 md:p-10">
-                  <p className="mb-2 text-[10px] font-bold tracking-widest text-white/80 uppercase">
-                    {card.kategori}
-                  </p>
-                  <h3 className="mb-8 text-2xl leading-tight font-black text-white drop-shadow-md md:text-3xl">
-                    {card.judul}
-                  </h3>
-
-                  {/* Circle Arrow (Fast Smooth Ghost Follow) */}
-                  <div className="relative flex h-12 w-12 items-center justify-center overflow-hidden rounded-full border-2 border-white/70 text-white transition-all duration-300 group-hover:border-blue-600 group-hover:bg-blue-600 group-hover:shadow-[0_0_20px_rgba(37,99,235,0.5)]">
-                    {/* Panah Keluar (Bening lebih cepat) */}
-                    <ArrowRight
-                      size={20}
-                      className="absolute transition-all duration-300 ease-in-out group-hover:translate-x-[150%] group-hover:opacity-0"
-                    />
-                    {/* Panah Masuk (Langsung mengejar tanpa delay) */}
-                    <ArrowRight
-                      size={20}
-                      className="absolute -translate-x-[150%] opacity-0 transition-all duration-300 ease-in-out group-hover:translate-x-0 group-hover:opacity-100"
-                    />
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </section>
+        {/* SEKSI 2: SOROTAN DESA (INTERACTIVE GALLERY) */}
+        <SorotanDesa stats={stats} />
 
         {/* SEKSI 2: LAYANAN (PERTAMINA INVESTOR STYLE) */}
         <section
           id="layanan"
-          className="relative right-1/2 left-1/2 -mr-[50vw] -ml-[50vw] w-[100vw] scroll-mt-[180px] overflow-hidden bg-white pt-16 pb-20"
+          className="relative right-1/2 left-1/2 -mr-[50vw] -ml-[50vw] w-[100vw] scroll-mt-[100px] overflow-hidden bg-white pt-16 pb-20"
         >
           {/* Bagian Atas / Header */}
           <div className="container mx-auto mb-12 flex flex-col items-start justify-between gap-8 px-6 lg:flex-row lg:items-center">
@@ -801,7 +593,7 @@ export default function HomeView({
                 </div>
               </>
             ) : (
-              <div className="container mx-auto flex h-[500px] flex-col items-center justify-center py-32 text-center">
+              <div className="container mx-auto flex h-[500px] flex-col items-center justify-center py-20 text-center">
                 <div className="mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-white/10">
                   <ConciergeBell className="text-white/40" size={36} />
                 </div>
@@ -821,7 +613,7 @@ export default function HomeView({
         </section>
 
         {/* SEKSI 4: PROGRAM & KEGIATAN */}
-        <section id="program" className="scroll-mt-[120px] py-16 md:py-24">
+        <section id="program" className="scroll-mt-[80px] py-16 md:py-16">
           {/* Header Section Matches Design */}
           <div className="mb-16 flex flex-col items-start justify-between gap-10 lg:flex-row lg:items-center lg:gap-16">
             {/* Left: Tagline & Title */}
@@ -964,7 +756,7 @@ export default function HomeView({
         </section>
 
         {/* SEKSI 5: BERITA TERKINI */}
-        <section id="berita" className="scroll-mt-[120px] py-16 md:py-24">
+        <section id="berita" className="scroll-mt-[80px] py-16 md:py-16">
           {/* Header Section Matches Design */}
           <div className="mb-16 flex flex-col items-start justify-between gap-10 lg:flex-row lg:items-center lg:gap-16">
             {/* Left: Tagline & Title */}
