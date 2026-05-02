@@ -236,17 +236,6 @@ export default function TentangKamiView({ banners, perangkat, konten, stats = []
           className="absolute inset-0 z-10 flex flex-col items-center justify-center px-4 text-center overflow-hidden"
           style={{ background: "#eef2ff", mixBlendMode: "screen" }}
         >
-          {/* Subtle Grid Pattern Background */}
-          <div 
-            className="absolute inset-0 opacity-20 pointer-events-none"
-            style={{ 
-              backgroundImage: 'radial-gradient(#94a3b8 1.5px, transparent 1.5px)',
-              backgroundSize: '24px 24px',
-              animation: 'scroll-monument 20s linear infinite',
-              width: '200%'
-            }} 
-          />
-
           <p
             className="relative z-10 mb-1 sm:mb-2 text-[10px] sm:text-xs font-black tracking-[0.3em] md:tracking-[0.4em] uppercase text-slate-800 md:text-sm lg:text-base drop-shadow-sm"
           >
