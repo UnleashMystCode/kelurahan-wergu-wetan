@@ -62,7 +62,7 @@ async function main() {
     <p>Langkah-langkah pelestarian dan pengembangan potensi ini terbukti bukan sekadar wacana. Implementasi program yang didukung oleh aparat desa langsung menyentuh titik krusial pemberdayaan. Evaluasi berkala menunjukkan angka partisipasi dan kepuasan masyarakat terhadap pengelolaan potensi lokal ini sangat tinggi.</p>
     <br/>
     <p>Menurut Bapak Kepala Desa, kunci dari kesuksesan ini adalah gotong royong dan rasa memiliki. "Kita tidak bisa membangun desa jika hanya menggunakan kacamata pemerintah. Potensi yang ada di lapangan harus terus didukung dari bawah," ungkapnya.</p>
-  `;
+  \`;
   const potensiList = [
     { judul: "Sentra Kerajinan Bambu: Mahakarya turun temurun warga RW 02", slug: "sentra-kerajinan-bambu-ekspor-1", deskripsiSingkat: "Kelompok pengrajin anyaman bambu terus berinovasi.", isi: "<p>Kini menjadi primadona ekspor.</p>" + loremIpsumParagraphs, gambar: dummyImages[0], kategori: "Ekonomi & UMKM", status: "Aktif" },
     { judul: "Pusat Oleh-oleh Khas: Jenang Kudus inovasi rasa modern", slug: "pusat-oleh-oleh-jenang-inovasi-2", deskripsiSingkat: "Inovasi varian rasa matcha dan taro.", isi: "<p>Digemari anak muda masa kini.</p>" + loremIpsumParagraphs, gambar: dummyImages[1], kategori: "Ekonomi & UMKM", status: "Aktif" },
@@ -97,7 +97,7 @@ async function main() {
 }
 
 main().catch(console.error).finally(() => prisma.$disconnect());
-  \`;
+  `;
 
   fs.writeFileSync('reseed-potensi.js', scriptContent);
   console.log("Script reseed-potensi.js has been generated successfully!");
