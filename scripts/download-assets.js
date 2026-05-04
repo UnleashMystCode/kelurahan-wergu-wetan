@@ -2,7 +2,7 @@ const fs = require('fs');
 const https = require('https');
 const path = require('path');
 
-const dir = path.join(__dirname, 'public', 'images', 'potensi');
+const dir = path.join(__dirname, '..', 'public', 'images', 'potensi');
 if (!fs.existsSync(dir)){
     fs.mkdirSync(dir, { recursive: true });
 }

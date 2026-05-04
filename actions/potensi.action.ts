@@ -2,7 +2,16 @@
 
 import prisma from "@/lib/db";
 import { revalidatePath } from "next/cache";
-import { PotensiDesaSchema } from "@/core/schemas/potensi.schema";
+import { z } from "zod";
+
+const PotensiDesaSchema = z.object({
+  judul: z.string().min(3, "Judul potensi minimal 3 karakter"),
+  deskripsiSingkat: z.string().min(10, "Deskripsi singkat minimal 10 karakter").max(200, "Maksimal 200 karakter"),
+  isi: z.string().min(10, "Isi artikel/blog tidak boleh kosong"),
+  kategori: z.string().min(1, "Kategori harus dipilih"),
+  gambar: z.string().optional(),
+  tanggal: z.string().optional(),
+});
 
 function createSlug(text: string) {
   return text

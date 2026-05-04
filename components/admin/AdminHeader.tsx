@@ -1,6 +1,5 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import {
   Bell,
   Search,
@@ -9,15 +8,20 @@ import {
   ShieldAlert,
   ChevronDown,
   Calendar,
-  Loader2,
+  Menu,
+  Command,
 } from "lucide-react";
 
-export default function AdminHeader({ role }: { role: "admin" | "super" }) {
-  const [isSearchFocused, setIsSearchFocused] = useState(false);
+interface AdminHeaderProps {
+  role: "admin" | "super";
+  isCollapsed: boolean;
+  onToggleSidebar: () => void;
+  onOpenSearch: () => void;
+}
 
+export default function AdminHeader({ role, isCollapsed, onToggleSidebar, onOpenSearch }: AdminHeaderProps) {
   // --- LOGIKA WARNA DINAMIS ---
   const isSuper = role === "super";
-
   const themeColor = isSuper ? "red" : "blue";
 
   // Class Tailwind Dinamis
@@ -38,16 +42,24 @@ export default function AdminHeader({ role }: { role: "admin" | "super" }) {
 
   return (
     <header className="sticky top-0 z-30 flex h-20 items-center justify-between border-b border-slate-200 bg-white/90 px-8 shadow-sm backdrop-blur-md transition-all duration-300">
-      {/* 1. KIRI: BRANDING */}
+      {/* 1. KIRI: BRANDING & TOGGLE */}
       <div className="flex items-center gap-4">
-        {/* LOGO: Abu (Loading) -> Merah/Biru (Selesai) */}
+        {/* Toggle Button */}
+        <button 
+          onClick={onToggleSidebar}
+          className={`flex h-10 w-10 items-center justify-center rounded-xl text-slate-500 transition-colors hover:bg-slate-100 focus:outline-none`}
+        >
+          <Menu size={20} />
+        </button>
+
+        {/* LOGO */}
         <div
-          className={`flex h-12 w-12 items-center justify-center rounded-xl shadow-lg transition-colors duration-300 ${logoBg}`}
+          className={`flex h-10 w-10 md:h-12 md:w-12 items-center justify-center rounded-xl shadow-lg transition-colors duration-300 ${logoBg}`}
         >
           {isSuper ? (
-            <ShieldAlert size={24} />
+            <ShieldAlert size={20} className="md:w-6 md:h-6" />
           ) : (
-            <ShieldCheck size={24} />
+            <ShieldCheck size={20} className="md:w-6 md:h-6" />
           )}
         </div>
 
@@ -64,28 +76,24 @@ export default function AdminHeader({ role }: { role: "admin" | "super" }) {
 
       {/* 2. TENGAH & KANAN: AREA INTERAKTIF */}
       <div className="flex items-center gap-3 md:gap-6">
-        {/* A. SEARCH BAR */}
-        <div
-          className={`hidden items-center rounded-xl border px-4 py-2.5 transition-all duration-300 md:flex ${
-            isSearchFocused
-              ? `w-80 bg-white shadow-sm ring-4 ${ringColor}`
-              : "w-64 border-slate-200 bg-slate-50"
-          }`}
+        {/* A. SEARCH BAR (Trigger Command Palette) */}
+        <button
+          onClick={onOpenSearch}
+          className={`hidden items-center justify-between rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 w-64 transition-all duration-300 hover:bg-white hover:border-slate-300 md:flex group`}
         >
-          <Search
-            size={18}
-            className={`transition-colors ${isSearchFocused ? titleColor : "text-slate-400"}`}
-          />
-          <input
-            type="text"
-            placeholder={
-              isSuper ? "Cari data sensitif..." : "Cari menu..."
-            }
-            className="ml-3 w-full border-none bg-transparent text-sm font-medium text-slate-700 outline-none placeholder:text-slate-400"
-            onFocus={() => setIsSearchFocused(true)}
-            onBlur={() => setIsSearchFocused(false)}
-          />
-        </div>
+          <div className="flex items-center gap-3">
+            <Search
+              size={18}
+              className="text-slate-400 group-hover:text-slate-600 transition-colors"
+            />
+            <span className="text-sm font-medium text-slate-400 group-hover:text-slate-600 transition-colors">
+              Pencarian Cepat...
+            </span>
+          </div>
+          <kbd className="hidden sm:inline-flex h-5 items-center gap-1 rounded border border-slate-200 bg-slate-100 px-1.5 font-mono text-[10px] font-medium text-slate-500">
+            <Command size={10} />K
+          </kbd>
+        </button>
 
         {/* B. FILTER TOOLS */}
         <div className="mr-2 flex items-center gap-2 border-r border-slate-200 pr-4">

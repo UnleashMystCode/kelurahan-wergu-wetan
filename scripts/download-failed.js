@@ -2,7 +2,7 @@ const fs = require('fs');
 const https = require('https');
 const path = require('path');
 
-const dir = path.join(__dirname, 'public', 'images', 'potensi');
+const dir = path.join(__dirname, '..', 'public', 'images', 'potensi');
 
 const images = [
   { id: '7', url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Ketoprak_Sasono_Hinggil_3.jpg/800px-Ketoprak_Sasono_Hinggil_3.jpg' },
@@ -42,7 +42,7 @@ async function main() {
     } catch (e) {
       console.error("Error downloading " + img.id + ".jpg: ", e.message);
       // Fallback copy if Wikipedia fails
-      fs.copyFileSync(path.join(__dirname, 'public', 'images', 'hero_office.png'), dest);
+      fs.copyFileSync(path.join(__dirname, '..', 'public', 'images', 'hero_office.png'), dest);
       console.log("Copied fallback for: " + img.id + ".jpg");
     }
   }

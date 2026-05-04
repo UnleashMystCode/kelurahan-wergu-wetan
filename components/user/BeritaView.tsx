@@ -2,8 +2,9 @@
 
 import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Calendar, ChevronRight, FileText, User, Tag, Search, Loader2 } from "lucide-react";
+import { Calendar, ChevronRight, FileText, User, Tag, Search, Loader2, Newspaper } from "lucide-react";
 import Link from "next/link";
+import StaticBanner from "./StaticBanner";
 
 export default function BeritaView({ banner, newsData = [] }: any) {
   const [activeTag, setActiveTag] = useState("Semua");
@@ -33,33 +34,13 @@ export default function BeritaView({ banner, newsData = [] }: any) {
 
   return (
     <div className="min-h-screen bg-slate-50 pb-20">
-      {/* 1. HERO HEADER (Minimalist Dark Search Style) */}
-      <div className="relative mt-[-100px] flex w-full flex-col items-center justify-center bg-[#0B132B] px-4 pt-[220px] pb-[60px] text-center md:pt-[240px] md:pb-[80px]">
-        <div className="mx-auto w-full max-w-4xl">
-          <motion.h1
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            style={{ fontFamily: "Georgia, 'Times New Roman', Times, serif" }}
-            className="mb-6 text-5xl leading-none tracking-tight text-white md:text-[80px]"
-          >
-            Berita
-          </motion.h1>
-
-          <motion.div
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.1 }}
-            className="mb-10 w-full px-4"
-          >
-            <p className="text-lg font-medium text-slate-300 md:text-xl">
-              Telusuri arsip publikasi, laporan kegiatan, pencapaian kinerja, serta siaran pers resmi
-              liputan Kelurahan Wergu Wetan.
-            </p>
-          </motion.div>
-        </div>
-
-
-      </div>
+      {/* 1. HERO HEADER (StaticBanner) */}
+      <StaticBanner
+        title={banner?.judul || "Berita"}
+        desc={banner?.deskripsi || "Telusuri arsip publikasi, laporan kegiatan, pencapaian kinerja, serta siaran pers resmi liputan Kelurahan Wergu Wetan."}
+        imageURL={banner?.gambarURL || "/images/hero_office.png"}
+        Icon={Newspaper}
+      />
 
       {/* Anchor for scrolling to tabs */}
       <div ref={anchorRef} className="w-full h-0" />

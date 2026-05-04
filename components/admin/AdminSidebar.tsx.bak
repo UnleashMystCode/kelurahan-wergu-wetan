@@ -28,11 +28,9 @@ import {
   ClipboardList,
   UserCog
 } from "lucide-react";
-import { useState, useEffect, createContext, useContext } from "react";
+import { useState, useEffect } from "react";
 
-const SidebarContext = createContext({ isCollapsed: false });
-
-export default function AdminSidebar({ role, isCollapsed = false }: { role: "admin" | "super", isCollapsed?: boolean }) {
+export default function AdminSidebar({ role }: { role: "admin" | "super" }) {
   const pathname = usePathname();
 
   const isActive = (path: string) => pathname === path;
@@ -57,36 +55,33 @@ export default function AdminSidebar({ role, isCollapsed = false }: { role: "adm
   const roleTextClass = isSuper ? "text-red-400" : "text-blue-400";
 
   return (
-    <SidebarContext.Provider value={{ isCollapsed }}>
-      <aside className={`fixed top-0 left-0 z-40 flex h-screen flex-col justify-between border-r border-slate-800 bg-slate-900 text-white transition-all duration-300 ${isCollapsed ? "w-20" : "w-64"}`}>
-        <div className="flex h-full flex-col overflow-hidden">
-          {/* HEADER SIDEBAR */}
-          <div className={`shrink-0 ${isCollapsed ? "p-4 flex justify-center" : "p-6"}`}>
-            <div className="mb-4 flex items-center gap-3">
-              <div
-                className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl shadow-lg transition-all duration-300 ${logoBgClass}`}
-              >
-                {isSuper ? (
-                  <ShieldAlert size={22} />
-                ) : (
-                  <ShieldCheck size={22} />
-                )}
-              </div>
-
-              {!isCollapsed && (
-                <div className="transition-opacity duration-300">
-                  <h1 className="text-lg leading-none font-bold tracking-tight text-slate-200 truncate w-32">
-                    Wergu Admin
-                  </h1>
-                  <span
-                    className={`text-[10px] font-bold tracking-widest uppercase transition-colors duration-300 ${roleTextClass}`}
-                  >
-                    {isSuper ? "Super Access" : "Petugas Area"}
-                  </span>
-                </div>
+    <aside className="fixed top-0 left-0 z-40 flex h-screen w-64 flex-col justify-between border-r border-slate-800 bg-slate-900 text-white transition-colors duration-300">
+      <div className="flex h-full flex-col overflow-hidden">
+        {/* HEADER SIDEBAR */}
+        <div className="shrink-0 p-6">
+          <div className="mb-4 flex items-center gap-3">
+            <div
+              className={`flex h-10 w-10 items-center justify-center rounded-xl shadow-lg transition-all duration-300 ${logoBgClass}`}
+            >
+              {isSuper ? (
+                <ShieldAlert size={22} />
+              ) : (
+                <ShieldCheck size={22} />
               )}
             </div>
+
+            <div>
+              <h1 className="text-lg leading-none font-bold tracking-tight text-slate-200">
+                Wergu Admin
+              </h1>
+              <span
+                className={`text-[10px] font-bold tracking-widest uppercase transition-colors duration-300 ${roleTextClass}`}
+              >
+                {isSuper ? "Super Access" : "Petugas Area"}
+              </span>
+            </div>
           </div>
+        </div>
 
         {/* === NAVIGASI UTAMA === */}
         <div className="no-scrollbar flex-1 space-y-1.5 overflow-y-auto px-4 pb-6">
@@ -302,27 +297,24 @@ export default function AdminSidebar({ role, isCollapsed = false }: { role: "adm
           {/* === NAVIGASI KHUSUS SUPER ADMIN === */}
           {isSuper && (
             <div className="animate-in fade-in slide-in-from-left-4 mt-6 border-t border-white/5 pt-4 duration-500">
-              {!isCollapsed && (
-                <div className="mb-2 px-4 text-[10px] font-bold tracking-wider text-slate-500 uppercase">
-                  Super Admin Area
-                </div>
-              )}
+              <div className="mb-2 px-4 text-[10px] font-bold tracking-wider text-slate-500 uppercase">
+                Super Admin Area
+              </div>
 
               <Link
                 href="/admin/settings"
-                title={isCollapsed ? "Manajemen Admin" : ""}
-                className={`group relative flex items-center ${isCollapsed ? "justify-center px-2 py-3" : "gap-3 px-4 py-3"} overflow-hidden rounded-xl text-sm font-medium transition-all ${
+                className={`group relative flex items-center gap-3 overflow-hidden rounded-xl px-4 py-3 text-sm font-medium transition-all ${
                   isActive("/admin/settings")
                     ? "bg-red-500/15 text-red-400 shadow-[inset_3px_0_0_0_#f87171]"
                     : "text-slate-400 hover:bg-red-500/10 hover:text-red-300"
                 }`}
               >
                 <UserCog
-                  size={isCollapsed ? 20 : 18}
+                  size={18}
                   className={`shrink-0 transition-transform duration-500 group-hover:rotate-12 ${isActive("/admin/settings") ? "text-red-400" : ""}`}
                 />
-                {!isCollapsed && <span className="relative z-10 truncate">Manajemen Admin</span>}
-                {isActive("/admin/settings") && !isCollapsed && (
+                <span className="relative z-10 truncate">Manajemen Admin</span>
+                {isActive("/admin/settings") && (
                   <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-red-500/10 to-transparent" />
                 )}
               </Link>
@@ -332,28 +324,25 @@ export default function AdminSidebar({ role, isCollapsed = false }: { role: "adm
       </div>
 
       {/* FOOTER SIDEBAR */}
-      <div className={`shrink-0 border-t border-white/5 bg-slate-900/50 ${isCollapsed ? "p-3" : "p-4"}`}>
+      <div className="shrink-0 border-t border-white/5 bg-slate-900/50 p-4">
         <Link
           href="/admin/login"
           onClick={handleLogout}
-          title={isCollapsed ? "Keluar Sistem" : ""}
-          className={`group flex items-center ${isCollapsed ? "justify-center px-2 py-3" : "gap-3 px-4 py-3"} rounded-xl text-sm font-medium text-slate-400 transition-all hover:bg-white/5 hover:text-white`}
+          className="group flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-slate-400 transition-all hover:bg-white/5 hover:text-white"
         >
           <LogOut
-            size={isCollapsed ? 20 : 18}
+            size={18}
             className="transition-transform duration-300 group-hover:-translate-x-1"
           />
-          {!isCollapsed && <span>Keluar Sistem</span>}
+          Keluar Sistem
         </Link>
       </div>
     </aside>
-    </SidebarContext.Provider>
   );
 }
 
 // --- COMPONENT DROPDOWN ---
 function SidebarDropdown({ label, icon: Icon, isActive, accent, children }: any) {
-  const { isCollapsed } = useContext(SidebarContext);
   const [isOpen, setIsOpen] = useState(isActive);
 
   useEffect(() => {
@@ -375,45 +364,39 @@ function SidebarDropdown({ label, icon: Icon, isActive, accent, children }: any)
   }
 
   return (
-    <div className="flex flex-col gap-1" title={isCollapsed ? label : ""}>
+    <div className="flex flex-col gap-1">
       <button
-        onClick={() => !isCollapsed && setIsOpen(!isOpen)}
-        className={`group flex w-full items-center ${isCollapsed ? "justify-center px-2 py-3" : "justify-between px-4 py-3"} rounded-xl text-sm font-medium transition-all duration-300 ${isActive || (isOpen && !isCollapsed) ? activeClass : "text-slate-400 hover:bg-slate-800"}`}
+        onClick={() => setIsOpen(!isOpen)}
+        className={`group flex w-full items-center justify-between rounded-xl px-4 py-3 text-sm font-medium transition-all duration-300 ${isActive || isOpen ? activeClass : "text-slate-400 hover:bg-slate-800"}`}
       >
         <div className="flex items-center gap-3">
           <Icon
-            size={20}
-            className={`shrink-0 transition-transform duration-300 ${isActive || (isOpen && !isCollapsed) ? iconClass : ""}`}
+            size={18}
+            className={`shrink-0 transition-transform duration-300 ${isActive || isOpen ? iconClass : ""}`}
           />
-          {!isCollapsed && <span className="truncate">{label}</span>}
+          <span className="truncate">{label}</span>
         </div>
-        {!isCollapsed && (
-          <ChevronDown
-            size={16}
-            className={`shrink-0 transition-transform duration-300 opacity-60 ${isOpen ? "rotate-180" : ""}`}
-          />
-        )}
+        <ChevronDown
+          size={16}
+          className={`shrink-0 transition-transform duration-300 opacity-60 ${isOpen ? "rotate-180" : ""}`}
+        />
       </button>
 
-      {!isCollapsed && (
-        <div
-          className={`grid transition-all duration-300 ease-in-out ${isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"}`}
-        >
-          <div className="overflow-hidden">
-            <div className="ml-[22px] mt-1 flex flex-col gap-1 border-l border-slate-700/50 pl-2">
-              {children}
-            </div>
+      <div
+        className={`grid transition-all duration-300 ease-in-out ${isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"}`}
+      >
+        <div className="overflow-hidden">
+          <div className="ml-[22px] mt-1 flex flex-col gap-1 border-l border-slate-700/50 pl-2">
+            {children}
           </div>
         </div>
-      )}
+      </div>
     </div>
   );
 }
 
 // --- COMPONENT KECIL UTK LINK ---
 function SidebarLink({ href, icon: Icon, label, isActive, accent, isSub = false }: any) {
-  const { isCollapsed } = useContext(SidebarContext);
-
   let activeClass = "";
   let iconClass = "";
   let hoverClass = "";
@@ -435,15 +418,14 @@ function SidebarLink({ href, icon: Icon, label, isActive, accent, isSub = false 
   return (
     <Link
       href={href}
-      title={isCollapsed ? label : ""}
-      className={`group relative flex items-center ${isCollapsed ? "justify-center px-2 py-3" : "gap-3 px-4 py-3"} overflow-hidden rounded-xl font-medium transition-all duration-300 ${isSub ? "text-[13px]" : "text-sm"} ${isActive ? activeClass : `text-slate-400 ${hoverClass}`}`}
+      className={`group relative flex items-center gap-3 overflow-hidden rounded-xl px-4 py-3 font-medium transition-all duration-300 ${isSub ? "text-[13px]" : "text-sm"} ${isActive ? activeClass : `text-slate-400 ${hoverClass}`}`}
     >
       <Icon
-        size={isSub ? 16 : 20}
+        size={isSub ? 16 : 18}
         className={`shrink-0 transition-transform duration-300 ${isActive ? iconClass : "opacity-70 group-hover:opacity-100"} ${!isSub && "group-hover:scale-110"}`}
       />
-      {!isCollapsed && <span className="relative z-10 truncate">{label}</span>}
-      {isActive && !isSub && !isCollapsed && (
+      <span className="relative z-10 truncate">{label}</span>
+      {isActive && !isSub && (
         <div
           className={`absolute inset-0 pointer-events-none bg-gradient-to-r ${accent === "red" ? "from-red-500/10" : "from-blue-500/10"} to-transparent`}
         />

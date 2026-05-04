@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLanguage } from "@/context/LanguageContext";
+import StaticBanner from "@/components/user/StaticBanner";
 import {
   Target,
   Users,
@@ -95,38 +96,13 @@ export default function TentangKamiView({ banners, perangkat, konten, stats = []
 
   return (
     <div className="min-h-screen bg-slate-50 pb-20">
-      {/* === 1. HERO HEADER (STATIS - Serasi dengan Beranda) === */}
-      <div className="relative mt-[-100px] flex w-full flex-col items-center justify-center overflow-hidden bg-slate-900 px-4 pt-[220px] pb-[60px] text-center md:pt-[240px] md:pb-[80px]">
-        {/* Background Image Statis dari Admin */}
-        <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: `url(${bannerData?.gambarURL || "/images/hero_office.png"})` }}
-        />
-        {/* Overlay Gelap */}
-        <div className="absolute inset-0 bg-black/50 bg-gradient-to-t from-black/80 via-transparent to-black/30" />
-
-        {/* Konten Teks */}
-        <div className="relative z-20 mx-auto max-w-4xl">
-            <motion.h1
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.2 }}
-              className="mb-6 text-4xl leading-tight font-extrabold tracking-tight text-white drop-shadow-lg md:text-5xl lg:text-6xl"
-            >
-              {bannerData?.judul || "Profil Kelurahan"}
-            </motion.h1>
-
-            <motion.p
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.3 }}
-              className="mx-auto max-w-2xl text-lg leading-relaxed text-blue-50 opacity-90 drop-shadow-md md:text-xl"
-            >
-              {bannerData?.deskripsi ||
-                "Mengenal lebih dekat struktur organisasi, visi, misi, dan sarana prasarana Kelurahan Wergu Wetan."}
-            </motion.p>
-          </div>
-      </div>
+      {/* === 1. HERO HEADER (Statis) === */}
+      <StaticBanner
+        title={bannerData?.judul || "Profil Kelurahan"}
+        desc={bannerData?.deskripsi || "Mengenal lebih dekat struktur organisasi, visi, misi, dan sarana prasarana Kelurahan Wergu Wetan."}
+        imageURL={bannerData?.gambarURL || "/images/hero_office.png"}
+        Icon={Target}
+      />
 
       {/* === 2. STICKY SUB-NAVBAR === */}
       <div
@@ -152,103 +128,7 @@ export default function TentangKamiView({ banners, perangkat, konten, stats = []
         </div>
       </div>
 
-      {/* === 2.5 ANIMASI CUTOUT BANNER (BUNGA JATUH & MONUMEN) === */}
-      <style>{`
-         @keyframes scroll-monument {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-         }
-         @keyframes bgScroll {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-         }
-         .bg-monument-track {
-            animation: scroll-monument 40s linear infinite;
-         }
-         .bg-text-track { animation: bgScroll 40s linear infinite; }
-         .bg-text-track-rev { animation: bgScroll 50s linear infinite reverse; }
-      `}</style>
 
-      {/* Container Utama Cutout */}
-      <div
-        className="relative z-20 overflow-hidden bg-white"
-        style={{ minHeight: "240px", boxShadow: "0 2px 6px 0 rgba(0,0,0,0.08)" }}
-      >
-        {/* Layer 1: Animasi di DALAM teks (Background Teks Berjalan Bening Kaca) */}
-        <div className="pointer-events-none absolute inset-0 overflow-hidden bg-[#0f172a] select-none">
-          <div className="bg-text-track absolute flex whitespace-nowrap" style={{ top: "5%" }}>
-            {[...Array(8)].map((_, i) => (
-              <span
-                key={`t1-${i}`}
-                className="shrink-0 px-8 font-black tracking-widest text-blue-400 uppercase"
-                style={{ fontSize: "2.8rem", opacity: 0.6 }}
-              >
-                WERGU WETAN ✦
-              </span>
-            ))}
-          </div>
-          <div
-            className="bg-text-track-rev absolute flex whitespace-nowrap"
-            style={{ top: "32%", animationDuration: "28s" }}
-          >
-            {[...Array(6)].map((_, i) => (
-              <span
-                key={`t2-${i}`}
-                className="shrink-0 px-12 font-black tracking-[0.4em] text-blue-300 uppercase"
-                style={{ fontSize: "1.6rem", opacity: 0.5 }}
-              >
-                KELURAHAN WERGU WETAN •
-              </span>
-            ))}
-          </div>
-          <div
-            className="bg-text-track absolute flex whitespace-nowrap"
-            style={{ top: "56%", animationDuration: "35s" }}
-          >
-            {[...Array(10)].map((_, i) => (
-              <span
-                key={`t3-${i}`}
-                className="shrink-0 px-6 font-black tracking-widest text-blue-500 uppercase"
-                style={{ fontSize: "3.5rem", opacity: 0.45 }}
-              >
-                WERGU WETAN
-              </span>
-            ))}
-          </div>
-          <div
-            className="bg-text-track-rev absolute flex whitespace-nowrap"
-            style={{ top: "78%", animationDuration: "22s" }}
-          >
-            {[...Array(8)].map((_, i) => (
-              <span
-                key={`t4-${i}`}
-                className="shrink-0 px-10 font-black tracking-[0.3em] text-blue-400 uppercase"
-                style={{ fontSize: "1.9rem", opacity: 0.55 }}
-              >
-                KUDUS · WERGU WETAN ✦
-              </span>
-            ))}
-          </div>
-        </div>
-
-        {/* Layer 2: White overlay absolute inset-0 → mix-blend-mode: screen */}
-        <div
-          className="absolute inset-0 z-10 flex flex-col items-center justify-center px-4 text-center overflow-hidden"
-          style={{ background: "#eef2ff", mixBlendMode: "screen" }}
-        >
-          <p
-            className="relative z-10 mb-1 sm:mb-2 text-[10px] sm:text-xs font-black tracking-[0.3em] md:tracking-[0.4em] uppercase text-slate-800 md:text-sm lg:text-base drop-shadow-sm"
-          >
-            Selamat Datang di Website Resmi
-          </p>
-          <h2
-            className="relative z-10 text-[36px] leading-[1.05] sm:text-5xl font-black tracking-tight uppercase md:text-[70px] lg:text-[85px]"
-            style={{ color: "#000" }}
-          >
-            KELURAHAN<br className="sm:hidden" /> WERGU WETAN
-          </h2>
-        </div>
-      </div>
 
       {/* === 3. KONTEN UTAMA === */}
       <div className="relative z-30 container mx-auto max-w-5xl space-y-16 px-4 py-12 pt-16">

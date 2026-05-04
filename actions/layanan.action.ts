@@ -1,36 +1,47 @@
 "use server";
-// ^^^ Direktif Next.js: Menandakan bahwa fungsi di dalam file ini hanya boleh dieksekusi di server.
 
 import { revalidatePath } from "next/cache";
-import { LayananService } from "@/core/services/layanan.service";
+import prisma from "@/lib/db";
+import { z } from "zod";
 
-/**
- * [CONTROLLER LAYER / ADAPTER]
- * File 'Action' ini sekarang berfungsi sebagai Controller murni.
- * Tugas pokok Controller:
- * 1. Menerima request (FormData) dari antarmuka pengguna (UI/Frontend).
- * 2. Meneruskan data tersebut ke Service Layer untuk diproses.
- * 3. Menangani framework-specific logic (seperti revalidatePath bawaan Next.js).
- * 4. Mengembalikan respons (success/error) ke UI.
- *
- * Aturan Ketat: Sama sekali dilarang ada logika bisnis (if-else validasi) atau pemanggilan Database (Prisma) di file ini.
- */
+// --- SKEMA VALIDASI ---
+const PengajuanSuratSchema = z.object({
+  nama: z.string().min(3, "Nama minimal 3 karakter"),
+  nik: z.string().length(16, "NIK harus tepat 16 digit angka"),
+  jenisSurat: z.string().min(1, "Jenis surat harus dipilih"),
+  whatsapp: z.string().min(10, "Nomor WhatsApp tidak valid"),
+});
 
-// Instansiasi Service (Sebagai pelaksana logika bisnis)
-const layananService = new LayananService();
-
-export async function kirimPengajuan(formData: FormData) {
+export async function kirimPengajuan(rawFormData: FormData) {
   try {
-    // [DELEGASI] Controller menyerahkan seluruh beban kerja pemrosesan data ke Service Layer.
-    await layananService.prosesKirimPengajuan(formData);
+    const rawData = {
+      nama: rawFormData.get("nama"),
+      nik: rawFormData.get("nik"),
+      jenisSurat: rawFormData.get("jenisSurat"),
+      whatsapp: rawFormData.get("whatsapp"),
+    };
 
-    // Jika Service Layer tidak melempar Error, artinya proses sukses.
-    // [FRAMEWORK LOGIC] Refresh cache halaman Next.js agar tabel di Admin langsung terupdate.
+    const validData = PengajuanSuratSchema.safeParse(rawData);
+
+    if (!validData.success) {
+      throw new Error(`Data tidak valid: ${validData.error.issues[0].message}`);
+    }
+
+    await prisma.pengajuanSurat.create({
+      data: {
+        nama: validData.data.nama,
+        nik: validData.data.nik,
+        jenisSurat: validData.data.jenisSurat,
+        whatsapp: validData.data.whatsapp,
+        status: "pending", // Aturan bisnis (default status)
+      },
+    });
+
+    revalidatePath("/admin/halaman/layanan/daftar");
     revalidatePath("/admin");
 
     return { success: true, message: "Pengajuan surat berhasil dikirim!" };
   } catch (error: any) {
-    // Menangkap Error yang dilempar (throw) dari Service Layer (misalnya Error Validasi NIK dari Zod)
     return { success: false, message: error.message };
   }
 }

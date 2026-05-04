@@ -5,9 +5,11 @@ import { motion } from "framer-motion";
 import {
   ChevronRight,
   Search,
+  Star,
 } from "lucide-react";
 
 import Link from "next/link";
+import StaticBanner from "./StaticBanner";
 
 const categories = [
   "Semua",
@@ -43,35 +45,13 @@ export default function PotensiDesaView({ banner, potensiItems = [] }: { banner?
 
   return (
     <div className="min-h-screen bg-slate-50 pb-20">
-      {/* 1. HERO HEADER (Disesuaikan dengan TentangKamiView & HomeView) */}
-      <div className="relative mt-[-100px] flex w-full flex-col items-center justify-center overflow-hidden bg-slate-900 px-4 pt-[220px] pb-[60px] text-center md:pt-[240px] md:pb-[80px]">
-        {/* Background Image */}
-        <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: `url('${banner?.gambarURL || "/images/hero_neighborhood.png"}')` }}
-        />
-        {/* Konten Teks */}
-        <div className="relative z-20 mx-auto max-w-4xl">
-            <motion.h1
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.2 }}
-              className="mb-6 text-4xl leading-tight font-extrabold tracking-tight text-white drop-shadow-lg md:text-5xl lg:text-6xl"
-            >
-              {banner?.judul || "Potensi Kelurahan"}
-            </motion.h1>
-
-            <motion.p
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.3 }}
-              className="mx-auto max-w-2xl text-lg leading-relaxed text-blue-50 opacity-90 drop-shadow-md md:text-xl"
-            >
-              {banner?.deskripsi ||
-                "Eksplorasi keberagaman aset, potensi unggulan UMKM, wisata ikonik, hingga dinamika sosial masyarakat Wergu Wetan."}
-            </motion.p>
-          </div>
-      </div>
+      {/* 1. HERO HEADER (StaticBanner) */}
+      <StaticBanner
+        title={banner?.judul || "Potensi Kelurahan"}
+        desc={banner?.deskripsi || "Eksplorasi keberagaman aset, potensi unggulan UMKM, wisata ikonik, hingga dinamika sosial masyarakat Wergu Wetan."}
+        imageURL={banner?.gambarURL || "/images/hero_neighborhood.png"}
+        Icon={Star}
+      />
 
       {/* Anchor for scrolling to tabs */}
       <div ref={anchorRef} className="w-full h-0" />

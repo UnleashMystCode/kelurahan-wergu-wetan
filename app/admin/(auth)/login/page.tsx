@@ -4,6 +4,8 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
+import { loginAction } from "@/actions/auth.action";
+import { toast } from "react-hot-toast";
 import {
   Mail,
   Lock,
@@ -32,19 +34,24 @@ export default function AdminLoginPage() {
     e.preventDefault();
     setLoading(true);
 
-    // Simulasi Login
-    console.log(`Login sebagai: ${role.toUpperCase()}`);
+    const formDataObj = new FormData();
+    formDataObj.append("username", formData.email);
+    formDataObj.append("password", formData.password);
 
-    // PENTING: Simpan role ke Cookie agar Layout Server bisa langsung membaca
-    // tanpa ada jeda/kedip saat halaman direload.
-    document.cookie = `userRole=${role}; path=/; max-age=86400`; // Expire 1 hari
-
-    setTimeout(() => {
+    try {
+      const result = await loginAction(formDataObj);
+      if (result.success) {
+        toast.success("Login berhasil!");
+        router.push("/admin/dashboard");
+        router.refresh();
+      } else {
+        toast.error(result.message || "Login gagal");
+      }
+    } catch (error) {
+      toast.error("Terjadi kesalahan sistem");
+    } finally {
       setLoading(false);
-      // Pindah halaman DAN paksa refresh router agar cookie baru langsung dibaca Server
-      router.push("/admin/dashboard");
-      router.refresh();
-    }, 2000);
+    }
   };
 
   return (
@@ -204,9 +211,11 @@ export default function AdminLoginPage() {
                   size={20}
                 />
                 <input
-                  type="email"
+                  type="text"
+                  value={formData.email}
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   placeholder={
-                    role === "super" ? "root@werguwetan.go.id" : "admin@werguwetan.go.id"
+                    role === "super" ? "superadmin" : "admin"
                   }
                   className={`w-full rounded-xl border bg-slate-50 py-3.5 pr-4 pl-12 text-sm text-slate-800 transition-all placeholder:text-slate-400 focus:ring-2 focus:outline-none ${role === "super" ? "focus:border-red-500 focus:ring-red-500/20" : "focus:border-blue-500 focus:ring-blue-500/20"}`}
                   required
@@ -223,6 +232,8 @@ export default function AdminLoginPage() {
                 />
                 <input
                   type={showPassword ? "text" : "password"}
+                  value={formData.password}
+                  onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                   placeholder="••••••••"
                   className={`w-full rounded-xl border bg-slate-50 py-3.5 pr-12 pl-12 text-sm text-slate-800 transition-all placeholder:text-slate-400 focus:ring-2 focus:outline-none ${role === "super" ? "focus:border-red-500 focus:ring-red-500/20" : "focus:border-blue-500 focus:ring-blue-500/20"}`}
                   required

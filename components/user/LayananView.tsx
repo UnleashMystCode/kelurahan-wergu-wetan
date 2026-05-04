@@ -18,6 +18,7 @@ import {
   ClipboardList,
 } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
+import StaticBanner from "./StaticBanner";
 
 export default function LayananView({ banner }: any) {
   const { t } = useLanguage();
@@ -44,29 +45,13 @@ export default function LayananView({ banner }: any) {
 
   return (
     <div className="min-h-screen bg-slate-50 pb-20">
-      {/* 1. HERO HEADER (Minimalist Dark Style) */}
-      <div className="relative mt-[-100px] flex w-full flex-col items-center justify-center bg-[#0B132B] px-4 pt-[220px] pb-[60px] text-center md:pt-[240px] md:pb-[80px]">
-        <div className="mx-auto max-w-4xl">
-          <motion.h1
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            style={{ fontFamily: "Georgia, 'Times New Roman', Times, serif" }}
-            className="mb-6 text-6xl leading-none tracking-tight text-white md:text-[80px]"
-          >
-            Layanan
-          </motion.h1>
-          <motion.div
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.1 }}
-            className="w-full max-w-2xl mx-auto"
-          >
-            <p className="text-lg font-medium tracking-wide text-slate-300 md:text-xl">
-              Panduan lengkap & administrasi digital Kelurahan Wergu Wetan.
-            </p>
-          </motion.div>
-        </div>
-      </div>
+      {/* 1. HERO HEADER (StaticBanner) */}
+      <StaticBanner
+        title={banner?.judul || "Layanan Warga"}
+        desc={banner?.deskripsi || "Portal Pelayanan Kelurahan Terpadu"}
+        imageURL={banner?.gambarURL || "/images/hero_office.png"}
+        Icon={FileText}
+      />
 
       {/* 2. STICKY SUB-NAVBAR (KATEGORI UTAMA) */}
       <div className="sticky top-[120px] z-40 h-[60px] border-b border-slate-200 bg-white/95 shadow-sm backdrop-blur-md">

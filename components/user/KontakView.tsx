@@ -47,28 +47,13 @@ export default function KontakView({
 
   return (
     <div className="min-h-screen bg-slate-50 pb-20">
-      {/* 1. HERO HEADER (Minimalist Dark Style) */}
-      <div className="relative mt-[-100px] flex w-full flex-col items-center justify-center bg-[#0B132B] px-4 pt-[220px] pb-[60px] text-center md:pt-[240px] md:pb-[80px]">
-        <div className="mx-auto max-w-4xl">
-          <motion.h1
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            style={{ fontFamily: "Georgia, 'Times New Roman', Times, serif" }}
-            className="mb-6 text-5xl leading-tight tracking-tight text-white drop-shadow-lg md:text-6xl lg:text-[80px]"
-          >
-            Kontak
-          </motion.h1>
-
-          <motion.p
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.1 }}
-            className="mx-auto max-w-2xl text-lg font-medium tracking-wide text-slate-300 md:text-xl"
-          >
-            Hubungi kami atau sampaikan aspirasi Anda secara daring.
-          </motion.p>
-        </div>
-      </div>
+      {/* 1. HERO HEADER (StaticBanner) */}
+      <StaticBanner
+        title={banner?.judul || "Kontak"}
+        desc={banner?.deskripsi || "Hubungi kami atau sampaikan aspirasi Anda secara daring."}
+        imageURL={banner?.gambarURL || "/images/hero_office.png"}
+        Icon={MessageSquare}
+      />
 
       <div className="relative z-30 container mx-auto mt-8 lg:mt-16 grid grid-cols-1 gap-6 lg:gap-10 px-4 md:px-8 lg:grid-cols-12">
         {/* ===== KOLOM KIRI: INFO KONTAK & MAP ===== */}
