@@ -29,8 +29,8 @@ export default async function AdminKontakPage() {
   return (
     <div className="space-y-10 pb-20">
       <div>
-        <h1 className="text-2xl font-bold text-slate-800">Info Kontak & Inbox Aspirasi</h1>
-        <p className="mt-1 text-sm text-slate-500">
+        <h1 className="text-2xl font-bold text-text-dark">Info Kontak & Inbox Aspirasi</h1>
+        <p className="mt-1 text-sm text-text-muted">
           Kelola info kontak resmi dan baca pesan warga yang masuk.
         </p>
       </div>
@@ -52,7 +52,7 @@ export default async function AdminKontakPage() {
                   type="text"
                   required
                   defaultValue={getConfig("phone", "+62 812 3456 7890")}
-                  className="w-full rounded-xl border-2 border-transparent bg-slate-50 p-4 font-bold text-slate-900 transition outline-none focus:border-blue-500/30"
+                  className="w-full rounded-xl border-2 border-transparent bg-slate-50 p-4 font-bold text-text-dark transition outline-none focus:border-blue-500/30"
                   placeholder="+62..."
                 />
               </div>
@@ -65,7 +65,7 @@ export default async function AdminKontakPage() {
                   type="email"
                   required
                   defaultValue={getConfig("email", "pemdes@werguwetan.go.id")}
-                  className="w-full rounded-xl border-2 border-transparent bg-slate-50 p-4 font-bold text-slate-900 transition outline-none focus:border-blue-500/30"
+                  className="w-full rounded-xl border-2 border-transparent bg-slate-50 p-4 font-bold text-text-dark transition outline-none focus:border-blue-500/30"
                   placeholder="admin@desa.id"
                 />
               </div>
@@ -82,7 +82,7 @@ export default async function AdminKontakPage() {
                   "alamat",
                   "Jl. Jendral Sudirman No. 12, Kudus, Jawa Tengah"
                 )}
-                className="w-full resize-none rounded-xl border-2 border-transparent bg-slate-50 p-4 font-bold text-slate-900 transition outline-none focus:border-blue-500/30"
+                className="w-full resize-none rounded-xl border-2 border-transparent bg-slate-50 p-4 font-bold text-text-dark transition outline-none focus:border-blue-500/30"
               />
             </div>
             <div className="flex justify-end">
@@ -125,7 +125,7 @@ export default async function AdminKontakPage() {
                 >
                   {/* Avatar */}
                   <div
-                    className={`flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full text-sm font-black ${p.status === "Belum Dibaca" ? "bg-blue-600 text-white" : "bg-slate-100 text-slate-500"}`}
+                    className={`flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full text-sm font-black ${p.status === "Belum Dibaca" ? "bg-blue-600 text-white" : "bg-slate-100 text-text-muted"}`}
                   >
                     {p.nama[0].toUpperCase()}
                   </div>
@@ -133,8 +133,8 @@ export default async function AdminKontakPage() {
                   <div className="min-w-0 flex-1">
                     <div className="mb-2 flex items-center justify-between gap-4">
                       <div>
-                        <p className="font-bold text-slate-800">{p.nama}</p>
-                        <p className="text-xs text-slate-400">
+                        <p className="font-bold text-text-dark">{p.nama}</p>
+                        <p className="text-xs text-text-muted">
                           {p.whatsapp} ·{" "}
                           {p.createdAt.toLocaleDateString("id-ID", {
                             day: "numeric",
@@ -162,7 +162,7 @@ export default async function AdminKontakPage() {
                         </span>
                       )}
                     </div>
-                    <p className="line-clamp-3 text-sm leading-relaxed text-slate-600">{p.pesan}</p>
+                      <p className="line-clamp-3 text-sm leading-relaxed text-text-muted">{p.pesan}</p>
                   </div>
                   {/* Aksi */}
                   <div className="flex flex-shrink-0 gap-1.5">

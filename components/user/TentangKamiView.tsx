@@ -19,20 +19,15 @@ import {
   MapPin,
   Home,
   Activity,
-  X,
-  ExternalLink,
-  ChevronRight,
-  Landmark,
-  Flower2,
-  Sparkles,
-  Trees,
 } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
+import type { BannerHomepage, PerangkatDesa, ProfilKonten, HomeStatistic } from "@prisma/client";
 
 type Props = {
-  banners: any[];
-  perangkat: any[];
-  konten: any[];
-  stats?: any[];
+  banners: BannerHomepage[];
+  perangkat: PerangkatDesa[];
+  konten: ProfilKonten[];
+  stats?: HomeStatistic[];
 };
 
 export default function TentangKamiView({ banners, perangkat, konten, stats = [] }: Props) {
@@ -117,8 +112,8 @@ export default function TentangKamiView({ banners, perangkat, konten, stats = []
                 onClick={() => scrollToSection(menu.id)}
                 className={`group relative flex h-full items-center gap-2 border-b-[3px] px-6 text-[13px] font-bold whitespace-nowrap transition-all md:text-sm ${
                   activeTab === menu.id
-                    ? "border-blue-600 bg-blue-50/50 text-blue-600 rounded-t-lg"
-                    : "border-transparent text-slate-500 hover:bg-slate-100 hover:text-blue-600 hover:border-blue-400 rounded-t-lg"
+                    ? "border-brand-base bg-blue-50/50 text-brand-base rounded-t-lg"
+                    : "border-transparent text-text-muted hover:bg-slate-100 hover:text-brand-base hover:border-blue-400 rounded-t-lg"
                 }`}
               >
                 {menu.label}
@@ -161,8 +156,8 @@ export default function TentangKamiView({ banners, perangkat, konten, stats = []
           />
 
           {/* Full-width scrollable org chart */}
-          <div className="-mx-4 w-full overflow-x-auto px-4 pb-6">
-            <div style={{ minWidth: "860px" }}>
+          <div className="-mx-4 w-full overflow-x-auto px-4 pb-6 no-scrollbar">
+            <div className="mx-auto w-fit min-w-[860px] pb-8">
               {/* ─── LEVEL 1: LURAH ─── */}
               <div className="flex justify-center">
                 {perangkat
@@ -178,7 +173,7 @@ export default function TentangKamiView({ banners, perangkat, konten, stats = []
 
               {/* connector Lurah → Sekretaris */}
               <div className="flex justify-center">
-                <div className="h-6 w-0.5 bg-blue-700" />
+                <div className="h-6 w-0.5 bg-brand-dark" />
               </div>
 
               {/* ─── LEVEL 2: SEKRETARIS ─── */}
@@ -210,12 +205,12 @@ export default function TentangKamiView({ banners, perangkat, konten, stats = []
                   <>
                     {/* vertical stem → horizontal kasi bar */}
                     <div className="flex justify-center">
-                      <div className="h-6 w-0.5 bg-blue-700" />
+                      <div className="h-6 w-0.5 bg-brand-dark" />
                     </div>
                     {kasi.length > 1 && (
                       <div className="flex justify-center">
                         <div
-                          className="h-0.5 rounded-full bg-blue-700"
+                          className="h-0.5 rounded-full bg-brand-dark"
                           style={{ width: kasiBarW }}
                         />
                       </div>
@@ -224,7 +219,7 @@ export default function TentangKamiView({ banners, perangkat, konten, stats = []
                     <div className="flex justify-center" style={{ gap: KGAP }}>
                       {kasi.map((_, i) => (
                         <div key={i} className="flex justify-center" style={{ width: KCARD }}>
-                          <div className="h-6 w-0.5 bg-blue-700" />
+                          <div className="h-6 w-0.5 bg-brand-dark" />
                         </div>
                       ))}
                     </div>
@@ -241,7 +236,7 @@ export default function TentangKamiView({ banners, perangkat, konten, stats = []
                       <>
                         <div className="my-8 flex items-center gap-4">
                           <div className="h-px flex-1 bg-slate-100" />
-                          <span className="rounded-full border border-slate-100 bg-slate-50 px-3 py-1 text-[10px] font-black tracking-[0.15em] text-slate-400 uppercase">
+                          <span className="rounded-full border border-slate-100 bg-slate-50 px-3 py-1 text-[10px] font-black tracking-[0.15em] text-text-muted uppercase">
                             Staf & Jabatan Fungsional
                           </span>
                           <div className="h-px flex-1 bg-slate-100" />
@@ -250,7 +245,7 @@ export default function TentangKamiView({ banners, perangkat, konten, stats = []
                         {staf.length > 1 && (
                           <div className="flex justify-center">
                             <div
-                              className="h-0.5 rounded-full bg-blue-700"
+                              className="h-0.5 rounded-full bg-brand-dark"
                               style={{ width: stafBarW }}
                             />
                           </div>
@@ -258,16 +253,13 @@ export default function TentangKamiView({ banners, perangkat, konten, stats = []
                         <div className="flex justify-center" style={{ gap: SGAP }}>
                           {staf.map((_, i) => (
                             <div key={i} className="flex justify-center" style={{ width: SCARD }}>
-                              <div className="h-6 w-0.5 bg-blue-700" />
+                              <div className="h-6 w-0.5 bg-brand-dark" />
                             </div>
                           ))}
                         </div>
 
                         {/* ─── LEVEL 4: STAF ─── */}
-                        <div
-                          className="flex flex-wrap justify-center"
-                          style={{ gap: SGAP, rowGap: "20px" }}
-                        >
+                        <div className="flex justify-center" style={{ gap: SGAP }}>
                           {staf.map((p) => (
                             <GovStructureNode key={p.id} data={p} rank="staf" />
                           ))}
@@ -294,16 +286,16 @@ export default function TentangKamiView({ banners, perangkat, konten, stats = []
               <table className="w-full min-w-[800px] border-collapse text-center text-sm">
                 <thead>
                   <tr className="border-b border-slate-200 bg-[#f5f5f5]">
-                    <th className="w-16 border-r border-slate-200 px-4 py-4 align-middle font-bold text-slate-800">
+                    <th className="w-16 border-r border-slate-200 px-4 py-4 align-middle font-bold text-text-dark">
                       No.
                     </th>
-                    <th className="w-[25%] border-r border-slate-200 px-6 py-4 align-middle font-bold text-slate-800">
+                    <th className="w-[25%] border-r border-slate-200 px-6 py-4 align-middle font-bold text-text-dark">
                       Jabatan
                     </th>
-                    <th className="w-[45%] border-r border-slate-200 px-8 py-4 text-left align-middle font-bold text-slate-800">
+                    <th className="w-[45%] border-r border-slate-200 px-8 py-4 text-left align-middle font-bold text-text-dark">
                       Pejabat
                     </th>
-                    <th className="px-6 py-4 align-middle font-bold text-slate-800">
+                    <th className="px-6 py-4 align-middle font-bold text-text-dark">
                       Status Kepegawaian
                     </th>
                   </tr>
@@ -311,7 +303,7 @@ export default function TentangKamiView({ banners, perangkat, konten, stats = []
                 <tbody className="divide-y divide-slate-200">
                   {perangkat.map((p, index) => (
                     <tr key={p.id} className="transition-colors hover:bg-slate-50">
-                      <td className="border-r border-slate-200 px-4 py-6 align-middle font-medium text-slate-700">
+                      <td className="border-r border-slate-200 px-4 py-6 align-middle font-medium text-text-dark">
                         {index + 1}
                       </td>
                       <td className="border-r border-slate-200 px-6 py-6 align-middle">
@@ -332,14 +324,14 @@ export default function TentangKamiView({ banners, perangkat, konten, stats = []
                             )}
                           </div>
                           <div className="flex-1 text-left">
-                            <div className="text-[15px] text-slate-800">{p.nama}</div>
+                            <div className="text-[15px] text-text-dark">{p.nama}</div>
                             {p.nip && (
-                              <div className="mt-2 text-[13px] text-slate-500">NIP. {p.nip}</div>
+                              <div className="mt-2 text-[13px] text-text-muted">NIP. {p.nip}</div>
                             )}
                           </div>
                         </div>
                       </td>
-                      <td className="px-6 py-6 align-middle font-medium text-slate-700">
+                      <td className="px-6 py-6 align-middle font-medium text-text-dark">
                         {p.nip ? "PNS / ASN" : "Staf / Honorer"}
                       </td>
                     </tr>
@@ -391,16 +383,16 @@ export default function TentangKamiView({ banners, perangkat, konten, stats = []
                     transition={{ delay: idx * 0.05, duration: 0.4 }}
                     className="group flex cursor-default flex-col items-start justify-center rounded-xl border border-slate-100 bg-white p-5 shadow-sm transition-all hover:-translate-y-1 hover:border-blue-200 hover:shadow-xl"
                   >
-                    <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-blue-50 text-blue-600 transition-colors group-hover:bg-blue-600 group-hover:text-white">
+                    <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-blue-50 text-brand-base transition-colors group-hover:bg-brand-base group-hover:text-white">
                       {d.i}
                     </div>
-                    <h4 className="mb-1 text-2xl leading-none font-black text-slate-800 transition-colors group-hover:text-blue-700">
+                    <h4 className="mb-1 text-2xl leading-none font-black text-text-dark transition-colors group-hover:text-brand-dark">
                       {d.v}
                     </h4>
-                    <p className="text-[10px] font-bold tracking-widest text-slate-500 uppercase">
+                    <p className="text-[10px] font-bold tracking-widest text-text-muted uppercase">
                       {d.t}
                     </p>
-                    <p className="mt-1 text-[11px] leading-none font-medium text-slate-400">
+                    <p className="mt-1 text-[11px] leading-none font-medium text-text-muted">
                       {d.s}
                     </p>
                   </motion.div>
@@ -412,16 +404,16 @@ export default function TentangKamiView({ banners, perangkat, konten, stats = []
             <div className="mb-8 grid grid-cols-1 gap-6 lg:grid-cols-2">
               {/* Laporan & Penanganan Kasus */}
               <div className="rounded-xl border border-blue-100 bg-blue-50/50 p-5 md:p-10">
-                <h4 className="mb-6 flex items-center gap-3 text-[13px] font-black tracking-widest text-blue-700 uppercase">
-                  <Activity size={20} className="text-blue-600" /> Laporan & Pengaduan Warga
+                <h4 className="mb-6 flex items-center gap-3 text-[13px] font-black tracking-widest text-brand-dark uppercase">
+                  <Activity size={20} className="text-brand-base shrink-0" /> Laporan & Pengaduan Warga
                 </h4>
 
                 <div className="mb-8 grid grid-cols-2 gap-4">
                   <div className="rounded-xl border border-slate-100 bg-white p-5 text-center shadow-sm">
-                    <p className="mb-1.5 text-[11px] font-bold tracking-widest text-slate-400 uppercase">
+                    <p className="mb-1.5 text-[11px] font-bold tracking-widest text-text-muted uppercase">
                       Total Bulan Ini
                     </p>
-                    <p className="text-4xl font-black text-slate-800">42</p>
+                    <p className="text-4xl font-black text-text-dark">42</p>
                   </div>
                   <div className="rounded-xl bg-emerald-500 p-5 text-center shadow-sm">
                     <p className="mb-1.5 text-[11px] font-bold tracking-widest text-emerald-100 uppercase">
@@ -433,7 +425,7 @@ export default function TentangKamiView({ banners, perangkat, konten, stats = []
 
                 {/* Top Kasus */}
                 <div className="space-y-5">
-                  <h5 className="mb-2 border-b border-blue-100 pb-2 text-[11px] font-bold tracking-widest text-slate-400 uppercase">
+                  <h5 className="mb-2 border-b border-blue-100 pb-2 text-[11px] font-bold tracking-widest text-text-muted uppercase">
                     Isu Dominan Berdasarkan Kategori
                   </h5>
                   {[
@@ -446,11 +438,11 @@ export default function TentangKamiView({ banners, perangkat, konten, stats = []
                     {
                       name: "Administrasi & Pendaftaran KK (RW 02)",
                       val: 20,
-                      color: "bg-blue-500",
+                      color: "bg-brand-base",
                     },
                   ].map((isu, idx) => (
                     <div key={idx} className="group cursor-default">
-                      <div className="mb-2 flex justify-between text-[13px] font-bold text-slate-700 transition-colors group-hover:text-blue-700">
+                      <div className="mb-2 flex justify-between text-[13px] font-bold text-text-dark transition-colors group-hover:text-brand-dark">
                         <span>{isu.name}</span>
                         <span>{isu.val}%</span>
                       </div>
@@ -470,8 +462,8 @@ export default function TentangKamiView({ banners, perangkat, konten, stats = []
 
               {/* Fasilitas Publik & Ekonomi */}
               <div className="flex flex-col rounded-xl border border-slate-200/60 bg-slate-50 p-5 md:p-10">
-                <h4 className="mb-6 flex items-center gap-3 text-[13px] font-black tracking-widest text-slate-700 uppercase">
-                  <Building2 size={20} className="text-slate-500" /> Ketersediaan Fasilitas Dasar
+                <h4 className="mb-6 flex items-center gap-3 text-[13px] font-black tracking-widest text-text-dark uppercase">
+                  <Building2 size={20} className="text-text-muted shrink-0" /> Ketersediaan Fasilitas Dasar
                 </h4>
                 <div className="flex flex-1 flex-col justify-center space-y-5">
                   <motion.div
@@ -482,10 +474,10 @@ export default function TentangKamiView({ banners, perangkat, konten, stats = []
                     className="group flex cursor-default items-center justify-between rounded-xl border border-slate-100 bg-white p-5 shadow-sm transition-all hover:border-rose-100 hover:shadow-lg"
                   >
                     <div>
-                      <span className="mb-1 block text-[15px] font-black text-slate-800 transition-colors group-hover:text-rose-600">
+                      <span className="mb-1 block text-[15px] font-black text-text-dark transition-colors group-hover:text-rose-600">
                         Posyandu & Puskesmas
                       </span>
-                      <span className="block text-[12px] font-medium text-slate-500">
+                      <span className="block text-[12px] font-medium text-text-muted">
                         Pusat layanan kesehatan dasar
                       </span>
                     </div>
@@ -501,14 +493,14 @@ export default function TentangKamiView({ banners, perangkat, konten, stats = []
                     className="group flex cursor-default items-center justify-between rounded-xl border border-slate-100 bg-white p-5 shadow-sm transition-all hover:border-blue-100 hover:shadow-lg"
                   >
                     <div>
-                      <span className="mb-1 block text-[15px] font-black text-slate-800 transition-colors group-hover:text-blue-600">
+                      <span className="mb-1 block text-[15px] font-black text-text-dark transition-colors group-hover:text-brand-base">
                         Sekolah & Pendidikan Dasar
                       </span>
-                      <span className="block text-[12px] font-medium text-slate-500">
+                      <span className="block text-[12px] font-medium text-text-muted">
                         PAUD, SD, dan jenjang menengah
                       </span>
                     </div>
-                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-50 text-xl font-black text-blue-600 transition-colors group-hover:bg-blue-500 group-hover:text-white">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-50 text-xl font-black text-brand-base transition-colors group-hover:bg-brand-base group-hover:text-white">
                       12
                     </div>
                   </motion.div>
@@ -520,10 +512,10 @@ export default function TentangKamiView({ banners, perangkat, konten, stats = []
                     className="group flex cursor-default items-center justify-between rounded-xl border border-slate-100 bg-white p-5 shadow-sm transition-all hover:border-amber-100 hover:shadow-lg"
                   >
                     <div>
-                      <span className="mb-1 block text-[15px] font-black text-slate-800 transition-colors group-hover:text-amber-600">
+                      <span className="mb-1 block text-[15px] font-black text-text-dark transition-colors group-hover:text-amber-600">
                         Sentra Izin Usaha Lokal UMKM
                       </span>
-                      <span className="block text-[12px] font-medium text-slate-500">
+                      <span className="block text-[12px] font-medium text-text-muted">
                         Kapasitas ekonomi kawasan terpadu
                       </span>
                     </div>
@@ -542,13 +534,13 @@ export default function TentangKamiView({ banners, perangkat, konten, stats = []
                 <BarChart size={180} />
               </div>
               <div className="relative z-10 w-full md:w-[60%]">
-                <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-blue-500/30 bg-blue-500/20 px-3 py-1.5 text-[10px] font-black tracking-widest text-blue-300 uppercase">
-                  <Target size={12} /> Pencapaian Layanan
+                <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-brand-base/30 bg-brand-base/20 px-3 py-1.5 text-[10px] font-black tracking-widest text-blue-300 uppercase">
+                  <Target size={12} className="shrink-0" /> Pencapaian Layanan
                 </div>
                 <h4 className="mb-3 text-2xl leading-tight font-bold md:text-[28px]">
                   Tren Kunjungan & Akses Birokrasi
                 </h4>
-                <p className="max-w-lg text-[14px] leading-relaxed text-slate-400">
+                <p className="max-w-lg text-[14px] leading-relaxed text-text-muted">
                   Peningkatan <strong className="text-white">15%</strong> akses layanan per bulan
                   akibat efisiensi digitalisasi birokrasi. Warga dapat memantau pelayanan terkini
                   secara akurat via platform.
@@ -628,7 +620,7 @@ export default function TentangKamiView({ banners, perangkat, konten, stats = []
                   className={`relative flex flex-col justify-between ${item.bg} group overflow-hidden rounded-xl border border-black/5 p-5 md:p-8 transition-all duration-300 hover:border-black/10 hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)]`}
                 >
                   <div
-                    className={`absolute -top-10 -right-10 h-40 w-40 bg-gradient-to-br ${item.color} pointer-events-none rounded-full opacity-10 blur-2xl transition-transform duration-700 group-hover:scale-150`}
+                    className={`absolute -top-10 -right-10 h-40 w-40 bg-gradient-to-br ${item.color} pointer-events-none rounded-full opacity-5 blur-xl transition-transform duration-500 group-hover:scale-110`}
                   />
 
                   <div>
@@ -638,16 +630,16 @@ export default function TentangKamiView({ banners, perangkat, konten, stats = []
                       >
                         <item.icon size={26} strokeWidth={2.5} />
                       </div>
-                      <div className="rounded-full border border-slate-100 bg-white px-4 py-1.5 text-sm font-bold text-slate-700 shadow-sm">
+                      <div className="rounded-full border border-slate-100 bg-white px-4 py-1.5 text-sm font-bold text-text-dark shadow-sm">
                         Tahun {item.year}
                       </div>
                     </div>
 
                     <div className="relative z-10">
-                      <h4 className="mb-3 text-[18px] leading-[1.3] font-extrabold text-[#0B132B] md:text-[19px]">
+                      <h4 className="mb-3 text-[18px] leading-snug font-extrabold text-[#0B132B] md:text-[19px]">
                         {item.title}
                       </h4>
-                      <p className="text-[14px] leading-[1.6] font-medium text-slate-600">
+                      <p className="text-[14px] leading-[1.6] font-medium text-text-muted">
                         {item.desc}
                       </p>
                     </div>
@@ -670,21 +662,21 @@ function SectionHeader({
 }: {
   title: string;
   subtitle?: string;
-  icon?: any;
+  icon?: LucideIcon;
 }) {
   return (
     <div className="mb-12 border-b border-slate-100 pb-6">
-      <p className="mb-3 text-[11px] font-black tracking-widest text-[#0f3b9e] uppercase">
+      <p className="mb-3 text-[11px] font-black tracking-widest text-brand-dark uppercase">
         {subtitle || "KELURAHAN WERGU WETAN"}
       </p>
-      <h2 className="text-3xl leading-[1.1] font-bold tracking-tight text-slate-900 md:text-4xl">
+      <h2 className="text-3xl leading-tight font-bold tracking-tight text-text-dark md:text-4xl">
         {title}
       </h2>
     </div>
   );
 }
 
-function CardPerangkat({ data, isLurah }: { data: any; isLurah?: boolean }) {
+function CardPerangkat({ data, isLurah }: { data: PerangkatDesa & { foto?: string | null }; isLurah?: boolean }) {
   return (
     <div
       className={`group relative overflow-hidden rounded-xl border bg-white shadow-sm transition-all duration-300 hover:shadow-xl ${
@@ -692,7 +684,7 @@ function CardPerangkat({ data, isLurah }: { data: any; isLurah?: boolean }) {
       }`}
     >
       {isLurah && (
-        <div className="absolute top-3 right-3 z-10 rounded-full bg-blue-600 px-2.5 py-1 text-[9px] font-black tracking-widest text-white uppercase">
+        <div className="absolute top-3 right-3 z-10 rounded-full bg-brand-base px-2.5 py-1 text-[9px] font-black tracking-widest text-white uppercase">
           Pimpinan
         </div>
       )}
@@ -716,16 +708,16 @@ function CardPerangkat({ data, isLurah }: { data: any; isLurah?: boolean }) {
         </div>
         {/* Info */}
         <div className="min-w-0 flex-1">
-          <p className="mb-1 text-[9px] font-black tracking-widest text-blue-600 uppercase">
+          <p className="mb-1 text-[9px] font-black tracking-widest text-brand-base uppercase">
             {data.jabatan}
           </p>
           <h4
-            className={`leading-tight font-bold text-slate-800 ${isLurah ? "text-base" : "text-sm"}`}
+            className={`leading-tight font-bold text-text-dark ${isLurah ? "text-base" : "text-sm"}`}
           >
             {data.nama}
           </h4>
           {data.nip && (
-            <p className="mt-2 inline-block rounded-lg bg-slate-50 px-2 py-0.5 font-mono text-[10px] text-slate-400">
+            <p className="mt-2 inline-block rounded-lg bg-slate-50 px-2 py-0.5 font-mono text-[10px] text-text-muted">
               NIP. {data.nip}
             </p>
           )}
@@ -739,21 +731,8 @@ function CardPerangkat({ data, isLurah }: { data: any; isLurah?: boolean }) {
   );
 }
 
-function StatCard({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="group rounded-xl border border-slate-100 bg-white p-5 md:p-8 text-center shadow-sm transition-all duration-300 hover:bg-blue-600 hover:shadow-xl hover:shadow-blue-200">
-      <h3 className="mb-1 text-3xl font-extrabold text-slate-800 transition-colors group-hover:text-white">
-        {value}
-      </h3>
-      <p className="text-xs font-bold tracking-wider text-slate-500 uppercase transition-colors group-hover:text-blue-100">
-        {label}
-      </p>
-    </div>
-  );
-}
-
 // STRUKTUR KOTAK KOSONG (Tanpa Foto dan Nama)
-function GovStructureNode({ data, rank }: { data: any; rank: "top" | "mid" | "kasi" | "staf" }) {
+function GovStructureNode({ data, rank }: { data: PerangkatDesa; rank: "top" | "mid" | "kasi" | "staf" }) {
   const isTop = rank === "top";
   const isMid = rank === "mid";
   const isKasi = rank === "kasi";
@@ -763,12 +742,12 @@ function GovStructureNode({ data, rank }: { data: any; rank: "top" | "mid" | "ka
 
   const bgCls = isTop ? "bg-blue-50" : "bg-white";
   const textCls = isTop
-    ? "text-blue-700 text-[13px]"
+    ? "text-brand-dark text-[13px]"
     : isMid
-      ? "text-blue-700 text-[12px]"
+      ? "text-brand-dark text-[12px]"
       : isKasi
-        ? "text-blue-600 text-[11px]"
-        : "text-slate-600 text-[10px]";
+        ? "text-brand-base text-[11px]"
+        : "text-text-muted text-[10px]";
 
   return (
     <div className="flex flex-col items-center" style={{ width: W }}>
@@ -801,29 +780,29 @@ function VisiMisiRenderer({
 
       <div className="relative z-10">
         {!isContentEmpty ? (
-          <div className="prose prose-slate prose-headings:text-[14px] prose-headings:font-black prose-headings:text-slate-800 prose-headings:uppercase prose-headings:tracking-[0.15em] prose-headings:mb-4 prose-headings:mt-8 first:prose-headings:mt-0 prose-p:text-slate-700 prose-p:mb-6 last:prose-p:mb-0 prose-strong:font-black prose-strong:text-slate-800 prose-li:text-slate-700 prose-li:marker:text-slate-400 prose-li:marker:font-bold prose-ul:my-4 prose-ol:my-4 max-w-none text-justify text-[15px] leading-relaxed text-slate-700 md:text-[16px]">
+          <div className="prose prose-slate prose-headings:text-[14px] prose-headings:font-black prose-headings:text-text-dark prose-headings:uppercase prose-headings:tracking-[0.15em] prose-headings:mb-4 prose-headings:mt-8 first:prose-headings:mt-0 prose-p:text-text-dark prose-p:mb-6 last:prose-p:mb-0 prose-strong:font-black prose-strong:text-text-dark prose-li:text-text-dark prose-li:marker:text-text-muted prose-li:marker:font-bold prose-ul:my-4 prose-ol:my-4 max-w-none text-justify text-[15px] leading-relaxed text-text-dark md:text-[16px]">
             <div dangerouslySetInnerHTML={{ __html: html! }} />
           </div>
         ) : (
           <>
             {/* VISI */}
             <div className="mb-8">
-              <h4 className="mb-4 text-[14px] font-black tracking-widest text-slate-800 uppercase">
+              <h4 className="mb-4 text-[14px] font-black tracking-widest text-text-dark uppercase">
                 VISI
               </h4>
-              <p className="text-justify text-[15px] leading-relaxed text-slate-700 md:text-[16px]">
+              <p className="text-justify text-[15px] leading-relaxed text-text-dark md:text-[16px]">
                 {fallback.visi}
               </p>
             </div>
 
             {/* MISI */}
             <div>
-              <h4 className="mb-4 text-[14px] font-black tracking-widest text-slate-800 uppercase">
+              <h4 className="mb-4 text-[14px] font-black tracking-widest text-text-dark uppercase">
                 MISI
               </h4>
-              <ol className="list-decimal space-y-2 pl-5 text-justify text-[15px] leading-relaxed text-slate-700 md:text-[16px]">
+              <ol className="list-decimal space-y-2 pl-5 text-justify text-[15px] leading-relaxed text-text-dark md:text-[16px]">
                 {fallback.misi.map((misi, i) => (
-                  <li key={i} className="pl-1 marker:font-bold marker:text-slate-400">
+                  <li key={i} className="pl-1 marker:font-bold marker:text-text-muted">
                     {misi}
                   </li>
                 ))}
@@ -853,29 +832,29 @@ function TugasFungsiRenderer({
 
       <div className="relative z-10">
         {!isContentEmpty ? (
-          <div className="prose prose-slate prose-headings:text-[14px] prose-headings:font-black prose-headings:text-slate-800 prose-headings:uppercase prose-headings:tracking-[0.15em] prose-headings:mb-4 prose-headings:mt-8 first:prose-headings:mt-0 prose-p:text-slate-700 prose-p:mb-6 last:prose-p:mb-0 prose-strong:font-black prose-strong:text-slate-800 prose-li:text-slate-700 prose-li:marker:text-slate-400 prose-li:marker:font-bold prose-ul:my-4 prose-ol:my-4 max-w-none text-justify text-[15px] leading-relaxed text-slate-700 md:text-[16px]">
+          <div className="prose prose-slate prose-headings:text-[14px] prose-headings:font-black prose-headings:text-text-dark prose-headings:uppercase prose-headings:tracking-[0.15em] prose-headings:mb-4 prose-headings:mt-8 first:prose-headings:mt-0 prose-p:text-text-dark prose-p:mb-6 last:prose-p:mb-0 prose-strong:font-black prose-strong:text-text-dark prose-li:text-text-dark prose-li:marker:text-text-muted prose-li:marker:font-bold prose-ul:my-4 prose-ol:my-4 max-w-none text-justify text-[15px] leading-relaxed text-text-dark md:text-[16px]">
             <div dangerouslySetInnerHTML={{ __html: html! }} />
           </div>
         ) : (
           <>
             {/* TUGAS */}
             <div className="mb-8">
-              <h4 className="mb-4 text-[14px] font-black tracking-widest text-slate-800 uppercase">
+              <h4 className="mb-4 text-[14px] font-black tracking-widest text-text-dark uppercase">
                 TUGAS POKOK
               </h4>
-              <p className="text-justify text-[15px] leading-relaxed text-slate-700 md:text-[16px]">
+              <p className="text-justify text-[15px] leading-relaxed text-text-dark md:text-[16px]">
                 {fallback.tugas}
               </p>
             </div>
 
             {/* FUNGSI */}
             <div>
-              <h4 className="mb-4 text-[14px] font-black tracking-widest text-slate-800 uppercase">
+              <h4 className="mb-4 text-[14px] font-black tracking-widest text-text-dark uppercase">
                 FUNGSI UTAMA
               </h4>
-              <ol className="list-decimal space-y-2 pl-5 text-justify text-[15px] leading-relaxed text-slate-700 md:text-[16px]">
+              <ol className="list-decimal space-y-2 pl-5 text-justify text-[15px] leading-relaxed text-text-dark md:text-[16px]">
                 {fallback.fungsi.map((f, i) => (
-                  <li key={i} className="pl-1 marker:font-bold marker:text-slate-400">
+                  <li key={i} className="pl-1 marker:font-bold marker:text-text-muted">
                     {f}
                   </li>
                 ))}
@@ -885,27 +864,5 @@ function TugasFungsiRenderer({
         )}
       </div>
     </div>
-  );
-}
-
-// Simple Rocket Icon Helper
-function RocketIcon({ className, size }: { className?: string; size?: number }) {
-  return (
-    <svg
-      className={className}
-      width={size}
-      height={size}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z" />
-      <path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z" />
-      <path d="M9 12H4s.55-3.03 2-5c1.62-2.2 5-3 5-3" />
-      <path d="M12 15v5s3.03-.55 5-2c2.2-1.62 3-5 3-5" />
-    </svg>
   );
 }

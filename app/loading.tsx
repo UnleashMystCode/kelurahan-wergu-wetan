@@ -10,9 +10,9 @@ export default function Loading() {
       <div className="relative mt-[-100px] flex h-[600px] w-full flex-col items-center justify-center bg-slate-900 px-4 pt-[100px]">
         {/* Soft pulsing elements to mimic the text/title */}
         <div className="flex w-full max-w-3xl flex-col items-center justify-center space-y-6">
-          <div className="h-6 w-32 rounded-full bg-slate-800 animate-pulse" />
-          <div className="h-16 w-3/4 rounded-2xl bg-slate-800 animate-pulse md:w-1/2" />
-          <div className="h-4 w-1/2 rounded-full bg-slate-800 animate-pulse" />
+          <div className="h-6 w-32 rounded-full bg-text-dark animate-pulse" />
+          <div className="h-16 w-3/4 rounded-2xl bg-text-dark animate-pulse md:w-1/2" />
+          <div className="h-4 w-1/2 rounded-full bg-text-dark animate-pulse" />
         </div>
       </div>
 

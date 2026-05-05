@@ -113,7 +113,7 @@ export default function AdminLoginPage() {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: 10 }}
-                  className="absolute left-0 z-50 mt-2 w-64 overflow-hidden rounded-xl bg-white py-2 text-slate-800 shadow-2xl ring-1 ring-black/5"
+                  className="absolute left-0 z-50 mt-2 w-64 overflow-hidden rounded-xl bg-white py-2 text-text-dark shadow-2xl ring-1 ring-black/5"
                 >
                   {/* Opsi Admin Biasa */}
                   <button
@@ -127,8 +127,8 @@ export default function AdminLoginPage() {
                       <ShieldCheck size={16} />
                     </div>
                     <div className="flex-1 text-left">
-                      <p className="text-sm font-bold text-slate-800">Admin Biasa</p>
-                      <p className="text-[10px] text-slate-500">Akses layanan surat & berita</p>
+                      <p className="text-sm font-bold text-text-dark">Admin Biasa</p>
+                      <p className="text-[10px] text-text-muted">Akses layanan surat & berita</p>
                     </div>
                     {role === "admin" && <Check size={16} className="text-blue-600" />}
                   </button>
@@ -145,8 +145,8 @@ export default function AdminLoginPage() {
                       <ShieldAlert size={16} />
                     </div>
                     <div className="flex-1 text-left">
-                      <p className="text-sm font-bold text-slate-800">Super Admin</p>
-                      <p className="text-[10px] text-slate-500">Akses penuh sistem & user</p>
+                      <p className="text-sm font-bold text-text-dark">Super Admin</p>
+                      <p className="text-[10px] text-text-muted">Akses penuh sistem & user</p>
                     </div>
                     {role === "super" && <Check size={16} className="text-red-600" />}
                   </button>
@@ -196,15 +196,15 @@ export default function AdminLoginPage() {
             >
               {role === "super" ? <ShieldAlert size={32} /> : <ShieldCheck size={32} />}
             </div>
-            <h1 className="text-2xl font-bold text-slate-800">
+            <h1 className="text-2xl font-bold text-text-dark">
               {role === "super" ? "Login Super Admin" : "Login Petugas"}
             </h1>
-            <p className="mt-2 text-sm text-slate-500">Masukkan kredensial Anda yang terdaftar.</p>
+            <p className="mt-2 text-sm text-text-muted">Masukkan kredensial Anda yang terdaftar.</p>
           </div>
 
           <form onSubmit={handleLogin} className="space-y-5">
             <div className="space-y-1.5">
-              <label className="ml-1 text-xs font-bold text-slate-700">Email / NIP</label>
+              <label className="ml-1 text-xs font-bold text-text-dark">Email / NIP</label>
               <div className="group relative">
                 <Mail
                   className="absolute top-1/2 left-4 -translate-y-1/2 text-slate-400 group-focus-within:text-blue-500"
@@ -224,7 +224,7 @@ export default function AdminLoginPage() {
             </div>
 
             <div className="space-y-1.5">
-              <label className="ml-1 text-xs font-bold text-slate-700">Password</label>
+              <label className="ml-1 text-xs font-bold text-text-dark">Password</label>
               <div className="group relative">
                 <Lock
                   className="absolute top-1/2 left-4 -translate-y-1/2 text-slate-400 group-focus-within:text-blue-500"
@@ -235,7 +235,7 @@ export default function AdminLoginPage() {
                   value={formData.password}
                   onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                   placeholder="••••••••"
-                  className={`w-full rounded-xl border bg-slate-50 py-3.5 pr-12 pl-12 text-sm text-slate-800 transition-all placeholder:text-slate-400 focus:ring-2 focus:outline-none ${role === "super" ? "focus:border-red-500 focus:ring-red-500/20" : "focus:border-blue-500 focus:ring-blue-500/20"}`}
+                  className={`w-full rounded-xl border bg-slate-50 py-3.5 pr-12 pl-12 text-sm text-text-dark transition-all placeholder:text-slate-400 focus:ring-2 focus:outline-none ${role === "super" ? "focus:border-red-500 focus:ring-red-500/20" : "focus:border-blue-500 focus:ring-blue-500/20"}`}
                   required
                 />
                 <button
@@ -266,7 +266,7 @@ export default function AdminLoginPage() {
           <div className="mt-8 text-center">
             <Link
               href="/home"
-              className="inline-flex items-center gap-1 text-sm font-medium text-slate-500 transition-colors hover:text-blue-600"
+              className="inline-flex items-center gap-1 text-sm font-medium text-text-muted transition-colors hover:text-blue-600"
             >
               &larr; Kembali ke Website Utama
             </Link>

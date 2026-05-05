@@ -111,14 +111,14 @@ export default function Navbar() {
             <div className="flex h-[34px] flex-col justify-between whitespace-nowrap">
               <h1
                 className={`text-xl leading-tight font-bold transition-colors duration-500 md:text-2xl ${
-                  scrolled || isOpen ? "text-slate-800" : "text-white"
+                  scrolled || isOpen ? "text-text-dark" : "text-white"
                 }`}
               >
                 Wergu Wetan
               </h1>
               <p
                 className={`text-[9px] font-medium tracking-[0.2em] uppercase transition-colors duration-500 ${
-                  scrolled || isOpen ? "text-slate-500" : "text-blue-200"
+                  scrolled || isOpen ? "text-text-muted" : "text-blue-200"
                 }`}
               >
                 {t.navbar.city}
@@ -157,14 +157,14 @@ export default function Navbar() {
                         className={`group relative text-sm font-bold whitespace-nowrap transition-colors duration-300 ${
                           scrolled
                             ? isActive(item.path)
-                              ? "text-blue-600"
-                              : "text-slate-600 hover:text-blue-600"
+                              ? "text-brand-base"
+                              : "text-text-muted hover:text-brand-base"
                             : "text-white"
                         }`}
                       >
                         {item.name}
                         <span
-                          className={`absolute -bottom-1 left-0 h-0.5 bg-blue-600 transition-all duration-300 ${isActive(item.path) ? "w-full" : "w-0 group-hover:w-full"}`}
+                          className={`absolute -bottom-1 left-0 h-0.5 bg-brand-base transition-all duration-300 ${isActive(item.path) ? "w-full" : "w-0 group-hover:w-full"}`}
                         ></span>
                       </Link>
                     ))}
@@ -176,7 +176,7 @@ export default function Navbar() {
                       onClick={() => setIsSearchOpen(true)}
                       className={`flex items-center justify-center rounded-xl p-2.5 transition-all duration-300 ${
                         scrolled
-                          ? "text-slate-600 hover:bg-slate-100 hover:text-blue-600"
+                          ? "text-text-muted hover:bg-slate-100 hover:text-brand-base"
                           : "text-white hover:bg-white/10 hover:text-white"
                       }`}
                     >
@@ -187,8 +187,8 @@ export default function Navbar() {
                       href="/ayo-sehat"
                       className={`ml-1 flex items-center justify-center rounded-full px-5 py-2 text-[13.5px] font-medium tracking-wide whitespace-nowrap transition-all duration-300 ${
                         scrolled
-                          ? "border border-slate-300 bg-transparent text-slate-700 hover:border-[#1a56db] hover:bg-[#1a56db] hover:text-white"
-                          : "border border-white/60 bg-transparent text-white hover:bg-white hover:text-slate-900"
+                          ? "border border-slate-300 bg-transparent text-text-dark hover:border-brand-base hover:bg-brand-base hover:text-white"
+                          : "border border-white/60 bg-transparent text-white hover:bg-white hover:text-text-dark"
                       }`}
                     >
                       Ayo Sehat!
@@ -200,10 +200,10 @@ export default function Navbar() {
 
           {/* TOMBOL MOBILE MENU */}
           <div
-            className={`relative z-20 transition-opacity md:hidden ${isSearchOpen ? "pointer-events-none opacity-0" : "opacity-100"}`}
+            className={`relative z-20 shrink-0 transition-opacity md:hidden ${isSearchOpen ? "pointer-events-none opacity-0" : "opacity-100"}`}
           >
             <button
-              className={`rounded-lg p-2 transition-colors ${scrolled || isOpen ? "text-slate-800 hover:bg-slate-100" : "text-white hover:bg-white/10"}`}
+              className={`rounded-lg p-2 transition-colors ${scrolled || isOpen ? "text-text-dark hover:bg-slate-100" : "text-white hover:bg-white/10"}`}
               onClick={() => setIsOpen(!isOpen)}
             >
               {isOpen ? <X size={24} /> : <Menu size={24} />}
@@ -226,7 +226,7 @@ export default function Navbar() {
               {/* MOBILE SEARCH BAR */}
               <div className="relative mb-2 border-b-2 border-slate-100 pb-6">
                 <div className="absolute inset-y-0 left-0 flex items-center pl-4 pb-6">
-                  <Search size={18} className="text-slate-400" />
+                  <Search size={18} className="text-text-muted" />
                 </div>
                 <input
                   readOnly
@@ -236,7 +236,7 @@ export default function Navbar() {
                   }}
                   type="text"
                   placeholder="Cari layanan, berita..."
-                  className="cursor-pointer w-full rounded-xl border-2 border-slate-200 bg-slate-50 py-3.5 pl-11 pr-4 text-sm font-medium text-slate-800 shadow-sm outline-none transition-all hover:bg-white hover:border-blue-500 placeholder:text-slate-400"
+                  className="cursor-pointer w-full rounded-xl border-2 border-slate-200 bg-slate-50 py-3.5 pl-11 pr-4 text-sm font-medium text-text-dark shadow-sm outline-none transition-all hover:bg-white hover:border-brand-base placeholder:text-text-muted"
                 />
               </div>
 
@@ -259,13 +259,13 @@ export default function Navbar() {
                       }
                     }}
                     className={`flex items-center justify-between text-lg font-bold ${
-                      isActive(item.path) ? "text-blue-600" : "text-slate-600"
+                      isActive(item.path) ? "text-brand-base" : "text-text-muted"
                     }`}
                   >
                     {item.name}
                     <ChevronRight
                       size={18}
-                      className={isActive(item.path) ? "text-blue-600" : "text-slate-300"}
+                      className={`shrink-0 ${isActive(item.path) ? "text-brand-base" : "text-slate-300"}`}
                     />
                   </Link>
                 </motion.div>

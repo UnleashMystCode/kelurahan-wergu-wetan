@@ -14,7 +14,7 @@ export default function BeritaDetailView({ berita }: { berita: any }) {
   return (
     <div className="min-h-screen bg-slate-50 pb-20">
       {/* 1. HERO HEADER (Dark background for navbar & text) */}
-      <div className="relative flex w-full flex-col justify-center bg-slate-900 px-4 pt-[180px] pb-[100px] md:pt-[220px] md:pb-[140px]">
+      <div className="relative flex w-full flex-col justify-center bg-text-dark px-4 pt-[180px] pb-[100px] md:pt-[220px] md:pb-[140px]">
         {/* Background Image */}
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-50 mix-blend-overlay"
@@ -40,7 +40,7 @@ export default function BeritaDetailView({ berita }: { berita: any }) {
             </Link>
 
             <div className="mb-4 flex flex-wrap items-center gap-3 text-sm font-bold">
-              <span className="flex items-center gap-1.5 rounded-full bg-blue-500/20 border border-blue-400/30 px-3 py-1 text-[11px] tracking-wider text-blue-300 uppercase backdrop-blur-md">
+              <span className="flex items-center gap-1.5 rounded-full bg-brand-base/20 border border-blue-400/30 px-3 py-1 text-[11px] tracking-wider text-blue-300 uppercase backdrop-blur-md">
                 <Tag size={12} /> {berita.kategori}
               </span>
               <span className="text-white/30">•</span>
@@ -59,7 +59,7 @@ export default function BeritaDetailView({ berita }: { berita: any }) {
             </h1>
 
             <div className="flex items-center gap-4">
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-blue-600 text-lg font-bold text-white shadow-md">
+              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-brand-base text-lg font-bold text-white shadow-md">
                 {berita.penulis ? berita.penulis.charAt(0).toUpperCase() : "A"}
               </div>
               <div>
@@ -86,18 +86,18 @@ export default function BeritaDetailView({ berita }: { berita: any }) {
           {(!berita.isi || berita.isi.trim() === '' || berita.isi === '<p></p>' || berita.isi === '<p><br></p>') ? (
             <div className="flex flex-col items-center justify-center rounded-3xl border border-dashed border-slate-300 bg-slate-100/50 px-6 py-20 text-center shadow-sm">
               <div className="mb-6 flex h-24 w-24 items-center justify-center rounded-full bg-white shadow-sm ring-4 ring-slate-50">
-                <FileClock className="h-10 w-10 text-slate-400" />
+                <FileClock className="h-10 w-10 text-text-muted" />
               </div>
-              <h2 className="mb-3 text-2xl font-black text-slate-800">
+              <h2 className="mb-3 text-2xl font-black text-text-dark">
                 Konten Sedang Disiapkan
               </h2>
-              <p className="mx-auto max-w-md text-slate-500 leading-relaxed">
+              <p className="mx-auto max-w-md text-text-muted leading-relaxed">
                 Redaksi kami sedang menyusun dan meninjau isi dari artikel berita ini. Silakan kunjungi kembali halaman ini dalam waktu dekat untuk membaca informasi selengkapnya.
               </p>
             </div>
           ) : (
             <article 
-              className="prose prose-slate prose-headings:font-bold prose-a:text-blue-600 prose-img:w-full prose-img:max-w-full prose-img:rounded-xl md:prose-lg w-full max-w-none break-words overflow-wrap-anywhere prose-p:leading-relaxed prose-p:text-slate-700" 
+              className="prose prose-slate prose-headings:font-bold prose-a:text-brand-base prose-img:w-full prose-img:max-w-full prose-img:rounded-xl md:prose-lg w-full max-w-none break-words overflow-wrap-anywhere prose-p:leading-relaxed prose-p:text-text-dark" 
               style={{ fontFamily: "Georgia, 'Times New Roman', Times, serif" }}
             >
               <div dangerouslySetInnerHTML={{ __html: berita.isi }} />
@@ -106,17 +106,17 @@ export default function BeritaDetailView({ berita }: { berita: any }) {
 
           {/* 3. FOOTER / SHARE */}
           <div className="mt-16 flex items-center justify-between border-t border-slate-200 pt-8">
-            <p className="text-sm font-bold tracking-widest text-slate-400 uppercase">
+            <p className="text-sm font-bold tracking-widest text-text-muted uppercase">
               Bagikan Artikel
             </p>
             <div className="flex gap-4">
-              <button className="text-sm font-medium text-slate-400 transition-colors hover:text-blue-600">
+              <button className="text-sm font-medium text-text-muted transition-colors hover:text-brand-base">
                 Facebook
               </button>
-              <button className="text-sm font-medium text-slate-400 transition-colors hover:text-blue-400">
+              <button className="text-sm font-medium text-text-muted transition-colors hover:text-blue-400">
                 Twitter
               </button>
-              <button className="text-sm font-medium text-slate-400 transition-colors hover:text-green-600">
+              <button className="text-sm font-medium text-text-muted transition-colors hover:text-green-600">
                 WhatsApp
               </button>
             </div>

@@ -5,10 +5,47 @@
  */
 
 import { PrismaClient } from "@prisma/client";
+import bcrypt from "bcryptjs";
+
 const prisma = new PrismaClient();
 
 async function main() {
-  console.log("🌱 Mulai seeding database...");
+  console.log("🚀 Mulai seeding database...");
+
+  // ===== 0. SEED ADMIN AKUN =====
+  const hashedPasswordAdmin = await bcrypt.hash("admin", 10);
+  await prisma.admin.upsert({
+    where: { username: "admin" },
+    update: {
+      passwordHash: hashedPasswordAdmin,
+      role: "admin",
+      namaLengkap: "Petugas Biasa"
+    },
+    create: {
+      username: "admin",
+      passwordHash: hashedPasswordAdmin,
+      namaLengkap: "Petugas Biasa",
+      role: "admin",
+    },
+  });
+  console.log("✅ Akun Petugas Biasa (admin) berhasil disiapkan.");
+
+  const hashedPasswordSuper = await bcrypt.hash("superadmin", 10);
+  await prisma.admin.upsert({
+    where: { username: "superadmin" },
+    update: {
+      passwordHash: hashedPasswordSuper,
+      role: "super",
+      namaLengkap: "Super Administrator"
+    },
+    create: {
+      username: "superadmin",
+      passwordHash: hashedPasswordSuper,
+      namaLengkap: "Super Administrator",
+      role: "super",
+    },
+  });
+  console.log("✅ Akun Super Admin (superadmin) berhasil disiapkan.");
 
   // ===== 1. BANNER HOMEPAGE =====
   const bannerCount = await prisma.bannerHomepage.count();
@@ -241,95 +278,87 @@ Wassalamu'alaikum Wr. Wb.`,
   }
 
   // ===== 7. BERITA CONTOH =====
-  const kegiatanCount = await prisma.kegiatan.count();
-  if (kegiatanCount === 0) {
-    await prisma.kegiatan.createMany({
-      data: [
-        {
-          judul: "Peluncuran Portal Layanan Digital Kelurahan Wergu Wetan",
-          slug: "peluncuran-portal-layanan-digital-" + Date.now(),
-          isi: "Kelurahan Wergu Wetan resmi meluncurkan portal layanan digital yang memungkinkan warga mengajukan keperluan administrasi secara online. Portal ini diharapkan dapat memangkas waktu tunggu dan meningkatkan kualitas pelayanan kepada masyarakat.",
-          gambar: "/images/hero_office.png",
-          kategori: "Pengumuman",
-          penulis: "Admin Kelurahan",
-          status: "Aktif",
-        },
-        {
-          judul: "Kegiatan Gotong Royong Bersih Lingkungan RT 03 RW 02",
-          slug: "gotong-royong-bersih-lingkungan-" + (Date.now() + 1),
-          isi: "Warga RT 03 RW 02 Kelurahan Wergu Wetan mengadakan kegiatan gotong royong membersihkan lingkungan sekitar. Kegiatan ini diikuti oleh lebih dari 50 warga dan mendapat apresiasi dari pihak kelurahan.",
-          gambar: "/images/hero_community.png",
-          kategori: "Kegiatan",
-          penulis: "Admin Kelurahan",
-          status: "Aktif",
-        },
-        {
-          judul: "Sosialisasi Program Bansos Tahun 2026 untuk Warga Kurang Mampu",
-          slug: "sosialisasi-program-bansos-2026-" + (Date.now() + 2),
-          isi: "Kelurahan Wergu Wetan mengadakan sosialisasi program bantuan sosial tahun 2026. Warga yang memenuhi syarat dapat mendaftarkan diri melalui RT/RW setempat paling lambat akhir bulan ini.",
-          gambar: "/images/hero_digital.png",
-          kategori: "Pengumuman",
-          penulis: "Admin Kelurahan",
-          status: "Aktif",
-        },
-      ],
-    });
-    console.log("✅ Berita contoh selesai");
-  } else {
-    console.log("⏩ Berita sudah ada, skip.");
-  }
+  console.log("Menambahkan Berita Dummy...");
+  await prisma.kegiatan.createMany({
+    data: [
+      {
+        judul: "Peluncuran Portal Layanan Digital Kelurahan Wergu Wetan",
+        slug: "peluncuran-portal-layanan-digital-" + Date.now(),
+        isi: "Kelurahan Wergu Wetan resmi meluncurkan portal layanan digital yang memungkinkan warga mengajukan keperluan administrasi secara online. Portal ini diharapkan dapat memangkas waktu tunggu dan meningkatkan kualitas pelayanan kepada masyarakat.",
+        gambar: "/images/hero_office.png",
+        kategori: "Pengumuman",
+        penulis: "Admin Kelurahan",
+        status: "Aktif",
+      },
+      {
+        judul: "Kegiatan Gotong Royong Bersih Lingkungan RT 03 RW 02",
+        slug: "gotong-royong-bersih-lingkungan-" + (Date.now() + 1),
+        isi: "Warga RT 03 RW 02 Kelurahan Wergu Wetan mengadakan kegiatan gotong royong membersihkan lingkungan sekitar. Kegiatan ini diikuti oleh lebih dari 50 warga dan mendapat apresiasi dari pihak kelurahan.",
+        gambar: "/images/hero_community.png",
+        kategori: "Kegiatan",
+        penulis: "Admin Kelurahan",
+        status: "Aktif",
+      },
+      {
+        judul: "Sosialisasi Program Bansos Tahun 2026 untuk Warga Kurang Mampu",
+        slug: "sosialisasi-program-bansos-2026-" + (Date.now() + 2),
+        isi: "Kelurahan Wergu Wetan mengadakan sosialisasi program bantuan sosial tahun 2026. Warga yang memenuhi syarat dapat mendaftarkan diri melalui RT/RW setempat paling lambat akhir bulan ini.",
+        gambar: "/images/hero_digital.png",
+        kategori: "Pengumuman",
+        penulis: "Admin Kelurahan",
+        status: "Aktif",
+      },
+    ],
+  });
+  console.log("✅ Berita contoh selesai");
 
   // ===== 8. POTENSI DESA CONTOH =====
-  const potensiCount = await prisma.potensiDesa.count();
-  if (potensiCount === 0) {
-    await prisma.potensiDesa.createMany({
-      data: [
-        {
-          judul: "Pasar Tradisional Wergu",
-          slug: "pasar-tradisional-wergu",
-          deskripsiSingkat: "Pusat perniagaan warga lokal dengan beragam bahan kebutuhan pokok, sayuran segar, dan komoditas harian.",
-          isi: "Pasar Tradisional Wergu merupakan jantung ekonomi warga kelurahan. Terletak strategis di jalan utama, pasar ini beroperasi sejak fajar menyingsing, menyediakan bahan pangan segar langsung dari petani sekitar. Pasar ini tidak hanya menjadi tempat jual beli, tetapi juga ruang interaksi sosial warga sehari-hari.",
-          gambar: "/images/hero_office.png",
-          kategori: "Ekonomi & UMKM",
-          penulis: "Admin Kelurahan",
-          status: "Aktif",
-        },
-        {
-          judul: "Karang Taruna Tunas Muda",
-          slug: "karang-taruna-tunas-muda",
-          deskripsiSingkat: "Wadah pengembangan generasi muda yang aktif dalam kegiatan sosial, olahraga, dan kreativitas lingkungan.",
-          isi: "Karang Taruna Tunas Muda adalah organisasi kepemudaan unggulan di Kelurahan Wergu Wetan. Mereka secara rutin menyelenggarakan kegiatan yang bermanfaat, seperti kerja bakti, turnamen olahraga antar RT, dan pelatihan kewirausahaan untuk pemuda. Organisasi ini telah mencetak banyak inovator muda yang berkontribusi bagi desa.",
-          gambar: "/images/hero_community.png",
-          kategori: "Sosial & Organisasi",
-          penulis: "Admin Kelurahan",
-          status: "Aktif",
-        },
-        {
-          judul: "Taman Balai Jagong",
-          slug: "taman-balai-jagong",
-          deskripsiSingkat: "Ruang terbuka hijau terbesar di Kudus yang menjadi pusat interaksi warga, olahraga, dan rekreasi keluarga.",
-          isi: "Taman Balai Jagong bukan sekadar ikon Kelurahan Wergu Wetan, melainkan kebanggaan seluruh warga Kudus. Dengan area yang luas, jogging track yang nyaman, serta sentra kuliner yang tertata rapi, tempat ini selalu dipadati pengunjung pada akhir pekan. Taman ini menjadi bukti nyata komitmen pemerintah dalam menyediakan ruang publik yang sehat dan ramah keluarga.",
-          gambar: "/images/hero_neighborhood.png",
-          kategori: "Ikonik & Fasilitas",
-          penulis: "Admin Kelurahan",
-          status: "Aktif",
-        },
-        {
-          judul: "Masjid Baitul Muttaqin",
-          slug: "masjid-baitul-muttaqin",
-          deskripsiSingkat: "Pusat kegiatan ibadah utama bagi warga muslim, rutin mengadakan kajian, TPQ, dan kegiatan amaliyah lainnya.",
-          isi: "Sebagai pusat keagamaan warga, Masjid Baitul Muttaqin berdiri megah dan selalu makmur oleh aktivitas peribadatan jamaah. Selain menjadi tempat shalat lima waktu, masjid ini juga memiliki program Taman Pendidikan Al-Qur'an (TPQ) yang aktif mendidik anak-anak desa. Setiap bulan, diselenggarakan kajian keislaman yang mempererat ukhuwah islamiyah antar warga.",
-          gambar: "/images/hero_digital.png",
-          kategori: "Keagamaan",
-          penulis: "Admin Kelurahan",
-          status: "Aktif",
-        },
-      ],
-    });
-    console.log("✅ Potensi Desa contoh selesai");
-  } else {
-    console.log("⏩ Potensi Desa sudah ada, skip.");
-  }
+  console.log("Menambahkan Potensi Dummy...");
+  await prisma.potensiDesa.createMany({
+    data: [
+      {
+        judul: "Pasar Tradisional Wergu",
+        slug: "pasar-tradisional-wergu",
+        deskripsiSingkat: "Pusat perniagaan warga lokal dengan beragam bahan kebutuhan pokok, sayuran segar, dan komoditas harian.",
+        isi: "Pasar Tradisional Wergu merupakan jantung ekonomi warga kelurahan. Terletak strategis di jalan utama, pasar ini beroperasi sejak fajar menyingsing, menyediakan bahan pangan segar langsung dari petani sekitar. Pasar ini tidak hanya menjadi tempat jual beli, tetapi juga ruang interaksi sosial warga sehari-hari.",
+        gambar: "/images/hero_office.png",
+        kategori: "Ekonomi & UMKM",
+        penulis: "Admin Kelurahan",
+        status: "Aktif",
+      },
+      {
+        judul: "Karang Taruna Tunas Muda",
+        slug: "karang-taruna-tunas-muda",
+        deskripsiSingkat: "Wadah pengembangan generasi muda yang aktif dalam kegiatan sosial, olahraga, dan kreativitas lingkungan.",
+        isi: "Karang Taruna Tunas Muda adalah organisasi kepemudaan unggulan di Kelurahan Wergu Wetan. Mereka secara rutin menyelenggarakan kegiatan yang bermanfaat, seperti kerja bakti, turnamen olahraga antar RT, dan pelatihan kewirausahaan untuk pemuda. Organisasi ini telah mencetak banyak inovator muda yang berkontribusi bagi desa.",
+        gambar: "/images/hero_community.png",
+        kategori: "Sosial & Organisasi",
+        penulis: "Admin Kelurahan",
+        status: "Aktif",
+      },
+      {
+        judul: "Taman Balai Jagong",
+        slug: "taman-balai-jagong",
+        deskripsiSingkat: "Ruang terbuka hijau terbesar di Kudus yang menjadi pusat interaksi warga, olahraga, dan rekreasi keluarga.",
+        isi: "Taman Balai Jagong bukan sekadar ikon Kelurahan Wergu Wetan, melainkan kebanggaan seluruh warga Kudus. Dengan area yang luas, jogging track yang nyaman, serta sentra kuliner yang tertata rapi, tempat ini selalu dipadati pengunjung pada akhir pekan. Taman ini menjadi bukti nyata komitmen pemerintah dalam menyediakan ruang publik yang sehat dan ramah keluarga.",
+        gambar: "/images/hero_neighborhood.png",
+        kategori: "Ikonik & Fasilitas",
+        penulis: "Admin Kelurahan",
+        status: "Aktif",
+      },
+      {
+        judul: "Masjid Baitul Muttaqin",
+        slug: "masjid-baitul-muttaqin",
+        deskripsiSingkat: "Pusat kegiatan ibadah utama bagi warga muslim, rutin mengadakan kajian, TPQ, dan kegiatan amaliyah lainnya.",
+        isi: "Sebagai pusat keagamaan warga, Masjid Baitul Muttaqin berdiri megah dan selalu makmur oleh aktivitas peribadatan jamaah. Selain menjadi tempat shalat lima waktu, masjid ini juga memiliki program Taman Pendidikan Al-Qur'an (TPQ) yang aktif mendidik anak-anak desa. Setiap bulan, diselenggarakan kajian keislaman yang mempererat ukhuwah islamiyah antar warga.",
+        gambar: "/images/hero_digital.png",
+        kategori: "Keagamaan",
+        penulis: "Admin Kelurahan",
+        status: "Aktif",
+      },
+    ],
+  });
+  console.log("✅ Potensi Desa contoh selesai");
 
   console.log("\n🎉 Seeding selesai!");
 }

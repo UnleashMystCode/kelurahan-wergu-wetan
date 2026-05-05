@@ -11,27 +11,27 @@ type StaticBannerProps = {
 
 export default function StaticBanner({ title, desc, imageURL, Icon }: StaticBannerProps) {
   return (
-    <div className="relative mt-[-100px] h-[400px] w-full overflow-hidden bg-slate-900 md:h-[480px]">
+    <div className="relative mt-[-100px] min-h-[480px] flex w-full flex-col overflow-hidden bg-text-dark md:min-h-[500px]">
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: `url(${imageURL})` }}
       />
       <div className="absolute inset-0 bg-black/50 bg-gradient-to-t from-black/80 via-transparent to-black/30" />
 
-      <div className="absolute inset-0 z-20 flex items-center justify-center px-4 pt-[140px] md:pt-[160px] text-center">
+      <div className="relative z-20 flex flex-1 flex-col items-center justify-center px-4 pt-[200px] pb-16 text-center md:pt-[200px] md:pb-16">
         <div className="mx-auto max-w-4xl">
           <motion.div
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            className="mb-6 inline-block rounded-full border border-white/20 bg-white/10 p-4 shadow-lg backdrop-blur-md"
+            className="mb-4 inline-block rounded-full border border-white/20 bg-white/10 p-3 shadow-lg backdrop-blur-md md:mb-6 md:p-4"
           >
-            <Icon size={32} className="text-blue-200" />
+            <Icon className="text-blue-200 h-6 w-6 md:h-8 md:w-8" />
           </motion.div>
 
           <motion.h1
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
-            className="mb-6 text-4xl leading-tight font-black tracking-tight text-white md:text-5xl lg:text-6xl"
+            className="mb-3 text-3xl leading-tight font-black tracking-tight text-white md:mb-6 md:text-5xl lg:text-6xl"
           >
             {title}
           </motion.h1>
@@ -40,7 +40,7 @@ export default function StaticBanner({ title, desc, imageURL, Icon }: StaticBann
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2 }}
-            className="mx-auto max-w-2xl text-lg leading-relaxed font-medium text-blue-50 opacity-90 md:text-xl"
+            className="mx-auto max-w-2xl text-[14px] leading-relaxed font-medium text-blue-50 opacity-90 md:text-xl"
           >
             {desc}
           </motion.p>

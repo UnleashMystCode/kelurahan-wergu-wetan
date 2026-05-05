@@ -58,8 +58,8 @@ export default function BeritaView({ banner, newsData = [] }: any) {
                 onClick={() => handleTagClick(tag)}
                 className={`group relative flex h-full items-center gap-2 border-b-[3px] px-6 text-[13px] font-bold whitespace-nowrap transition-all lg:text-sm ${
                   activeTag === tag
-                    ? "border-blue-600 bg-blue-50/50 text-blue-600 rounded-t-lg"
-                    : "border-transparent text-slate-500 hover:bg-slate-100 hover:text-blue-600 hover:border-blue-400 rounded-t-lg"
+                    ? "border-brand-base bg-blue-50/50 text-brand-base rounded-t-lg"
+                    : "border-transparent text-text-muted hover:bg-slate-100 hover:text-brand-base hover:border-blue-400 rounded-t-lg"
                 } `}
               >
                 {tag}
@@ -75,12 +75,12 @@ export default function BeritaView({ banner, newsData = [] }: any) {
           {filtered.length === 0 ? (
             <div className="flex flex-col items-center py-20 text-center">
               <div className="mb-6 flex h-24 w-24 items-center justify-center rounded-full border border-slate-200 bg-slate-100 shadow-sm">
-                <FileText className="text-slate-400" size={40} />
+                <FileText className="text-text-muted" size={40} />
               </div>
-              <h2 className="mb-4 text-2xl font-black text-slate-800">
+              <h2 className="mb-4 text-2xl font-black text-text-dark">
                 Belum Ada Publikasi
               </h2>
-              <p className="mx-auto max-w-lg text-[15px] leading-relaxed text-slate-500">
+              <p className="mx-auto max-w-lg text-[15px] leading-relaxed text-text-muted">
                 Modul publikasi untuk kategori "{activeTag}" saat ini belum memiliki konten. Periksa kembali secara berkala.
               </p>
             </div>
@@ -110,8 +110,8 @@ export default function BeritaView({ banner, newsData = [] }: any) {
                           onError={(e) => { e.currentTarget.src = "/images/hero_office.png" }}
                         />
                       </div>
-                      <div className="flex flex-col justify-center bg-[#1a56db] p-6 md:w-1/2 md:p-14">
-                        <h3 className="mb-auto text-[28px] leading-[1.3] font-bold text-white md:text-[34px]">
+                      <div className="flex flex-col justify-center bg-brand-base p-6 md:w-1/2 md:p-14">
+                        <h3 className="mb-auto text-[28px] leading-snug font-bold text-white md:text-[34px]">
                           {filtered[0].judul}
                         </h3>
                         <div className="mt-8 text-[15px] font-medium text-blue-100">
@@ -136,12 +136,12 @@ export default function BeritaView({ banner, newsData = [] }: any) {
                             className="group relative flex flex-col p-5 md:p-8 transition-all duration-300 bg-slate-100 hover:z-10 hover:-translate-y-2 hover:scale-[1.03] hover:shadow-2xl"
                           >
                             <div className="flex items-start">
-                              <div className="mr-3 mt-[7px] h-2 w-2 shrink-0 bg-[#1a56db]"></div>
-                              <h3 className="text-[17px] font-medium leading-[1.4] text-slate-800 transition-colors duration-300 group-hover:text-blue-700">
+                              <div className="mr-3 mt-[7px] h-2 w-2 shrink-0 bg-brand-base"></div>
+                              <h3 className="text-[17px] font-medium leading-[1.4] text-text-dark transition-colors duration-300 group-hover:text-brand-dark">
                                 {item.judul}
                               </h3>
                             </div>
-                            <div className="mt-4 pl-5 text-[14px] text-slate-400">
+                            <div className="mt-4 pl-5 text-[14px] text-text-muted">
                               {new Date(item.tanggal || Date.now()).toLocaleDateString("en-US", {
                                 month: "long",
                                 day: "numeric",
@@ -156,9 +156,9 @@ export default function BeritaView({ banner, newsData = [] }: any) {
 
                   {/* "MORE" BUTTON */}
                   {filtered.length > 4 && (
-                    <div className="mb-6 flex w-full justify-center bg-[#1a56db] py-[14px] transition-colors hover:bg-blue-800">
+                    <div className="mb-6 flex w-full justify-center bg-brand-base py-[14px] transition-colors hover:bg-blue-800">
                       <Link href="#" className="flex items-center gap-2 text-[16px] font-medium text-white">
-                        More <ChevronRight size={18} className="rounded-full bg-white text-[#1a56db]" />
+                        More <ChevronRight size={18} className="rounded-full bg-white text-brand-base" />
                       </Link>
                     </div>
                   )}
@@ -174,10 +174,10 @@ export default function BeritaView({ banner, newsData = [] }: any) {
                       href={`/berita/${item.slug}`}
                       className="group flex flex-col border-b border-slate-300 py-[18px] transition-colors hover:bg-slate-50 md:flex-row md:items-center md:justify-between px-2"
                     >
-                      <h4 className="text-[16px] font-normal text-slate-800 transition-colors duration-300 group-hover:text-[#1a56db] md:w-[80%]">
+                      <h4 className="text-[16px] font-normal text-text-dark transition-colors duration-300 group-hover:text-brand-base md:w-[80%]">
                         {item.judul}
                       </h4>
-                      <div className="mt-2 shrink-0 text-[13.5px] text-slate-400 md:mt-0 md:text-right">
+                      <div className="mt-2 shrink-0 text-[13.5px] text-text-muted md:mt-0 md:text-right">
                         {new Date(item.tanggal || Date.now()).toLocaleDateString("en-US", {
                           month: "long",
                           day: "numeric",
@@ -192,18 +192,18 @@ export default function BeritaView({ banner, newsData = [] }: any) {
               {/* Boxed Pagination */}
               {filtered.length > 0 && (
                 <div className="mt-14 mb-10 flex flex-wrap items-center justify-center gap-2">
-                  <button className="flex h-[42px] w-[42px] items-center justify-center bg-[#1a56db] text-[15px] text-white transition-colors">
+                  <button className="flex h-[42px] w-[42px] items-center justify-center bg-brand-base text-[15px] text-white transition-colors">
                     1
                   </button>
                   {[2, 3, 4, 5, 6].map((num) => (
                     <button
                       key={num}
-                      className="flex h-[42px] w-[42px] items-center justify-center border border-slate-200 bg-white text-[15px] text-slate-500 transition-all duration-300 hover:-translate-y-1 hover:border-[#1a56db] hover:bg-[#1a56db]/90 hover:text-white hover:shadow-md"
+                      className="flex h-[42px] w-[42px] items-center justify-center border border-slate-200 bg-white text-[15px] text-text-muted transition-all duration-300 hover:-translate-y-1 hover:border-brand-base hover:bg-brand-base/90 hover:text-white hover:shadow-md"
                     >
                       {num}
                     </button>
                   ))}
-                  <button className="flex h-[42px] items-center justify-center border border-slate-200 bg-white px-5 text-[15px] text-slate-500 transition-all duration-300 hover:-translate-y-1 hover:border-[#1a56db] hover:bg-[#1a56db]/90 hover:text-white hover:shadow-md">
+                  <button className="flex h-[42px] items-center justify-center border border-slate-200 bg-white px-5 text-[15px] text-text-muted transition-all duration-300 hover:-translate-y-1 hover:border-brand-base hover:bg-brand-base/90 hover:text-white hover:shadow-md">
                     Next
                   </button>
                 </div>

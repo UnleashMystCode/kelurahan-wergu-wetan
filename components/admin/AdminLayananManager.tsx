@@ -200,7 +200,7 @@ export default function AdminLayananManager() {
     <div className="mt-8 rounded-xl border border-slate-100 bg-white p-8 shadow-sm">
       <div className="mb-8 flex flex-col items-start justify-between gap-4 border-b border-slate-50 pb-4 md:flex-row md:items-center">
         <div>
-          <h2 className="border-l-4 border-blue-600 pl-3 text-lg font-bold text-slate-700">
+          <h2 className="border-l-4 border-blue-600 pl-3 text-lg font-bold text-text-dark">
             B. Daftar Surat Masuk (Inbox)
           </h2>
           <p className="mt-1 ml-4 text-xs text-slate-400">
@@ -240,16 +240,16 @@ export default function AdminLayananManager() {
             {filteredData.map((item) => (
               <tr key={item.id} className="transition-all hover:bg-blue-50/20">
                 <td className="p-5">
-                  <div className="font-bold text-slate-800">{item.nama}</div>
+                  <div className="font-bold text-text-dark">{item.nama}</div>
                   <div className="mt-0.5 text-xs text-slate-400">{item.nik}</div>
                 </td>
                 <td className="p-5">
-                  <div className="font-bold text-slate-600">{item.layanan}</div>
+                  <div className="font-bold text-text-muted">{item.layanan}</div>
                   <div className="mb-2 text-[10px] font-medium text-slate-400">
                     Masuk: {item.tanggal}
                   </div>
                   {item.keteranganWarga && (
-                    <div className="max-w-xs rounded-r-lg border-l-2 border-slate-200 bg-slate-50/50 py-0.5 pr-2 pl-2 text-xs text-slate-500">
+                    <div className="max-w-xs rounded-r-lg border-l-2 border-slate-200 bg-slate-50/50 py-0.5 pr-2 pl-2 text-xs text-text-muted">
                       <span className="mb-0.5 block text-[9px] font-bold tracking-widest text-slate-400 uppercase">
                         Keperluan:
                       </span>
@@ -332,8 +332,8 @@ export default function AdminLayananManager() {
                 <Printer size={24} />
               </div>
               <div>
-                <h3 className="text-lg font-bold text-slate-800">Konfigurasi Cetak Surat</h3>
-                <p className="text-xs text-slate-500">
+                <h3 className="text-lg font-bold text-text-dark">Konfigurasi Cetak Surat</h3>
+                <p className="text-xs text-text-muted">
                   Sesuaikan metadata surat resmi sebelum diprint.
                 </p>
               </div>
@@ -352,7 +352,7 @@ export default function AdminLayananManager() {
                     onChange={(e) =>
                       setPrintSettings((prev) => ({ ...prev, logoUrl: e.target.value }))
                     }
-                    className="w-full rounded-xl border border-slate-200/60 bg-white p-3.5 font-bold text-slate-800 transition outline-none placeholder:text-slate-300 focus:border-indigo-500/30"
+                    className="w-full rounded-xl border border-slate-200/60 bg-white p-3.5 font-bold text-text-dark transition outline-none placeholder:text-slate-300 focus:border-indigo-500/30"
                     placeholder="https://contoh.com/logo.png (Kosongkan otomatis default)"
                   />
                 </div>
@@ -367,7 +367,8 @@ export default function AdminLayananManager() {
                     onChange={(e) =>
                       setPrintSettings((prev) => ({ ...prev, nomorSurat: e.target.value }))
                     }
-                    className="w-full rounded-xl border border-slate-200/60 bg-white p-3.5 font-bold text-slate-800 transition outline-none placeholder:text-slate-300 focus:border-indigo-500/30"
+                    className="w-full rounded-xl border border-slate-200/60 bg-white p-3.5 font-bold text-text-dark transition outline-none placeholder:text-slate-300 focus:border-indigo-500/30"
+                    placeholder="Cth: 001/SRT/2025"
                   />
                 </div>
               </div>
@@ -428,7 +429,7 @@ export default function AdminLayananManager() {
                       onChange={(e) =>
                         setPrintSettings((prev) => ({ ...prev, keteranganWarga: e.target.value }))
                       }
-                      className="w-full resize-none rounded-xl border border-slate-200/60 bg-white p-3.5 font-bold text-slate-800 transition outline-none placeholder:text-slate-300 focus:border-indigo-500/30"
+                        className="w-full resize-none rounded-xl border border-slate-200/60 bg-white p-3.5 font-bold text-text-dark transition outline-none placeholder:text-slate-300 focus:border-indigo-500/30"
                     />
                   </div>
                 </div>
@@ -447,7 +448,7 @@ export default function AdminLayananManager() {
                     onChange={(e) =>
                       setPrintSettings((prev) => ({ ...prev, tanggalSurat: e.target.value }))
                     }
-                    className="w-full rounded-xl border border-slate-200/60 bg-white p-3.5 font-bold text-slate-800 transition outline-none placeholder:text-slate-300 focus:border-indigo-500/30"
+                    className="w-full rounded-xl border border-slate-200/60 bg-white p-3.5 font-bold text-text-dark transition outline-none placeholder:text-slate-300 focus:border-indigo-500/30"
                   />
                 </div>
                 <div className="grid grid-cols-2 gap-4">
@@ -461,7 +462,8 @@ export default function AdminLayananManager() {
                       onChange={(e) =>
                         setPrintSettings((prev) => ({ ...prev, namaPejabat: e.target.value }))
                       }
-                      className="w-full rounded-xl border border-slate-200/60 bg-white p-3.5 font-bold text-slate-800 transition outline-none placeholder:text-slate-300 focus:border-indigo-500/30"
+                      className="w-full rounded-xl border border-slate-200/60 bg-white p-3.5 font-bold text-text-dark transition outline-none placeholder:text-slate-300 focus:border-indigo-500/30"
+                      placeholder="Nama Lurah/Pejabat"
                     />
                   </div>
                   <div className="space-y-1.5">
@@ -485,7 +487,7 @@ export default function AdminLayananManager() {
                   type="button"
                   disabled={loading}
                   onClick={() => setModalPrint(null)}
-                  className="flex-1 rounded-xl bg-slate-100 py-3.5 font-bold text-slate-600 transition hover:bg-slate-200 disabled:opacity-60"
+                  className="flex-1 rounded-xl bg-slate-100 py-3.5 font-bold text-text-muted transition hover:bg-slate-200 disabled:opacity-60"
                 >
                   Batal
                 </button>
@@ -511,8 +513,8 @@ export default function AdminLayananManager() {
                 <FileText size={24} />
               </div>
               <div>
-                <h3 className="text-lg font-bold text-slate-800">Tindak Lanjut Pengajuan</h3>
-                <p className="text-xs text-slate-500">
+                <h3 className="text-lg font-bold text-text-dark">Tindak Lanjut Pengajuan</h3>
+                <p className="text-xs text-text-muted">
                   Ubah Status menjadi: <strong className="text-blue-600">{modalAksi.aksi}</strong>
                 </p>
               </div>
@@ -528,7 +530,7 @@ export default function AdminLayananManager() {
                       <div className="mb-1 text-[10px] font-black tracking-widest text-slate-400 uppercase">
                         Keperluan Pemohon
                       </div>
-                      <p className="font-medium text-slate-700">
+                      <p className="font-medium text-text-dark">
                         {data.keteranganWarga || (
                           <span className="text-slate-400 italic">
                             Tidak ada keterangan spesifik
@@ -546,7 +548,7 @@ export default function AdminLayananManager() {
                         onChange={(e) => setCatatanInput(e.target.value)}
                         rows={3}
                         disabled={loading}
-                        className="w-full resize-none rounded-xl border-2 border-transparent bg-slate-50 p-4 font-medium text-slate-800 transition outline-none placeholder:text-slate-300 focus:border-blue-500/20 disabled:opacity-60"
+                      className="w-full resize-none rounded-xl border-2 border-transparent bg-slate-50 p-4 font-medium text-text-dark transition outline-none placeholder:text-slate-300 focus:border-blue-500/20 disabled:opacity-60"
                         placeholder="Tulis alasan jika ditolak, atau pesan jika selesai (Cth: Surat jadul bisa diambil besok)..."
                       />
                     </div>
@@ -556,7 +558,7 @@ export default function AdminLayananManager() {
                         type="button"
                         disabled={loading}
                         onClick={() => setModalAksi(null)}
-                        className="flex-1 rounded-xl bg-slate-100 py-3.5 font-bold text-slate-600 transition hover:bg-slate-200 disabled:opacity-60"
+                      className="flex-1 rounded-xl bg-slate-100 py-3.5 font-bold text-text-muted transition hover:bg-slate-200 disabled:opacity-60"
                       >
                         Batal
                       </button>

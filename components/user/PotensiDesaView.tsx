@@ -69,8 +69,8 @@ export default function PotensiDesaView({ banner, potensiItems = [] }: { banner?
                 onClick={() => handleCategoryClick(cat)}
                 className={`group relative flex h-full items-center gap-2 border-b-[3px] px-6 text-[13px] font-bold whitespace-nowrap transition-all md:text-sm ${
                   activeCategory === cat
-                    ? "border-blue-600 bg-blue-50/50 text-blue-600 rounded-t-lg"
-                    : "border-transparent text-slate-500 hover:bg-slate-100 hover:text-blue-600 hover:border-blue-400 rounded-t-lg"
+                    ? "border-brand-base bg-blue-50/50 text-brand-base rounded-t-lg"
+                    : "border-transparent text-text-muted hover:bg-slate-100 hover:text-brand-base hover:border-blue-400 rounded-t-lg"
                 }`}
               >
                 {cat}
@@ -84,8 +84,8 @@ export default function PotensiDesaView({ banner, potensiItems = [] }: { banner?
         {filteredData.length === 0 ? (
           <div className="flex flex-col items-center py-20 text-center">
             <Search size={48} className="mb-4 text-slate-300" />
-            <h3 className="text-xl font-bold text-slate-700">Tidak ada potensi ditemukan</h3>
-            <p className="mt-2 text-slate-500">
+            <h3 className="text-xl font-bold text-text-dark">Tidak ada potensi ditemukan</h3>
+            <p className="mt-2 text-text-muted">
               Coba gunakan kata kunci atau kategori yang berbeda.
             </p>
           </div>
@@ -112,10 +112,10 @@ export default function PotensiDesaView({ banner, potensiItems = [] }: { banner?
                     />
                   </div>
                   <div className="flex flex-col justify-center p-6 md:w-[48%] md:p-14">
-                    <h3 className="mb-5 text-[26px] leading-[1.3] font-bold text-slate-900 transition-colors duration-300 group-hover:text-blue-700 md:text-[32px]">
+                    <h3 className="mb-5 text-[26px] leading-snug font-bold text-text-dark transition-colors duration-300 group-hover:text-brand-dark md:text-[32px]">
                       {filteredData[0].judul}
                     </h3>
-                    <div className="mt-auto text-[14px] font-medium tracking-wide text-slate-400">
+                    <div className="mt-auto text-[14px] font-medium tracking-wide text-text-muted">
                       {new Date(filteredData[0].createdAt || Date.now()).toLocaleDateString("en-US", {
                         month: "long",
                         day: "numeric",
@@ -152,14 +152,14 @@ export default function PotensiDesaView({ banner, potensiItems = [] }: { banner?
 
                   {/* Konten Kanan */}
                   <div className="flex flex-col justify-start md:pt-1">
-                    <h4 className="mb-3 text-[22px] leading-[1.3] font-bold text-slate-900 transition-colors duration-300 group-hover:text-blue-700 md:text-[26px]">
+                    <h4 className="mb-3 text-[22px] leading-snug font-bold text-text-dark transition-colors duration-300 group-hover:text-brand-dark md:text-[26px]">
                       {item.judul}
                     </h4>
-                    <p className="mb-4 line-clamp-3 text-[16px] leading-[1.6] text-slate-500">
+                    <p className="mb-4 line-clamp-3 text-[16px] leading-[1.6] text-text-muted">
                       {item.deskripsiSingkat || "Deskripsi singkat mengenai potensi desa ini belum tersedia."}
                     </p>
                     
-                    <div className="mt-2 text-[14px] font-medium tracking-wide text-slate-400">
+                    <div className="mt-2 text-[14px] font-medium tracking-wide text-text-muted">
                       {new Date(item.createdAt || Date.now()).toLocaleDateString("en-US", {
                         month: "long",
                         day: "numeric",
@@ -173,18 +173,18 @@ export default function PotensiDesaView({ banner, potensiItems = [] }: { banner?
 
             {/* Pagination / Show More */}
             <div className="mt-14 flex flex-wrap items-center justify-center gap-2">
-              <button className="flex h-[42px] w-[42px] items-center justify-center bg-[#1a56db] text-[15px] text-white transition-colors">
+              <button className="flex h-[42px] w-[42px] items-center justify-center bg-brand-base text-[15px] text-white transition-colors">
                 1
               </button>
               {[2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
                 <button
                   key={num}
-                  className="flex h-[42px] w-[42px] items-center justify-center border border-slate-200 bg-white text-[15px] text-slate-500 transition-all duration-300 hover:-translate-y-1 hover:border-[#1a56db] hover:bg-[#1a56db]/90 hover:text-white hover:shadow-md"
+                  className="flex h-[42px] w-[42px] items-center justify-center border border-slate-200 bg-white text-[15px] text-text-muted transition-all duration-300 hover:-translate-y-1 hover:border-brand-base hover:bg-brand-base/90 hover:text-white hover:shadow-md"
                 >
                   {num}
                 </button>
               ))}
-              <button className="flex h-[42px] items-center justify-center border border-slate-200 bg-white px-5 text-[15px] text-slate-500 transition-all duration-300 hover:-translate-y-1 hover:border-[#1a56db] hover:bg-[#1a56db]/90 hover:text-white hover:shadow-md">
+              <button className="flex h-[42px] items-center justify-center border border-slate-200 bg-white px-5 text-[15px] text-text-muted transition-all duration-300 hover:-translate-y-1 hover:border-brand-base hover:bg-brand-base/90 hover:text-white hover:shadow-md">
                 Next
               </button>
             </div>

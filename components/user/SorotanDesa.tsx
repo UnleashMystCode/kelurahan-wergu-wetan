@@ -219,7 +219,7 @@ export default function SorotanDesa({ stats = [] }: { stats: any[] }) {
               <h2 className="mb-2 text-3xl leading-tight font-extrabold text-white md:text-5xl">
                 {currentCategory.title}
               </h2>
-              <p className="max-w-xl text-[14px] leading-relaxed text-slate-400 md:text-[15px]">
+              <p className="max-w-xl text-[14px] leading-relaxed text-text-muted md:text-[15px]">
                 {currentCategory.subtitle}
               </p>
             </motion.div>
@@ -273,9 +273,9 @@ export default function SorotanDesa({ stats = [] }: { stats: any[] }) {
                        <div className="flex-1">
                           {activeItem.isStat ? (
                              <div className="mb-2 flex items-end gap-1 text-5xl font-black tracking-tighter text-white md:text-7xl drop-shadow-lg">
-                                <Counter value={parseInt(activeItem.rawVal as string)} />
-                                {(activeItem.rawVal as string).includes("+") && <span className="text-blue-500">+</span>}
-                                {(activeItem.rawVal as string).includes("%") && <span className="ml-[-4px] text-4xl text-blue-500">%</span>}
+                               <Counter value={parseInt(String(activeItem.rawVal).replace(/\D/g, "")) || 0} />
+                               {String(activeItem.rawVal).includes("+") && <span className="text-brand-base">+</span>}
+                               {String(activeItem.rawVal).includes("%") && <span className="ml-[-4px] text-4xl text-brand-base">%</span>}
                                 <span className="ml-3 text-xl md:text-3xl font-bold tracking-wider text-blue-400 uppercase">{activeItem.rawLabel}</span>
                              </div>
                           ) : (
@@ -288,7 +288,7 @@ export default function SorotanDesa({ stats = [] }: { stats: any[] }) {
                           </p>
                        </div>
                        
-                       <Link href="/berita" className="self-end shrink-0 inline-flex items-center gap-2 rounded-full bg-white/10 backdrop-blur-md px-5 py-2.5 md:py-3 text-[13px] md:text-sm font-bold text-white border border-white/20 transition-all hover:bg-blue-600 hover:border-blue-600 hover:scale-105 active:scale-95 shadow-lg">
+                       <Link href="/berita" className="self-end shrink-0 inline-flex items-center gap-2 rounded-full bg-white/10 backdrop-blur-md px-5 py-2.5 md:py-3 text-[13px] md:text-sm font-bold text-white border border-white/20 transition-all hover:bg-brand-base hover:border-brand-base hover:scale-105 active:scale-95 shadow-lg">
                           <span>Eksplorasi</span>
                           <div className="flex h-5 w-5 md:h-6 md:w-6 items-center justify-center rounded-full bg-white/20 text-white">
                             <ArrowUpRight size={14} />
@@ -309,7 +309,7 @@ export default function SorotanDesa({ stats = [] }: { stats: any[] }) {
                    key={item.id}
                    onClick={() => handleSideClick(item.id)}
                    className={`relative flex-1 rounded-xl overflow-hidden cursor-pointer group min-h-[90px] sm:min-h-[100px] md:min-h-[120px] lg:min-h-0 border-2 transition-all duration-300 ${
-                     isActive ? "border-blue-600 scale-[1.02] z-10" : "border-transparent opacity-70 hover:opacity-100"
+                     isActive ? "border-brand-base scale-[1.02] z-10" : "border-transparent opacity-70 hover:opacity-100"
                    }`}
                 >
                    {/* Background Image */}
@@ -347,14 +347,14 @@ export default function SorotanDesa({ stats = [] }: { stats: any[] }) {
              {/* Mobile Navigation Controls in Grid (Takes up remaining 2 slots) */}
              <button 
                 onClick={handlePrevCategory} 
-                className="lg:hidden flex flex-col items-center justify-center gap-1.5 rounded-xl border border-white/20 bg-white/5 hover:bg-white/10 min-h-[90px] sm:min-h-[100px] md:min-h-[120px] transition-all active:scale-95 active:bg-blue-600/50"
+                className="lg:hidden flex flex-col items-center justify-center gap-1.5 rounded-xl border border-white/20 bg-white/5 hover:bg-white/10 min-h-[90px] sm:min-h-[100px] md:min-h-[120px] transition-all active:scale-95 active:bg-brand-base/50"
              >
                 <ChevronLeft size={28} className="text-white/80" />
                 <span className="text-[9px] font-semibold tracking-widest text-white/60 uppercase">Prev</span>
              </button>
              <button 
                 onClick={handleNextCategory} 
-                className="lg:hidden flex flex-col items-center justify-center gap-1.5 rounded-xl border border-white/20 bg-white/5 hover:bg-white/10 min-h-[90px] sm:min-h-[100px] md:min-h-[120px] transition-all active:scale-95 active:bg-blue-600/50"
+                className="lg:hidden flex flex-col items-center justify-center gap-1.5 rounded-xl border border-white/20 bg-white/5 hover:bg-white/10 min-h-[90px] sm:min-h-[100px] md:min-h-[120px] transition-all active:scale-95 active:bg-brand-base/50"
              >
                 <ChevronRight size={28} className="text-white/80" />
                 <span className="text-[9px] font-semibold tracking-widest text-white/60 uppercase">Next</span>

@@ -90,7 +90,7 @@ export default function GlobalSearchModal({ isOpen, onClose }: GlobalSearchModal
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
             onClick={onClose}
-            className="fixed inset-0 z-[100] bg-slate-900/60 backdrop-blur-sm"
+            className="fixed inset-0 z-[100] bg-text-dark/60 backdrop-blur-sm"
           />
 
           {/* Modal Container */}
@@ -104,24 +104,24 @@ export default function GlobalSearchModal({ isOpen, onClose }: GlobalSearchModal
             >
               {/* Search Header */}
               <div className="relative flex items-center border-b border-slate-100 px-6 py-4">
-                <Search className="h-6 w-6 text-slate-400" />
+                <Search className="h-6 w-6 text-text-muted" />
                 <input
                   ref={inputRef}
                   type="text"
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
                   placeholder="Cari berita, layanan, potensi desa..."
-                  className="w-full bg-transparent px-2 sm:px-4 py-2 text-base sm:text-lg text-slate-800 placeholder-slate-400 outline-none"
+                  className="w-full bg-transparent px-2 sm:px-4 py-2 text-base sm:text-lg text-text-dark placeholder-slate-400 outline-none"
                 />
                 {query && (
                   <button
                     onClick={() => setQuery("")}
-                    className="mr-2 rounded-full p-1 text-slate-400 hover:bg-slate-100 hover:text-slate-600"
+                    className="mr-2 rounded-full p-1 text-text-muted hover:bg-slate-100 hover:text-text-muted"
                   >
                     <X size={16} />
                   </button>
                 )}
-                <div className="hidden items-center gap-1 rounded-md border border-slate-200 bg-slate-50 px-2 py-1 text-xs font-medium text-slate-500 sm:flex">
+                <div className="hidden items-center gap-1 rounded-md border border-slate-200 bg-slate-50 px-2 py-1 text-xs font-medium text-text-muted sm:flex">
                   <kbd>ESC</kbd>
                 </div>
               </div>
@@ -130,13 +130,13 @@ export default function GlobalSearchModal({ isOpen, onClose }: GlobalSearchModal
               <div className="max-h-[60vh] overflow-y-auto p-2">
                 {!query.trim() ? (
                   <div className="py-12 text-center">
-                    <p className="text-sm font-medium text-slate-500">
+                    <p className="text-sm font-medium text-text-muted">
                       Ketik sesuatu untuk memulai pencarian di portal Wergu Wetan.
                     </p>
                   </div>
                 ) : isLoading ? (
                   <div className="flex items-center justify-center py-12">
-                    <Loader2 className="h-6 w-6 animate-spin text-blue-500" />
+                    <Loader2 className="h-6 w-6 animate-spin text-brand-base" />
                   </div>
                 ) : results.length > 0 ? (
                   <motion.div
@@ -165,21 +165,21 @@ export default function GlobalSearchModal({ isOpen, onClose }: GlobalSearchModal
                           <div
                             className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-lg ${
                               item.type === "berita"
-                                ? "bg-blue-100 text-blue-600"
+                                ? "bg-blue-100 text-brand-base"
                                 : "bg-emerald-100 text-emerald-600"
                             }`}
                           >
                             {item.type === "berita" ? <FileText size={20} /> : <Store size={20} />}
                           </div>
                           <div>
-                            <h4 className="text-sm font-bold text-slate-800 group-hover:text-blue-700 line-clamp-1">
+                            <h4 className="text-sm font-bold text-text-dark group-hover:text-brand-dark line-clamp-1">
                               {item.judul}
                             </h4>
-                            <div className="mt-0.5 flex items-center gap-2 text-xs font-medium text-slate-500">
+                            <div className="mt-0.5 flex items-center gap-2 text-xs font-medium text-text-muted">
                               <span
                                 className={`rounded px-1.5 py-0.5 text-[10px] uppercase tracking-wider ${
                                   item.type === "berita"
-                                    ? "bg-blue-100 text-blue-700"
+                                    ? "bg-blue-100 text-brand-dark"
                                     : "bg-emerald-100 text-emerald-700"
                                 }`}
                               >
@@ -192,15 +192,15 @@ export default function GlobalSearchModal({ isOpen, onClose }: GlobalSearchModal
                         </div>
                         <ArrowRight
                           size={16}
-                          className="text-slate-300 transition-transform group-hover:translate-x-1 group-hover:text-blue-500"
+                          className="text-slate-300 transition-transform group-hover:translate-x-1 group-hover:text-brand-base"
                         />
                       </motion.button>
                     ))}
                   </motion.div>
                 ) : (
                   <div className="py-12 text-center">
-                    <p className="text-sm font-medium text-slate-500">
-                      Tidak ada hasil yang ditemukan untuk <span className="font-bold text-slate-800">"{query}"</span>
+                    <p className="text-sm font-medium text-text-muted">
+                      Tidak ada hasil yang ditemukan untuk <span className="font-bold text-text-dark">"{query}"</span>
                     </p>
                   </div>
                 )}
@@ -208,20 +208,20 @@ export default function GlobalSearchModal({ isOpen, onClose }: GlobalSearchModal
 
               {/* Footer Modal (Hidden on mobile) */}
               <div className="hidden sm:block border-t border-slate-100 bg-slate-50 px-6 py-3">
-                <div className="flex items-center justify-between text-xs text-slate-400">
+                <div className="flex items-center justify-between text-xs text-text-muted">
                   <span>Pencarian Global Wergu Wetan</span>
                   <div className="flex items-center gap-4">
                     <span className="flex items-center gap-1">
-                      <kbd className="rounded border border-slate-300 bg-white px-1.5 py-0.5 font-sans font-medium text-slate-500">
+                      <kbd className="rounded border border-slate-300 bg-white px-1.5 py-0.5 font-sans font-medium text-text-muted">
                         ↑
                       </kbd>
-                      <kbd className="rounded border border-slate-300 bg-white px-1.5 py-0.5 font-sans font-medium text-slate-500">
+                      <kbd className="rounded border border-slate-300 bg-white px-1.5 py-0.5 font-sans font-medium text-text-muted">
                         ↓
                       </kbd>
                       Navigasi
                     </span>
                     <span className="flex items-center gap-1">
-                      <kbd className="rounded border border-slate-300 bg-white px-1.5 py-0.5 font-sans font-medium text-slate-500">
+                      <kbd className="rounded border border-slate-300 bg-white px-1.5 py-0.5 font-sans font-medium text-text-muted">
                         ↵
                       </kbd>
                       Pilih

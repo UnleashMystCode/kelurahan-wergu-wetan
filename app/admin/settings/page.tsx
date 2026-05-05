@@ -21,9 +21,17 @@ import {
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
+type AdminMock = {
+  id: number;
+  name: string;
+  email: string;
+  role: string;
+  status: string;
+};
+
 export default function AdminSettingsPage() {
   // --- DATA & LOGIC (Sama seperti sebelumnya) ---
-  const [admins, setAdmins] = useState([
+  const [admins, setAdmins] = useState<AdminMock[]>([
     { id: 1, name: "Budi Santoso", email: "budi@desa.go.id", role: "Petugas", status: "Active" },
     { id: 2, name: "Siti Aminah", email: "siti@desa.go.id", role: "Petugas", status: "Inactive" },
     {
@@ -36,7 +44,7 @@ export default function AdminSettingsPage() {
   ]);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editData, setEditData] = useState<any>(null);
+  const [editData, setEditData] = useState<AdminMock | null>(null);
   const [form, setForm] = useState({ name: "", email: "", password: "", status: "Active" });
   const [filterStatus, setFilterStatus] = useState("All");
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -47,7 +55,7 @@ export default function AdminSettingsPage() {
     setIsModalOpen(true);
   };
 
-  const openEditModal = (admin: any) => {
+  const openEditModal = (admin: AdminMock) => {
     setEditData(admin);
     setForm({ name: admin.name, email: admin.email, password: "", status: admin.status });
     setIsModalOpen(true);

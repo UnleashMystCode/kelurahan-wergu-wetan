@@ -86,7 +86,7 @@ export default function HeroCarousel({
   return (
     // Di layar HP, kita gunakan calc(100dvh+100px) agar benar-benar "mentok" bawah layar HP (100dvh) 
     // sekaligus mengimbangi margin-top negatif dari navbar transparan.
-    <div className="group relative h-[calc(100dvh+100px)] md:h-[calc(100vh+100px)] md:min-h-[700px] w-full overflow-hidden bg-slate-900">
+    <div className="group relative h-[calc(100dvh+100px)] md:h-[calc(100vh+100px)] md:min-h-[700px] w-full overflow-hidden bg-text-dark">
       {/* 1. GAMBAR BACKGROUND */}
       <AnimatePresence mode="wait" initial={false}>
         <motion.div
@@ -116,7 +116,7 @@ export default function HeroCarousel({
                 initial={{ y: 40, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
-                className="mb-4 inline-block rounded-full border border-white/10 bg-blue-600/90 px-5 py-1.5 text-[10px] font-bold tracking-widest text-white uppercase shadow-lg backdrop-blur-md md:text-xs"
+                className="mb-4 inline-block rounded-full border border-white/10 bg-brand-base/90 px-5 py-1.5 text-[10px] font-bold tracking-widest text-white uppercase shadow-lg backdrop-blur-md md:text-xs"
               >
                 {currentBanner.tagline}
               </motion.span>
@@ -155,7 +155,7 @@ export default function HeroCarousel({
               >
                 <Link
                   href={currentBanner.linkHref || "/layanan"}
-                  className="group flex w-fit items-center gap-2 rounded-full border border-white bg-transparent px-8 py-3 text-sm font-bold text-white transition-all hover:bg-white hover:text-slate-900"
+                  className="group flex w-fit items-center gap-2 rounded-full border border-white bg-transparent px-8 py-3 text-sm font-bold text-white transition-all hover:bg-white hover:text-text-dark"
                 >
                   Selengkapnya{" "}
                   <ArrowRight
@@ -187,7 +187,7 @@ export default function HeroCarousel({
                   <div className="flex w-full items-center gap-2.5">
                     {/* Buletan biasa (clean look) */}
                     <div
-                      className={`h-2.5 w-2.5 shrink-0 rounded-full transition-all duration-300 ${i === index ? "scale-110 bg-blue-600" : "border border-white/30 bg-transparent group-hover:bg-white/20"}`}
+                      className={`h-2.5 w-2.5 shrink-0 rounded-full transition-all duration-300 ${i === index ? "scale-110 bg-brand-base" : "border border-white/30 bg-transparent group-hover:bg-white/20"}`}
                     />
                     {/* Judul Slide */}
                     <span
@@ -203,7 +203,7 @@ export default function HeroCarousel({
                         initial={{ width: "0%" }}
                         animate={{ width: "100%" }}
                         transition={{ duration: 12, ease: "linear" }}
-                        className="absolute top-0 left-0 h-full bg-blue-600"
+                        className="absolute top-0 left-0 h-full bg-brand-base"
                       />
                     )}
                   </div>

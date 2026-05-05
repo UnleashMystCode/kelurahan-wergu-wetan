@@ -11,6 +11,13 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  
+  /* Custom Brand Palette */
+  --color-brand-dark: #0D47A1;
+  --color-brand-base: #1565C0;
+  --color-text-dark: #272727;
+  --color-text-muted: #7C7C7C;
+  --color-bg-white: #FFFFFF;
 }
 
 body {
