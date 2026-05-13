@@ -10,9 +10,11 @@
 
 | Guide | Description |
 |-------|-------------|
-| **[🏗️ Architecture (Master Blueprint)](.docs/architecture.md)** | High-level overview, ANF-Agentic Architecture, branching strategy, data contracts |
-| **[⚙️ Backend (Server Actions & Logic)](.docs/be-ssr-logic.md)** | Prisma, JWT auth, RBAC, caching, Supabase integration — for backend devs & agents |
-| **[🎨 Frontend / UI (Design System & Stitch)](.docs/fe-ui-ux.md)** | Design tokens, Tailwind→Figma mapping, Stitch AI export for Figma |
+| **[🏗️ Architecture (Master Blueprint)](.docs/architecture.md)** | ANF-Agentic Architecture theory, branching strategy (be/*, fe/*, pr/*), data contracts |
+| **[⚙️ Backend Logic (Services & SSR)](.docs/backend-logic.md)** | Server Actions pattern, Prisma queries, data mapping to FE, SSR rules |
+| **[🎨 Frontend UI (Design & Stitch)](.docs/frontend-ui.md)** | Design system, Stitch AI integration, component "hole" pattern, Tailwind→Figma |
+| **[🔐 Security Policy](.docs/security-policy.md)** | RLS enforcement, JWT, Zod validation, secrets management |
+| **[🗺️ Roadmap](.docs/roadmap.md)** | Feature timeline, sprint tracking, priorities |
 
 ---
 
@@ -56,23 +58,48 @@
 
 ---
 
-## 📁 Project Structure
+## 📁 Project Structure (Logical Workspace)
 
 ```
 wergu-wetan-app/
-├── app/                    # Next.js App Router (routes + layouts)
+├── app/                    # Next.js App Router (Routes + Layouts) — FE workspace
 │   ├── (user)/            # Public-facing pages
-│   ├── admin/             # Protected admin dashboard
-│   └── api/               # Minimal API routes
-├── actions/               # Server Actions (backend logic)
-├── components/            # React UI components
+│   ├── admin/             # Protected CMS dashboard
+│   └── api/               # Minimal API routes (Excel template only)
+│
+├── actions/               # Server Actions (Backend Logic) — BE workspace
+│   ├── auth.action.ts
+│   ├── berita.action.ts
+│   └── ...
+│
+├── components/            # React UI components — FE workspace
 │   ├── user/             # Public components
 │   └── admin/            # Admin components
-├── lib/                  # Utilities (Prisma client, helpers)
-├── prisma/               # Database schema + seeding
+│
+├── lib/                  # Utilities + Helpers — BE workspace
+│   ├── db.ts            # Prisma singleton
+│   └── services/        # Business logic services (optional)
+│
+├── prisma/               # Database Schema + Seeding — BE workspace
+│   ├── schema.prisma
+│   └── seed.ts
+│
 ├── public/               # Static assets (images, icons)
-└── .docs/               # 📚 Architecture documentation
+├── .docs/               # 📚 ANF-Agentic Architecture documentation
+│   ├── architecture.md        # Master blueprint
+│   ├── backend-logic.md       # BE patterns & SSR
+│   ├── frontend-ui.md         # FE UI & Stitch
+│   ├── security-policy.md     # Security rules
+│   └── roadmap.md             # Feature timeline
+│
+└── .env.example          # Environment template
 ```
+
+**Workspace Separation (ANF Theory):**
+- **BE workspace** (`be/*` branch): `actions/`, `lib/`, `prisma/` — Server Actions, Prisma, services
+- **FE workspace** (`fe/*` branch): `components/`, `app/` — UI components, pages, layouts
+- **Integration** (`pr/*` branch): Merge BE + FE → test data contracts (props "holes")
+- **Production** (`main` branch): Stable, tested, deployed
 
 ---
 
@@ -109,7 +136,7 @@ This project uses **Supabase PostgreSQL** with Prisma ORM.
 - **Icons:** Lucide React
 - **Animations:** Framer Motion
 
-Design tokens defined in `app/globals.css`. See [Frontend UI Guide](.docs/fe-ui-ux.md) for full spec.
+Design tokens defined in `app/globals.css`. See [Frontend UI Guide](.docs/frontend-ui.md) for full spec.
 
 ---
 
@@ -132,10 +159,14 @@ This project implements the **ANF-Agentic Architecture** pattern (AlrafuruNotFou
 All architecture decisions live in **[`.docs/`](.docs/)**:
 
 1. **[`architecture.md`](.docs/architecture.md)** — ANF-Agentic Architecture master blueprint, branching strategy (be/*, fe/*, pr/*), data contracts between BE/FE
-2. **[`be-ssr-logic.md`](.docs/be-ssr-logic.md)** — Backend patterns, Server Actions, Prisma, JWT auth, Supabase, output format for FE consumption
-3. **[`fe-ui-ux.md`](.docs/fe-ui-ux.md)** — Frontend UI/UX: design system, Stitch AI integration, Tailwind→Figma mapping, props pattern ("lubang" pattern)
+2. **[`backend-logic.md`](.docs/backend-logic.md)** — Backend patterns: Service encapsulation, Server Actions, Prisma, Zod validation, SSR guidelines
+3. **[`frontend-ui.md`](.docs/frontend-ui.md)** — Frontend UI/UX: design system, Stitch AI integration, Tailwind→Figma mapping, props "hole" pattern
+4. **[`security-policy.md`](.docs/security-policy.md)** — Security: RLS, JWT, Zod, secrets, audit logging
+5. **[`roadmap.md`](.docs/roadmap.md)** — Feature roadmap, sprint planning, priority tracking
 
-For new contributors: **Read `architecture.md` first.**
+**For new contributors:** Read `architecture.md` first, then branch-specific docs (`backend-logic.md` or `frontend-ui.md`).
+
+**For AI Agents (Antigravity/Claude Code):** Use prompt: "Follow ANF-Agentic Architecture, see .docs/architecture.md and .docs/backend-logic.md (or frontend-ui.md)."
 
 ---
 

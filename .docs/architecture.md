@@ -68,21 +68,20 @@ wergu-wetan-app/
 │   ├── globals.css          # Tailwind + CSS custom properties
 │   └── tw-safelist.txt      # VITAL — dynamic Tailwind classes
 │
-├── actions/                 # Server Actions (Backend Logic)
+├── actions/                 # Server Actions (Backend Logic) — BE workspace
 │   ├── auth.action.ts
 │   ├── berita.action.ts
-│   ├── potensi.action.ts
 │   └── ...
 │
-├── components/              # React Components (UI Layer)
+├── components/              # React Components (UI Layer) — FE workspace
 │   ├── user/               # Public-facing components
 │   └── admin/              # Admin dashboard components
 │
-├── lib/                    # Utilities + Helpers
+├── lib/                    # Utilities + Helpers (BE workspace)
 │   ├── db.ts              # Prisma singleton
-│   └── auth-utils.ts
+│   └── services/          # Business logic services (optional)
 │
-├── prisma/                 # Database Schema + Seeding
+├── prisma/                 # Database Schema + Seeding (BE workspace)
 │   ├── schema.prisma
 │   └── seed.ts
 │
@@ -90,6 +89,11 @@ wergu-wetan-app/
     ├── images/
     └── icons/
 ```
+
+**Workspace Logic:**
+- **BE workspace:** `actions/`, `lib/`, `prisma/` — modified in `be/*` branches
+- **FE workspace:** `components/`, `app/` — modified in `fe/*` branches
+- **Integration:** `pr/*` branches merge BE + FE for testing
 
 ---
 
@@ -630,7 +634,55 @@ Step 3 — PR (pr/berita-full):
 
 ---
 
+## 📚 14. Documentation & Agent Guidelines
+
+### Core Documents (`.docs/`)
+
+| File | Audience | Purpose |
+|------|----------|---------|
+| **[`architecture.md`](.docs/architecture.md)** | Tech Leads, Architects | Master blueprint, ANF theory, branching strategy, data contracts |
+| **[`backend-logic.md`](.docs/backend-logic.md)** | Backend devs, Agents (Antigravity) | Service pattern, Server Actions, Prisma queries, SSR rules |
+| **[`frontend-ui.md`](.docs/frontend-ui.md)** | Frontend devs, Agents | Design system, Stitch workflow, component patterns, props "holes" |
+| **[`security-policy.md`](.docs/security-policy.md)** | All developers | RLS enforcement, JWT, Zod validation, secrets management |
+| **[`roadmap.md`](.docs/roadmap.md)** | Product, Teams | Feature timeline, sprint planning, priority tracking |
+
+### Agent Quick-Start (Antigravity/Claude Code)
+
+**When asked to implement a feature:**
+1. Read `architecture.md` first (branch context)
+2. Check `backend-logic.md` for BE patterns OR `frontend-ui.md` for FE patterns
+3. Follow "Service Pattern" for BE, "Hole Pattern" for FE
+4. Enforce Zod validation + RLS policies (see `security-policy.md`)
+5. Write tests in `pr/*` branch
+
+**Prompt template for Agents:**
+```
+Follow ANF-Agentic Architecture:
+- Branch: be/<feature> for backend, fe/<feature> for frontend
+- Use Service Pattern: encapsulate all DB queries in services/
+- Use Server Actions: never create API routes
+- Validate with Zod: define schema before DB ops
+- Check Security: RLS enabled? JWT verified?
+- Docs reference: see .docs/backend-logic.md or .docs/frontend-ui.md
+```
+
+---
+
+## 🏷️ 15. Document Control
+
+| Version | Date | Changes | Author |
+|---------|------|---------|--------|
+| 1.0 | 2026-04-15 | Initial draft | Kilo AI |
+| 2.0 | 2026-05-05 | Verified against codebase, fixed hallucinations | Kilo AI |
+| 2.1 | 2026-05-14 | Restructured: ANF-Agentic Architecture, new docs structure | AlrafuruNotFound |
+
+**Review Cadence:** Every sprint retro or major feature addition.  
+**Approval:** Tech Lead sign-off required for any deviation.
+
+---
+
 **Last Review:** 14 Mei 2026 | **Status:** ✅ Implemented  
 **Owner:** Engineering Team | **Next Review:** SprintPlanning
 
-Note: This branching strategy assumes small-to-medium sized team (3-5 devs). Adjust if scaling.
+**Note:** This architecture document is the living source of truth. Update when structure changes.
+
