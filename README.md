@@ -88,7 +88,6 @@ wergu-wetan-app/
 │
 ├── public/                   # Static assets (images, icons)
 └── .docs/                   # 📚 ANF-Agentic Architecture documentation
-    ├── README.md            # Documentation index (start here)
     ├── project-manifest.md  # Active inventory & cleanup queue
     ├── architecture.md      # Master blueprint
     ├── backend-logic.md     # BE patterns & SSR
@@ -160,8 +159,6 @@ This project implements the **ANF-Agentic Architecture** pattern (AlrafuruNotFou
 
 ## 📖 Documentation
 
-Start with **[`.docs/README.md`](.docs/README.md)** for navigation index.
-
 Core documentation in **[`.docs/`](.docs/)**:
 
 1. **[`project-manifest.md`](.docs/project-manifest.md)** — Active inventory, file ownership, cleanup queue (sanitize codebase)
@@ -171,7 +168,7 @@ Core documentation in **[`.docs/`](.docs/)**:
 5. **[`security-policy.md`](.docs/security-policy.md)** — Security: RLS, JWT, Zod, secrets, audit logging, PR checklist
 6. **[`roadmap.md`](.docs/roadmap.md)** — Feature timeline, sprint planning, priority tracking by branch
 
-**For new contributors:** Read `.docs/README.md` first, then [`architecture.md`](.docs/architecture.md), followed by branch-specific docs ([`backend-logic.md`](.docs/backend-logic.md) or [`frontend-ui.md`](.docs/frontend-ui.md)).
+**For new contributors:** Start with [`architecture.md`](.docs/architecture.md), then branch-specific docs ([`backend-logic.md`](.docs/backend-logic.md) or [`frontend-ui.md`](.docs/frontend-ui.md)).
 
 **For AI Agents (Antigravity/Claude Code):** Prompt: "Follow ANF-Agentic Architecture, see .docs/architecture.md and .docs/backend-logic.md (or .docs/frontend-ui.md)."
 

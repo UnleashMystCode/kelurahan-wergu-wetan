@@ -2,7 +2,7 @@
 
 **Portal Web Terpadu Kelurahan Wergu Wetan**  
 **Purpose:** Inventory & cleanup queue for active codebase files, aligned with ANF-Agentic branching.  
-**Maintained by:** Engineering Team | **Last Updated:** 14 Mei 2026
+**Maintained by:** Engineering Team | **Last Updated:** 14 Mei 2026 (Post-Restructuring Audit v1)
 
 ---
 
@@ -134,7 +134,6 @@ This manifest follows **ANF-Agentic Architecture** principles:
 | `AdminBannerManager.tsx` | Banner CRUD UI | ✅ Active |
 | `AdminHomeFeatures.tsx` | Homepage sections manager | ✅ Active |
 | `AdminStrukturClient.tsx` | Staff organization editor | ✅ Active |
-| `AdminSuratView.tsx` | Letter request manager | ⏳ In Progress |
 | `AdminLayananManager.tsx` | Services manager | ✅ Active |
 | `ModalTambahBerita.tsx` | Add news modal | ✅ Active |
 | `ModalEditBerita.tsx` | Edit news modal | ✅ Active |
@@ -144,7 +143,7 @@ This manifest follows **ANF-Agentic Architecture** principles:
 | `ConfirmDeleteButton.tsx` | Delete confirmation button | ✅ Active |
 | `InboxClient.tsx` | Contact messages inbox UI | ✅ Active |
 | `CommandPalette.tsx` | Admin quick actions palette | ✅ Active |
-| `TemplateSurat.tsx` | Letter template preview | ⏳ Planned |
+| `TemplateSurat.tsx` | Letter template preview — *used by AdminLayananManager* | ✅ Active |
 
 #### Design & Configuration
 
@@ -153,35 +152,46 @@ This manifest follows **ANF-Agentic Architecture** principles:
 | `app/globals.css` | Tailwind v4 + design tokens | ✅ Active |
 | `app/tw-safelist.txt` | Dynamic Tailwind class safelist | ✅ Active |
 | `tailwind.config.ts` | Tailwind v4 configuration | ✅ Active |
-| `components.json` *(if exists)* | Component registry (optional) | 🔍 Verify |
+
+#### Non-Code Directories (Tracked but Out-of-Architecture)
+
+| Directory | Purpose | Status |
+|-----------|---------|--------|
+| `certificates/` | Local HTTPS certs for `npm run dev --experimental-https` | ✅ Active (dev only, gitignored) |
+| `context/` | React Context providers (`LanguageContext.tsx`) | ✅ Active (FE extension) |
+| `public/icons/` | SVG icons for UI components | 🆕 Created (empty, ready) |
+| `lib/services/` | Business logic layer | 🆕 Created (empty, reserved for future use) |
+| `trash-temp/` | **REVIEW QUEUE** — files moved here during restructuring audit | 🔍 Review before delete |
 
 **Out-of-scope / Not Implemented:**
 - `components/ui/` — primitive component library (TODO)
 - `app/api/` — API routes: only `template/stats` (Excel export) exists; no REST API routes
 - `middleware.ts` — not used (auth handled in layout)
 - Error monitoring (Sentry) — not configured
-- `lib/services/` — business logic layer (deferred; Server Actions sufficient for now)
 
 ---
 
 ## 🧹 Cleanup Queue
 
-### Files to Review (Candidates for Deletion / Archival)
+### `/trash-temp/` — Pending Review (Moved During Restructuring Audit — 14 Mei 2026)
 
-| File / Directory | Reason | Action |
-|------------------|--------|--------|
-| `fix.js` (root) | One-time utility script, no longer needed | 🗑️ Delete after confirming migration complete |
-| `app/admin/halaman/*/page-old.tsx` *(if exists)* | Legacy admin pages (check for old versions) | 🔍 Search & delete if found |
-| Unused mock data files (`*.mock.tsx`, `*.fixture.tsx`) | Design-time only, not production | 🗑️ Delete |
-| Duplicate component variants (e.g., `Navbar.v2.tsx`)* | Multiple versions of same component | 🗑️ Keep single source |
+| File | Original Location | Reason Moved | Action |
+|------|------------------|--------------|--------|
+| `AdminSuratView.tsx` | `components/admin/` | Zero imports anywhere — orphan component (Surat feature not yet implemented) | 🔍 Keep if Surat feature starts, else delete |
+| `file.svg` | `public/` | Default Next.js boilerplate SVG — not used in any component | 🗑️ Safe to delete |
+| `globe.svg` | `public/` | Default Next.js boilerplate SVG — not used | 🗑️ Safe to delete |
+| `next.svg` | `public/` | Default Next.js boilerplate SVG — not used | 🗑️ Safe to delete |
+| `vercel.svg` | `public/` | Default Next.js boilerplate SVG — not used | 🗑️ Safe to delete |
+| `window.svg` | `public/` | Default Next.js boilerplate SVG — not used | 🗑️ Safe to delete |
+| `ttd-test.png` | `public/` | Test signature image — no code reference found | 🔍 Confirm then delete |
 
-**Note:** No `*-old.tsx` or `.bak` files currently found in codebase.
+### Completed Cleanup
 
-**Search command to run:**
-```bash
-# Find orphaned files (not imported anywhere)
-git ls-files | xargs grep -L "import.*from"  # approximate
-```
+| Item | Action Taken | Date |
+|------|-------------|------|
+| `fix.js` (root) | ✅ Already absent — confirmed clean | 14 Mei 2026 |
+| `scripts/` (root) | ✅ Deleted — was empty directory | 14 Mei 2026 |
+| Default Next.js SVGs | ✅ Moved to `trash-temp/` | 14 Mei 2026 |
 
 ### Cleanup Rules
 

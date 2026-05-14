@@ -95,38 +95,80 @@ This document is the **definitive source of truth** for the application's archit
 
 ---
 
-## 📁 4. Directory Structure (Logical Workspace)
+## 📁 4. Directory Structure (Verified Against Codebase)
 
 ```
 wergu-wetan-app/
-├── app/                      # Next.js App Router — FE workspace
-│   ├── (user)/              # Public pages (user-facing)
-│   ├── admin/               # Protected CMS dashboard
-│   ├── api/                 # Minimal — Excel template only
-│   ├── globals.css          # Tailwind + CSS custom properties
-│   └── tw-safelist.txt      # VITAL — dynamic Tailwind classes
+├── app/                          # Next.js App Router — FE workspace
+│   ├── home/                    # Homepage route → /home
+│   ├── berita/                  # News listing → /berita
+│   │   └── [slug]/              # News detail → /berita/[slug]
+│   ├── potensi-desa/            # Village potentials → /potensi-desa
+│   │   └── [slug]/              # Potensi detail → /potensi-desa/[slug]
+│   ├── layanan/                 # Services → /layanan
+│   ├── kontak/                  # Contact → /kontak
+│   ├── tentang-kami/            # About → /tentang-kami
+│   ├── admin/                   # Protected CMS dashboard
+│   │   ├── (auth)/login/        # Admin login (route group)
+│   │   ├── (dashboard)/         # Dashboard route group
+│   │   │   ├── dashboard/       # Dashboard overview
+│   │   │   └── pesan-masuk/     # Contact inbox
+│   │   ├── halaman/             # Content management pages
+│   │   │   ├── beranda/         # Homepage editor
+│   │   │   ├── berita/          # News management
+│   │   │   ├── potensi-desa/    # Potensi management
+│   │   │   ├── layanan/         # Services management
+│   │   │   ├── kontak/          # Contact info management
+│   │   │   └── tentang-kami/    # About content management
+│   │   └── settings/            # Admin settings
+│   │       └── manajemen-admin/ # Admin user management (super only)
+│   ├── api/                     # Minimal — Excel template only
+│   ├── globals.css              # Tailwind + CSS custom properties
+│   ├── layout.tsx               # Root layout (Plus Jakarta Sans, metadata)
+│   ├── page.tsx                 # Root redirect → /home
+│   └── tw-safelist.txt          # VITAL — dynamic Tailwind classes
 │
-├── actions/                 # Server Actions — BE workspace
+├── actions/                     # Server Actions — BE workspace
 │   ├── auth.action.ts
 │   ├── berita.action.ts
-│   └── ...
+│   ├── banner.action.ts
+│   ├── home.action.ts
+│   ├── kontak.action.ts
+│   ├── layanan.action.ts
+│   ├── pesan.action.ts
+│   ├── potensi.action.ts
+│   ├── search.action.ts
+│   └── tentang-kami.action.ts
 │
-├── components/              # React Components — FE workspace
-│   ├── user/               # Public components
-│   └── admin/              # Admin components
+├── components/                  # React Components — FE workspace
+│   ├── user/                   # Public-facing components
+│   └── admin/                  # Admin CMS components
 │
-├── lib/                    # Utilities — BE workspace
-│   ├── db.ts              # Prisma singleton
-│   └── services/          # Business logic (optional)
+├── lib/                        # Utilities — BE workspace
+│   ├── db.ts                  # Prisma singleton
+│   ├── dictionary.ts          # Localization (i18n)
+│   └── services/              # Business logic layer (reserved)
 │
-├── prisma/                 # Database Schema — BE workspace
+├── context/                    # React Context providers (FE extension)
+│   └── LanguageContext.tsx
+│
+├── prisma/                     # Database Schema — BE workspace
 │   ├── schema.prisma
 │   └── seed.ts
 │
-└── public/                 # Static assets
-    ├── images/
-    └── icons/
+├── public/                     # Static assets
+│   ├── images/                # Hero images, potensi photos
+│   ├── icons/                 # SVG icons
+│   └── uploads/               # User-uploaded content
+│
+├── certificates/               # Local HTTPS certs (dev only, gitignored)
+├── .docs/                      # ANF-Agentic Architecture documentation
+└── README.md                   # Project entry point (start here)
 ```
+
+> **⚠️ PENTING — Tidak ada `(user)/` route group di kode aktual.**  
+> Public routes langsung di bawah `app/` (contoh: `app/berita/`, bukan `app/(user)/berita/`).  
+> Route group `(user)/` hanya ada di dokumentasi lama — **sudah dihapus**.
 
 **Workspace Separation:**
 - **BE workspace** (`be/*` branch): `actions/`, `lib/`, `prisma/` — Server Actions, Prisma, services
@@ -286,25 +328,47 @@ FE (Component) → Receive props → Render UI (no logic)
 
 ## 🌐 6. Routing Conventions
 
+> **Source of truth:** File paths verified via filesystem scan — 14 Mei 2026.
+
 ### Public Routes (User Portal)
 
-| Route | Handler | Data Source |
-|-------|---------|-------------|
-| `/home` | `app/(user)/home/page.tsx` | `home.action.ts` |
-| `/berita` | `app/(user)/berita/page.tsx` | `berita.action.ts.getAllBerita()` |
-| `/berita/[slug]` | `app/(user)/berita/[slug]/page.tsx` | `berita.action.ts.getBeritaBySlug(slug)` |
-| `/potensi-desa` | `app/(user)/potensi-desa/page.tsx` | `potensi.action.ts.getAllPotensi()` |
-| `/kontak` | `app/(user)/kontak/page.tsx` | `kontak.action.ts.getContactInfo()` |
+| Route | File Path (Actual) | Data Source |
+|-------|--------------------|-------------|
+| `/` | `app/page.tsx` | Redirect → `/home` |
+| `/home` | `app/home/page.tsx` | `home.action.ts` |
+| `/berita` | `app/berita/page.tsx` | `berita.action.ts` → `getAllBerita()` |
+| `/berita/[slug]` | `app/berita/[slug]/page.tsx` | `berita.action.ts` → `getBeritaBySlug(slug)` |
+| `/potensi-desa` | `app/potensi-desa/page.tsx` | `potensi.action.ts` → `getAllPotensi()` |
+| `/potensi-desa/[slug]` | `app/potensi-desa/[slug]/page.tsx` | `potensi.action.ts` → `getPotensiBySlug(slug)` |
+| `/layanan` | `app/layanan/page.tsx` | `layanan.action.ts` → `getAllLayanan()` |
+| `/kontak` | `app/kontak/page.tsx` | `kontak.action.ts` → `getContactInfo()` |
+| `/tentang-kami` | `app/tentang-kami/page.tsx` | `tentang-kami.action.ts` |
 
-### Admin Routes (Protected)
+### Admin Routes (Protected — JWT verified in `app/admin/layout.tsx`)
 
-| Route | Auth Required | Role | Layout |
-|-------|--------------|------|--------|
-| `/admin/dashboard` | ✅ | admin+ | `app/admin/layout.tsx` (JWT verify) |
-| `/admin/halaman/berita` | ✅ | admin+ | AdminShell |
-| `/admin/halaman/potensi-desa` | ✅ | admin+ | AdminShell |
-| `/admin/halaman/tentang-kami` | ✅ | admin+ | AdminShell |
-| `/admin/settings/manajemen-admin` | ✅ | **super only** | AdminShell + RBAC |
+| Route | File Path (Actual) | Auth | Role |
+|-------|--------------------|------|------|
+| `/admin` | `app/admin/page.tsx` | ✅ | admin+ |
+| `/admin/login` | `app/admin/(auth)/login/page.tsx` | ❌ public | — |
+| `/admin/dashboard` | `app/admin/(dashboard)/dashboard/page.tsx` | ✅ | admin+ |
+| `/admin/pesan-masuk` | `app/admin/(dashboard)/pesan-masuk/page.tsx` | ✅ | admin+ |
+| `/admin/halaman/beranda` | `app/admin/halaman/beranda/page.tsx` | ✅ | admin+ |
+| `/admin/halaman/beranda/sambutan` | `app/admin/halaman/beranda/sambutan/page.tsx` | ✅ | admin+ |
+| `/admin/halaman/beranda/layanan-icon` | `app/admin/halaman/beranda/layanan-icon/page.tsx` | ✅ | admin+ |
+| `/admin/halaman/berita` | `app/admin/halaman/berita/page.tsx` | ✅ | admin+ |
+| `/admin/halaman/berita/daftar` | `app/admin/halaman/berita/daftar/page.tsx` | ✅ | admin+ |
+| `/admin/halaman/potensi-desa` | `app/admin/halaman/potensi-desa/page.tsx` | ✅ | admin+ |
+| `/admin/halaman/potensi-desa/daftar` | `app/admin/halaman/potensi-desa/daftar/page.tsx` | ✅ | admin+ |
+| `/admin/halaman/layanan` | `app/admin/halaman/layanan/page.tsx` | ✅ | admin+ |
+| `/admin/halaman/layanan/daftar` | `app/admin/halaman/layanan/daftar/page.tsx` | ✅ | admin+ |
+| `/admin/halaman/kontak` | `app/admin/halaman/kontak/page.tsx` | ✅ | admin+ |
+| `/admin/halaman/kontak/daftar` | `app/admin/halaman/kontak/daftar/page.tsx` | ✅ | admin+ |
+| `/admin/halaman/tentang-kami` | `app/admin/halaman/tentang-kami/page.tsx` | ✅ | admin+ |
+| `/admin/halaman/tentang-kami/teks` | `app/admin/halaman/tentang-kami/teks/page.tsx` | ✅ | admin+ |
+| `/admin/halaman/tentang-kami/struktur` | `app/admin/halaman/tentang-kami/struktur/page.tsx` | ✅ | admin+ |
+| `/admin/halaman/tentang-kami/statistik` | `app/admin/halaman/tentang-kami/statistik/page.tsx` | ✅ | admin+ |
+| `/admin/settings` | `app/admin/settings/page.tsx` | ✅ | admin+ |
+| `/admin/settings/manajemen-admin` | `app/admin/settings/manajemen-admin/page.tsx` | ✅ | **super only** |
 
 ---
 
@@ -424,12 +488,15 @@ describe('BeritaPage Integration', () => {
 
 ### Core Documents (`.docs/`)
 
+> **Entry point:** [`README.md`](../README.md) di root project — baca ini pertama kali.
+
 | File | Audience | Purpose |
 |------|----------|---------|
 | **[`architecture.md`](.docs/architecture.md)** | Tech Leads, Architects | Master blueprint, ANF theory, branching strategy, data contracts |
 | **[`backend-logic.md`](.docs/backend-logic.md)** | Backend devs, Agents | Server Actions pattern, Prisma queries, Zod validation, SSR |
 | **[`frontend-ui.md`](.docs/frontend-ui.md)** | Frontend devs, Agents | Design system, Stitch workflow, component "hole" pattern |
 | **[`security-policy.md`](.docs/security-policy.md)** | All developers | RLS, JWT, Zod validation, secrets management |
+| **[`project-manifest.md`](.docs/project-manifest.md)** | All developers | Active file inventory, cleanup queue, feature coverage matrix |
 | **[`roadmap.md`](.docs/roadmap.md)** | Product, Teams | Feature timeline, sprint planning, priorities |
 
 ### Agent Quick-Start (Antigravity/Claude Code)
@@ -461,14 +528,15 @@ Follow ANF-Agentic Architecture:
 | 1.0 | 2026-04-15 | Initial draft | Kilo AI |
 | 2.0 | 2026-05-05 | Verified against codebase | Kilo AI |
 | 2.1 | 2026-05-14 | Restructured: ANF-Agentic Architecture | AlrafuruNotFound |
-| **3.0** | **2026-05-14** | **Removed duplicates, fixed numbering, consolidated sections** | **Kilo AI** |
+| 3.0 | 2026-05-14 | Removed duplicates, fixed numbering, consolidated sections | Kilo AI |
+| **3.1** | **2026-05-14** | **Codebase audit: removed phantom `(user)/` route group, verified all actual routes, updated directory tree, deleted duplicate `.docs/README.md`** | **Antigravity** |
 
 **Review Cadence:** Every sprint retro or major feature addition.  
 **Approval:** Tech Lead sign-off required for any deviation.
 
 ---
 
-**Last Review:** 14 Mei 2026 | **Status:** ✅ Implemented  
+**Last Review:** 14 Mei 2026 | **Status:** ✅ Verified Against Codebase v0.1.0  
 **Owner:** Engineering Team | **Next Review:** Sprint Planning
 
 **Note:** This architecture document is the living source of truth. Update when structure changes.
