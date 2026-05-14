@@ -1,24 +1,26 @@
-# 🎨 Frontend / UI — Design System & Stitch Integration
+# 🎨 Frontend UI — Design System & Component Patterns
 
-**Purpose:** UI/UX implementation, design system management, dan integration dengan backend via props pattern within **ANF-Agentic Architecture**.
-
----
-
-## 🌿 2. Branch Context: `fe/*` (Frontend Workspace)
-
-**Fokus:** Semua yang berhubungan dengan UI/UX dan presentation layer.
-
-**Kewenangan:**
-- ✅ **`components/`** — UI components (dengan "lubang" untuk data)
-- ✅ **`app/`** — Pages dan layouts
-- ✅ **`app/globals.css`** — Design tokens
-- ❌ **Tidak touch:** `actions/`, `services/`, `lib/` (BE territory)
-
-**Output:** Komponen React siap diisi data oleh BE functions.
+**Purpose:** UI/UX implementation guide within ANF-Agentic Architecture. Covers design system, component patterns, and Stitch AI integration (optional design-to-code workflow).
 
 ---
 
-## 🧩 3. Design System (The "Source of Truth")
+## 🌿 1. Branch Context: `fe/*` (FE Workspace)
+
+**Focus:** All UI/UX and presentation layer code.
+
+**Workspace files:**
+- `components/` — React UI components (stateless "holes")
+- `app/` — Next.js pages and layouts
+- `app/globals.css` — Design tokens and Tailwind configuration
+- `tailwind.config.ts` — Tailwind setup
+
+**Output:** Presentational components with explicit props interfaces, ready for data injection from BE.
+
+**Rule:** Never modify `actions/`, `lib/`, or `prisma/` — those are BE territory.
+
+---
+
+## 🧩 2. Design System (Source of Truth)
 
 ### CSS Custom Properties (Tailwind v4)
 
@@ -28,14 +30,14 @@
 @layer theme {
   :root {
     /* Brand Colors — DO NOT MODIFY */
-    --color-brand-dark: #0D47A1;   /* Headers, footers, serious CTAs */
-    --color-brand-base: #1565C0;   /* Interactive: buttons, hover, links */
+    --color-brand-dark: #0D47A1;   /* Headers, footers, primary CTAs */
+    --color-brand-base: #1565C0;   /* Buttons, links, interactive states */
 
     /* Text Colors */
     --color-text-dark: #272727;    /* All headings & body text */
     --color-text-muted: #7C7C7C;   /* Metadata, timestamps, secondary */
 
-    /* Backgrounds (optional) */
+    /* Backgrounds & Borders */
     --color-bg-light: #F8FAFC;
     --color-border: #E2E8F0;
   }
@@ -56,29 +58,45 @@ const plusJakarta = Plus_Jakarta_Sans({
 ```
 
 **Type Scale:**
-| Element | Tailwind | Weight | Line Height |
-|---------|----------|--------|-------------|
-| H1 (Page title) | `text-3xl` | `font-bold` (700) | `leading-tight` |
-| H2 (Section) | `text-2xl` | `font-bold` (700) | `leading-snug` |
-| H3 (Subsection) | `text-xl` | `font-semibold` (600) | `leading-snug` |
+| Element | Tailwind Class | Weight | Line Height |
+|---------|---------------|--------|-------------|
+| H1 | `text-3xl` | `font-bold` (700) | `leading-tight` |
+| H2 | `text-2xl` | `font-bold` (700) | `leading-snug` |
+| H3 | `text-xl` | `font-semibold` (600) | `leading-snug` |
 | Body | `text-base` | `font-normal` (400) | `leading-relaxed` |
-| Small/Meta | `text-sm` | `font-normal` (400) | `leading-normal` |
+| Small | `text-sm` | `font-normal` (400) | `leading-normal` |
+
+**Color Application:**
+| Token | Use For |
+|-------|---------|
+| `brand-dark` | Navigation, footers, primary CTAs |
+| `brand-base` | Buttons, links, hover/focus states |
+| `text-dark` | All heading and body text |
+| `text-muted` | Metadata, timestamps, secondary information |
 
 ---
 
-## 🔗 4. Stitch AI Integration Guide (FE Workflow)
+## 🔗 3. Stitch AI Integration (Optional — Design-to-Code)
 
-### The "Hole" Pattern — FE Creates Props Interface
+Stitch is a **design-time tool** for converting Figma designs to React/Tailwind code. It is NOT a runtime dependency.
 
-**FE makes "holes" (props), BE fills them with data.**
+### When to Use Stitch
+
+- ✅ Importing designer mockups from Figma into codebase
+- ✅ Generating component boilerplate from approved designs
+- ❌ NOT for data binding — data comes from Server Actions at runtime
+- ❌ NOT a state management solution
+
+### The "Hole" Pattern — Props Interface Contract
+
+FE creates explicit props interfaces ("holes"). BE provides data to fill them.
 
 **Step 1 — Define Props Interface (FE):**
 ```typescript
-// components/user/BeritaCard.tsx (FE — UI only, no data fetching)
+// components/user/BeritaCard.tsx (FE — pure UI)
 'use client';
 
 export interface BeritaCardProps {
-  // These are the "holes" — BE will provide these values
   judul: string;
   isi: string;
   gambar?: string;
@@ -89,12 +107,9 @@ export interface BeritaCardProps {
 }
 
 export function BeritaCard({ judul, isi, gambar, kategori, penulis, tanggal, slug }: BeritaCardProps) {
-  // Pure UI — no database calls, no Server Actions
   return (
     <article className="bg-white border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
-      {gambar && (
-        <img src={gambar} alt={judul} className="w-full h-48 object-cover" />
-      )}
+      {gambar && <img src={gambar} alt={judul} className="w-full h-48 object-cover" />}
       <div className="p-4">
         <span className="text-xs font-semibold text-brand-base uppercase">{kategori}</span>
         <h3 className="font-bold text-lg mt-1 line-clamp-2">{judul}</h3>
@@ -110,7 +125,7 @@ export function BeritaCard({ judul, isi, gambar, kategori, penulis, tanggal, slu
 
 **Step 2 — BE Fills the Holes (Server Action):**
 ```typescript
-// actions/berita.action.ts (BE — Server Action)
+// actions/berita.action.ts (BE — data provider)
 export async function getAllBerita(): Promise<ApiResponse<Berita[]>> {
   try {
     const raw = await prisma.kegiatan.findMany({
@@ -119,14 +134,13 @@ export async function getAllBerita(): Promise<ApiResponse<Berita[]>> {
       take: 10,
     });
 
-    // Map DB fields → FE props format (fills the holes)
-    const data: Berita[] = raw.map(b => ({
+    const data = raw.map(b => ({
       judul: b.judul,
       isi: b.isi,
       gambar: b.gambar || '/images/default-news.png',
       kategori: b.kategori,
       penulis: b.penulis,
-      tanggal: b.tanggal.toISOString(), // FE receives ISO string
+      tanggal: b.tanggal.toISOString(),
       slug: b.slug,
     }));
 
@@ -137,7 +151,7 @@ export async function getAllBerita(): Promise<ApiResponse<Berita[]>> {
 }
 ```
 
-**Step 3 — FE Page Orchestrates (Client Component Wrapper):**
+**Step 3 — FE Page Orchestrates:**
 ```typescript
 // app/berita/page.tsx (FE — calls BE, passes to UI)
 'use client';
@@ -167,45 +181,14 @@ export default async function BeritaPage() {
 
 ---
 
-## 📋 5. Components Priority for Stitch Export
+## 🚀 4. Exporting Components with Stitch
 
-Order by UI-first, stateless, and reusable:
+### Prepare Component for Stitch
 
-### 🔴 High Priority (Public Portal)
+Transform Next.js component → Stitch-compatible:
 
-| Component | File | Props Interface (the "holes") |
-|-----------|------|-----------------------------|
-| **Navbar** | `components/user/Navbar.tsx` | `{ currentPath: string, navItems: NavItem[] }` |
-| **Footer** | `components/user/Footer.tsx` | `{ contact: ContactInfo, links: Link[] }` |
-| **HeroCarousel** | `components/user/HeroCarousel.tsx` | `{ banners: Banner[] }` |
-| **BeritaCard** | `components/user/BeritaCard.tsx` | `{ judul, isi, gambar?, kategori, penulis, tanggal, slug }` |
-| **PotensiCard** | `components/user/PotensiDesaCard.tsx` | `{ judul, deskripsiSingkat, gambar?, kategori, slug }` |
-
-### 🟡 Medium Priority (Admin Dashboard)
-
-| Component | File | Props |
-|-----------|------|-------|
-| **AdminSidebar** | `components/admin/AdminSidebar.tsx` | `{ userRole: 'admin' | 'super', activeRoute: string }` |
-| **AdminHeader** | `components/admin/AdminHeader.tsx` | `{ user: { namaLengkap, role } }` |
-| **BeritaForm** | `components/admin/AdminBeritaForm.tsx` | `{ initialData?, onSubmit, loading }` |
-
-### 🟢 Low Priority (Specialized)
-
-| Component | File | Purpose |
-|-----------|------|---------|
-| **GlobalSearchModal** | `components/user/GlobalSearchModal.tsx` | Cmd+K search UI (controlled props) |
-| **CommandPalette** | `components/admin/CommandPalette.tsx` | Admin quick actions |
-
----
-
-## 🚀 6. Step-by-Step: Export Component to Stitch
-
-### Step 1: Prepare Component for Stitch
-
-**Transform Next.js component → Stitch-compatible:**
-
+**Before (Next.js-specific):**
 ```typescript
-// BEFORE: Next.js component (components/user/Navbar.tsx)
 'use client';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -220,8 +203,8 @@ export default function Navbar() {
 }
 ```
 
+**After (Stitch-ready):**
 ```typescript
-// AFTER: Stitch-ready (Navbar.stitch.tsx)
 'use client';
 
 export interface NavItem {
@@ -230,8 +213,8 @@ export interface NavItem {
 }
 
 export interface NavbarProps {
-  currentPath: string;          // BE/Page passes this
-  navItems: NavItem[];          // Static route config
+  currentPath: string;   // BE/page passes this
+  navItems: NavItem[];   // Static route config
 }
 
 export function Navbar({ currentPath, navItems }: NavbarProps) {
@@ -246,7 +229,6 @@ export function Navbar({ currentPath, navItems }: NavbarProps) {
             <span className="font-bold text-xl text-text-dark">Wergu Wetan</span>
           </div>
 
-          {/* Navigation — now uses navItems prop (FE data) */}
           <div className="hidden md:flex items-center gap-6">
             {navItems.map((item) => (
               <a
@@ -267,139 +249,69 @@ export function Navbar({ currentPath, navItems }: NavbarProps) {
 }
 ```
 
-**Key changes for Stitch compatibility:**
-1. ✅ **Add `'use client'`** directive (required by Stitch)
-2. ✅ **Define `interface Props`** — explicit data contract
-3. ✅ **Replace `<Link>` → `<a>`** (or keep Link, Stitch will handle)
-4. ✅ **Remove `next/navigation` hooks** — use static `currentPath` prop
-5. ✅ **Remove dynamic className templates** (`className={\`bg-${color}\`}` → not supported)
-6. ✅ **Use absolute image URLs** or placeholders
+**Key changes:**
+1. ✅ Add `'use client'` (required by Stitch)
+2. ✅ Define explicit `interface Props`
+3. ✅ Replace Next.js hooks (`usePathname`) with static props
+4. ✅ Replace `<Link>` with `<a>` (or keep Link, Stitch handles it)
+5. ✅ Remove dynamic `className` templates — use conditional classes
+6. ✅ Use absolute image URLs or placeholders
 
----
+### Stitch URL Format
 
-### Step 2: Generate Public Raw URL
+Stitch requires public HTTP(S) URL to the component file:
 
-Stitch requires **public HTTP(S) URL** to component file:
-
-**Option A — GitHub Raw:**
-```
-https://raw.githubusercontent.com/username/repo/main/stitch_export/Navbar.tsx
-```
-
-**Option B — Vercel Deployment:**
-```
-https://your-app.vercel.app/stitch_export/Navbar.tsx
-```
-
-**Stitch URL format:**
 ```
 https://stitch.withgoogle.com/copy?url=<ENCODED_URL>&name=ComponentName
 ```
 
 Example:
 ```
-https://stitch.withgoogle.com/copy?url=https%3A%2F%2Fraw.githubusercontent.com%2Fmy-org%2Fwergu-wetan%2Fmain%2Fstitch_export%2FNavbar.tsx&name=WW_Navbar
+https://stitch.withgoogle.com/copy?url=https%3A%2F%2Fraw.githubusercontent.com%2Forg%2Frepo%2Fmain%2Fcomponents%2FNavbar.tsx&name=WW_Navbar
 ```
 
 ---
 
-### Step 3: Import to Figma via Stitch
+## 🎨 5. Tailwind → Figma Property Map
 
-1. Open https://stitch.withgoogle.com/
-2. Paste the full Stitch URL in browser address bar
-3. Stitch will:
-   - Parse React JSX → Figma frames
-   - Extract Tailwind classes → Figma fills, shadows, corner radius
-   - Create component variants (hover, active, disabled)
-4. Component appears in your Figma team library
+Stitch recognizes these Tailwind patterns:
 
----
+| Tailwind Class | Figma Property |
+|----------------|----------------|
+| `bg-blue-600` | Fill color `#2563EB` |
+| `text-text-dark` | Text color `#272727` |
+| `rounded-xl` | Corner radius `12px` |
+| `shadow-lg` | Drop shadow effect |
+| `border` | Stroke weight `1px` |
+| `p-4` | Padding `16px` all sides |
+| `flex` / `flex-col` | Auto Layout (vertical) |
+| `items-center` | Align: center |
+| `justify-between` | Justify: space between |
+| `gap-2` | Space between items `8px` |
+| `w-full` | Width "Fill container" |
+| `h-16` | Fixed height `64px` |
+| `hover:bg-blue-700` | Interactive variant (hover state) |
+| `transition-all` | Smart animate between states |
+| `backdrop-blur-md` | Background blur `16px` |
 
-## 🎨 7. Tailwind Classes → Figma Property Map
-
-Stitch recognizes these patterns:
-
-| Tailwind Class | Figma Property | Example |
-|----------------|----------------|---------|
-| `bg-blue-600` | Fill color `#2563EB` | Primary button |
-| `text-text-dark` | Text color `#272727` | All heading/body |
-| `rounded-xl` | Corner radius `12px` | Cards, buttons |
-| `shadow-lg` | Drop shadow effect | Card elevation |
-| `border` | Stroke weight `1px` | Borders |
-| `p-4` | Padding `16px` all sides | Spacing |
-| `flex` / `flex-col` | Auto Layout (vertical) | Container |
-| `items-center` | Align: center | Flex alignment |
-| `justify-between` | Justify: space between | Navbar spacing |
-| `gap-2` | Space between items `8px` | Flex gap |
-| `w-full` | Width constraint "Fill container" | Responsive |
-| `h-16` | Fixed height `64px` | Header, banner |
-
-**Complex mappings:**
-- `hover:scale-[1.02]` → Interactive variant with `scale: 1.02` transform
-- `transition-all` → Smart animate between states
-- `backdrop-blur-md` → Background blur `16px`
+**Complex patterns:**
+- `hover:scale-[1.02]` → Transform scale
+- `active:scale-95` → Pressed state
+- `disabled:opacity-50` → Disabled state
 
 ---
 
-## 🏗️ 8. Design Tokens → Figma Variables
+## 🖼️ 6. Image Handling
 
-Export CSS variables to Figma Variables:
-
-```css
-:root {
-  --color-brand-dark: #0D47A1;
-  --color-brand-base: #1565C0;
-  --color-text-dark: #272727;
-  --color-text-muted: #7C7C7C;
-}
-```
-
-**Figma Variables mapping:**
-
-| Variable Name | Type | Value | Collection |
-|---------------|------|-------|------------|
-| `color/brand/dark` | Color | `#0D47A1` | Brand Colors |
-| `color/brand/base` | Color | `#1565C0` | Brand Colors |
-| `color/text/dark` | Color | `#272727` | Text Colors |
-| `color/text/muted` | Color | `#7C7C7C` | Text Colors |
-| `spacing/unit` | Number | `4px` | Spacing base |
-
-**Publish as Team Library** — agar semua designer pakai standard yang sama.
-
----
-
-## 📱 9. Responsive Breakpoints (Figma Frames)
-
-Map Tailwind breakpoints ke Figma frame sizes:
-
-| Breakpoint | Min Width | Frame Size (Figma) |
-|------------|-----------|-------------------|
-| Mobile (base) | 0px | 375×812 (iPhone X) |
-| `sm` | 640px | 640×1024 (iPad mini) |
-| `md` | 768px | 768×1024 (iPad) |
-| `lg` | 1024px | 1024×768 (desktop) |
-| `xl` | 1280px | 1280×800 |
-| `2xl` | 1536px | 1536×864 |
-
-**Figma best practice:** Buat Auto Layout components, lalu constrain dengan min/max-width.
-
----
-
-## 🖼️ 10. Image Handling for Stitch
-
-Static assets from `public/images/` require absolute URLs:
+Static assets from `public/images/` require **absolute URLs** for Stitch preview:
 
 ```typescript
-// BEFORE (Next.js relative path)
+// ❌ Next.js relative path (runtime OK, Stitch fails)
 <img src="/images/hero_office.png" alt="Office hero" />
 
-// AFTER (Stitch-ready — absolute URL)
+// ✅ Absolute URL (Stitch-compatible)
 <img src="https://wergu-wetan.id/images/hero_office.png" alt="Office hero" />
 ```
-
-**Why?** Stitch tidak bisa resolve relative paths. Gunakan:
-- Absolute URLs (production domain)
-- Placeholder images (via unsplash.com) untuk preview
 
 **Image specs:**
 - Hero banners: 1920×800 (desktop), 768×400 (tablet), 400×300 (mobile)
@@ -408,126 +320,48 @@ Static assets from `public/images/` require absolute URLs:
 
 ---
 
-## 🔄 11. Dynamic Data → Static Mock (Stitch Preview)
+## 📱 7. Responsive Breakpoints
 
-**Real component (with Server Action):**
-```typescript
-// app/berita/page.tsx
-const { data } = await getAllBerita(); // from actions/berita.action.ts
-```
+Map Tailwind breakpoints to device frames:
 
-**Stitch mock (for design preview):**
-```typescript
-// Navbar.stitch.mock.tsx — Untuk preview di Figma
-export const mockNavItems = [
-  { href: '/home', label: 'Beranda' },
-  { href: '/layanan', label: 'Layanan' },
-  { href: '/berita', label: 'Berita' },
-];
+| Breakpoint | Min Width | Device |
+|------------|-----------|--------|
+| Mobile (base) | 0px | 375×812 (iPhone X) |
+| `sm` | 640px | 640×1024 (iPad mini) |
+| `md` | 768px | 768×1024 (iPad) |
+| `lg` | 1024px | 1024×768 (desktop) |
+| `xl` | 1280px | 1280×800 |
+| `2xl` | 1536px | 1536×864 |
 
-// Usage in component for Stitch preview:
-export function Navbar() {
-  // In Stitch preview, use mock data; in production, get from BE
-  const mockMode = true; // TODO: auto-detect Stitch environment
-  const navItems = mockMode ? mockNavItems : realNavItems;
-
-  return <nav>...</nav>;
-}
-```
-
-**Better approach:**
-Buat `mock-data.ts` untuk consistent mock data across all components.
+**Figma best practice:** Use Auto Layout with min/max-width constraints.
 
 ---
 
-## 🧪 12. Testing Component States in Stitch
+## 🧪 8. Before PR: FE Checklist
 
-Stitch auto-detects Tailwind variant classes dan creates component variants:
-
-| State | Tailwind Class | Stitch Variant |
-|-------|----------------|----------------|
-| Default | none | `Default` |
-| Hover | `hover:bg-blue-700` | `Hover` |
-| Active/Pressed | `active:scale-95` | `Pressed` |
-| Disabled | `disabled:opacity-50` | `Disabled` |
-| Focus | `focus:ring-2` | `Focused` |
-
-**Pastikan semua interactive states ada** sebelum export ke Figma.
-
----
-
-## 📤 13. Export from Figma Back to Code
-
-Setelah desain final di Figma (via Stitch import), export kembali ke React:
-
-1. **Install Figma plugin:** "Figma to Code" (by Anima) atau "Locofy"
-2. **Select frame** → Generate React/Tailwind code
-3. **Copy generated code** → Paste ke component FE (e.g., `components/user/XYZ.tsx`)
-4. **Replace mock data** dengan real Server Action calls
-
-**Manual refinement required:**
-- ✅ Add `'use client'` directive jika component pakai state/effects
-- ✅ Replace `<div>` dengan semantic HTML (`<nav>`, `<header>`, `<main>`)
-- ✅ Add accessibility props (`aria-label`, `alt` text untuk images)
-- ✅ Reconnect data flow: ganti mock data → call Server Action dari `actions/`
-
----
-
-## 🔄 14. Workflow: Design → Code → PR (FE Perspective)
-
-```
-[Design in Figma via Stitch]
-        ↓
-[Export to React/Tailwind code]
-        ↓
-[Paste into components/user/ (FE branch)]
-        ↓
-[Add Props Interface + "holes"]
-        ↓
-[Call Server Action from actions/ (BE) — but BE belum siap?]
-        ↓
-[Use mock data temporarily]
-        ↓
-[Mock data → real data after BE done]
-        ↓
-[Integration test in pr/* branch]
-        ↓
-[Merge to main if all tests pass]
-```
-
-**FE Checklist before PR:**
-- [ ] Component renders with mock data in Figma preview
+- [ ] Component renders with mock data in Stitch preview (if used)
 - [ ] Exported code matches design specs (pixel-perfect)
 - [ ] Props interface defined (TypeScript)
 - [ ] Real data integration works (await Server Action call)
 - [ ] Mobile responsive (test 375px, 768px, 1024px)
 - [ ] Accessibility: keyboard nav, contrast ratio ≥4.5:1, ARIA labels
 - [ ] No console errors/warnings
+- [ ] No direct `fetch()` calls to database (use Server Actions only)
 
 ---
 
-## 🛠️ 15. Common Issues & Solutions
+## 🛠️ 9. Common Issues & Solutions
 
 | Issue | Cause | Solution |
 |-------|-------|----------|
-| **Stitch ignores `className`** | Arbitrary value `w-[324px]` | Use fixed Tailwind classes (`w-80`) atau add to safelist |
-| **Component too complex** | Nested ternaries, loops | Extract sub-components, simplify logic |
-| **Images 404 in Figma** | Relative paths (`/images/foo.png`) | Convert to absolute URL (`https://domain.com/images/foo.png`) |
-| **Icons not rendering** | `lucide-react` icons (external lib) | Replace dengan SVG strings atau icon font |
-| **Fonts mismatch** | Google Fonts not loaded in Figma canvas | Add `font-family` fallback to CSS variables |
-| **Dynamic classes fail** | `className={\`bg-${color}\`}` | Predefine variants atau use conditional classes |
-
----
-
-## 📚 16. Resources
-
-- **Stitch AI:** https://stitch.withgoogle.com/
-- **Tailwind v4:** https://tailwindcss.com/docs
-- **React JSX → Figma plugin:** https://www.figma.com/community/plugin/745905260355047109
-- **Figma Variables:** https://help.figma.com/hc/en-us/articles/360040562653
-- **Auto Layout (Figma):** https://help.figma.com/hc/en-us/articles/360040451134
+| Stitch ignores className | Arbitrary value `w-[324px]` | Use fixed Tailwind classes (`w-80`) or add to safelist |
+| Component too complex | Nested ternaries, loops | Extract sub-components, simplify logic |
+| Images 404 in Figma | Relative paths (`/images/foo.png`) | Convert to absolute URL (`https://domain.com/images/foo.png`) |
+| Icons not rendering | `lucide-react` external lib | Replace with inline SVG strings |
+| Fonts mismatch | Google Fonts not loaded in Figma canvas | Add `font-family` fallback to CSS variables |
+| Dynamic classes fail | `className={\`bg-${color}\`}` | Predefine variants or use conditional classes |
 
 ---
 
 **Last Review:** 14 Mei 2026 | **Status:** ✅ Active  
-**Owner:** Frontend Team | **Next Review:** Sprint retrospective
+**Owner:** Frontend Team | **Next Review:** Sprint Retrospective
