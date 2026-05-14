@@ -1,7 +1,7 @@
 # Portal Web Terpadu Kelurahan Wergu Wetan
 
 **Status:** ✅ v0.1.0 — Production Ready  
-**Architecture:** Vertical Slice Monolith (Next.js App Router)  
+**Architecture:** ANF-Agentic (Vertical Slice Monolith — Next.js App Router)  
 **Stack:** Next.js 16.1.6 + React 19 + TypeScript 5 + Tailwind v4 + Prisma + PostgreSQL (Supabase)
 
 ---
@@ -10,11 +10,11 @@
 
 | Guide | Description |
 |-------|-------------|
-| **[🏗️ Architecture (Master Blueprint)](.docs/architecture.md)** | ANF-Agentic Architecture theory, branching strategy (be/*, fe/*, pr/*), data contracts |
-| **[⚙️ Backend Logic (Services & SSR)](.docs/backend-logic.md)** | Server Actions pattern, Prisma queries, data mapping to FE, SSR rules |
-| **[🎨 Frontend UI (Design & Stitch)](.docs/frontend-ui.md)** | Design system, Stitch AI integration, component "hole" pattern, Tailwind→Figma |
-| **[🔐 Security Policy](.docs/security-policy.md)** | RLS enforcement, JWT, Zod validation, secrets management |
-| **[🗺️ Roadmap](.docs/roadmap.md)** | Feature timeline, sprint tracking, priorities |
+| **[🏗️ Architecture (Master Blueprint)](.docs/architecture.md)** | ANF-Agentic Architecture theory, branching strategy (be/*, fe/*, pr/*), data contracts, file ownership |
+| **[⚙️ Backend Logic (BE Workspace)](.docs/backend-logic.md)** | Server Actions pattern, Prisma ORM, Zod validation, JWT auth, data mapping to FE |
+| **[🎨 Frontend UI (FE Workspace)](.docs/frontend-ui.md)** | Design system, component "hole" pattern, Stitch workflow (optional), Tailwind v4 |
+| **[🔐 Security Policy](.docs/security-policy.md)** | RLS enforcement, JWT, Zod validation, secrets management (all branches) |
+| **[🗺️ Roadmap](.docs/roadmap.md)** | Feature timeline, sprint tracking, priorities by branch (be/*, fe/*, pr/*) |
 
 ---
 
@@ -62,37 +62,39 @@
 
 ```
 wergu-wetan-app/
-├── app/                    # Next.js App Router (Routes + Layouts) — FE workspace
-│   ├── (user)/            # Public-facing pages
-│   ├── admin/             # Protected CMS dashboard
-│   └── api/               # Minimal API routes (Excel template only)
+├── app/                        # Next.js App Router — FE workspace
+│   ├── (user)/                # Public pages (user-facing)
+│   ├── admin/                 # Protected CMS dashboard
+│   ├── api/                   # Minimal — Excel template only
+│   ├── globals.css            # Tailwind + CSS custom properties
+│   └── tw-safelist.txt        # VITAL — dynamic Tailwind classes
 │
-├── actions/               # Server Actions (Backend Logic) — BE workspace
+├── actions/                   # Server Actions — BE workspace
 │   ├── auth.action.ts
 │   ├── berita.action.ts
 │   └── ...
 │
-├── components/            # React UI components — FE workspace
-│   ├── user/             # Public components
-│   └── admin/            # Admin components
+├── components/                # React Components — FE workspace
+│   ├── user/                 # Public components
+│   └── admin/                # Admin components
 │
-├── lib/                  # Utilities + Helpers — BE workspace
-│   ├── db.ts            # Prisma singleton
-│   └── services/        # Business logic services (optional)
+├── lib/                      # Utilities — BE workspace
+│   ├── db.ts                # Prisma singleton
+│   └── services/            # Business logic (optional)
 │
-├── prisma/               # Database Schema + Seeding — BE workspace
+├── prisma/                   # Database Schema — BE workspace
 │   ├── schema.prisma
 │   └── seed.ts
 │
-├── public/               # Static assets (images, icons)
-├── .docs/               # 📚 ANF-Agentic Architecture documentation
-│   ├── architecture.md        # Master blueprint
-│   ├── backend-logic.md       # BE patterns & SSR
-│   ├── frontend-ui.md         # FE UI & Stitch
-│   ├── security-policy.md     # Security rules
-│   └── roadmap.md             # Feature timeline
-│
-└── .env.example          # Environment template
+├── public/                   # Static assets (images, icons)
+└── .docs/                   # 📚 ANF-Agentic Architecture documentation
+    ├── README.md            # Documentation index (start here)
+    ├── project-manifest.md  # Active inventory & cleanup queue
+    ├── architecture.md      # Master blueprint
+    ├── backend-logic.md     # BE patterns & SSR
+    ├── frontend-ui.md       # FE UI & Stitch
+    ├── security-policy.md   # Security rules
+    └── roadmap.md           # Feature timeline
 ```
 
 **Workspace Separation (ANF Theory):**
@@ -150,23 +152,28 @@ This project implements the **ANF-Agentic Architecture** pattern (AlrafuruNotFou
 - **Vertical Slice:** Domain-centric organization (berita, potensi, layanan) over horizontal layers
 - **Server Actions First:** Type-safe backend integration without REST overhead
 
-**Key Innovation:** Explicit data contracts (props interfaces) as integration boundaries between BE (services) and FE (components).
+**Key Innovation:** Explicit data contracts (props interfaces) as integration boundaries between BE (Server Actions) and FE (components).
+
+📖 See **[`.docs/architecture.md`](.docs/architecture.md)** for full specification.
 
 ---
 
 ## 📖 Documentation
 
-All architecture decisions live in **[`.docs/`](.docs/)**:
+Start with **[`.docs/README.md`](.docs/README.md)** for navigation index.
 
-1. **[`architecture.md`](.docs/architecture.md)** — ANF-Agentic Architecture master blueprint, branching strategy (be/*, fe/*, pr/*), data contracts between BE/FE
-2. **[`backend-logic.md`](.docs/backend-logic.md)** — Backend patterns: Service encapsulation, Server Actions, Prisma, Zod validation, SSR guidelines
-3. **[`frontend-ui.md`](.docs/frontend-ui.md)** — Frontend UI/UX: design system, Stitch AI integration, Tailwind→Figma mapping, props "hole" pattern
-4. **[`security-policy.md`](.docs/security-policy.md)** — Security: RLS, JWT, Zod, secrets, audit logging
-5. **[`roadmap.md`](.docs/roadmap.md)** — Feature roadmap, sprint planning, priority tracking
+Core documentation in **[`.docs/`](.docs/)**:
 
-**For new contributors:** Read `architecture.md` first, then branch-specific docs (`backend-logic.md` or `frontend-ui.md`).
+1. **[`project-manifest.md`](.docs/project-manifest.md)** — Active inventory, file ownership, cleanup queue (sanitize codebase)
+2. **[`architecture.md`](.docs/architecture.md)** — ANF-Agentic Architecture master blueprint, branching strategy (be/*, fe/*, pr/*), data contracts
+3. **[`backend-logic.md`](.docs/backend-logic.md)** — Backend patterns: Server Actions, Prisma, Zod validation, JWT auth, data mapping
+4. **[`frontend-ui.md`](.docs/frontend-ui.md)** — Frontend UI/UX: design system, Stitch workflow, component "hole" pattern, responsive design
+5. **[`security-policy.md`](.docs/security-policy.md)** — Security: RLS, JWT, Zod, secrets, audit logging, PR checklist
+6. **[`roadmap.md`](.docs/roadmap.md)** — Feature timeline, sprint planning, priority tracking by branch
 
-**For AI Agents (Antigravity/Claude Code):** Use prompt: "Follow ANF-Agentic Architecture, see .docs/architecture.md and .docs/backend-logic.md (or frontend-ui.md)."
+**For new contributors:** Read `.docs/README.md` first, then [`architecture.md`](.docs/architecture.md), followed by branch-specific docs ([`backend-logic.md`](.docs/backend-logic.md) or [`frontend-ui.md`](.docs/frontend-ui.md)).
+
+**For AI Agents (Antigravity/Claude Code):** Prompt: "Follow ANF-Agentic Architecture, see .docs/architecture.md and .docs/backend-logic.md (or .docs/frontend-ui.md)."
 
 ---
 
@@ -196,12 +203,19 @@ Running `npm run dev` uses `--experimental-https` with a self-signed cert. Brows
 
 ## 🤝 Contributing
 
-1. Create feature branch: `git checkout -b feature/your-feature`
-2. Follow vertical slice architecture (add to `actions/`, `components/` as domain)
-3. All backend logic → Server Actions (never create API routes without discussion)
-4. Write Zod schemas for all inputs
-5. Run `npm run lint` & `npm run format` before PR
-6. Update `.docs/` if architecture changes
+1. Identify scope: backend (`be/*`) or frontend (`fe/*`)
+2. Create feature branch:
+   - Backend: `git checkout -b be/<domain>-<desc>` (e.g., `be/berita-crud`)
+   - Frontend: `git checkout -b fe/<domain>-<desc>` (e.g., `fe/berita-card-ui`)
+3. Follow vertical slice architecture (add domain code to `actions/` or `components/`)
+4. All backend logic → Server Actions (never create API routes without discussion)
+5. Write Zod schemas for all Server Action inputs
+6. Implement FE component with explicit props interface ("hole")
+7. Run `npm run lint` & `npm run format` before PR
+8. **Add new files to [`project-manifest.md`](.docs/project-manifest.md) inventory**
+9. After BE + FE complete, merge into `pr/<domain>-<desc>` for integration testing
+10. Update `.docs/` if architecture or patterns change
+11. Reference: [`.docs/architecture.md`](.docs/architecture.md) for full branching workflow
 
 ---
 
