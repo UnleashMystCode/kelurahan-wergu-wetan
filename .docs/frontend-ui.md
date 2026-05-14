@@ -1,26 +1,23 @@
-# 🎨 Frontend UI — Design System & Component Patterns
+# 🎨 Frontend UI & Component Architecture
 
-**Purpose:** UI/UX implementation guide within ANF-Agentic Architecture. Covers design system, component patterns, and Stitch AI integration (optional design-to-code workflow).
+## 1. Overview
+Bagian ini mengatur segala hal yang berhubungan dengan antarmuka pengguna (UI), *styling*, dan interaksi di *browser*. Komponen di sini murni berfokus pada presentasi data (tampilan) dan dilarang memuat logika bisnis berat atau *query* database secara langsung.
 
----
+## 2. UI Tech Stack & Libraries
+- **Styling:** Menggunakan **Tailwind CSS v4** dengan *custom CSS variables* untuk sistem tema yang fleksibel. (Catatan: Kita *tidak* menggunakan komponen pracetak seperti Shadcn UI untuk mempertahankan keunikan visual portal desa).
+- **Typography:** Memanfaatkan **Plus Jakarta Sans** via `next/font` untuk kesan korporat yang modern.
 
-## 🌿 1. Branch Context: `fe/*` (FE Workspace)
+## 3. The "Hole" Pattern (Data Contract)
+Dalam *ANF-Agentic Architecture*, kita menggunakan pola "Hole" (Lubang) untuk memisahkan *Frontend* dan *Backend*:
+- **Frontend Components** (misal: `BeritaCard.tsx` atau `Navbar.tsx`) hanya membuat antarmuka (props) yang berfungsi sebagai "lubang" kosong.
+- **Backend (Server Actions)** akan membocorkan data terstruktur untuk mengisi "lubang" tersebut di *Server Components* (misal: `app/berita/page.tsx`).
 
-**Focus:** All UI/UX and presentation layer code.
-
-**Workspace files:**
-- `components/` — React UI components (stateless "holes")
-- `app/` — Next.js pages and layouts
-- `app/globals.css` — Design tokens and Tailwind configuration
-- `tailwind.config.ts` — Tailwind setup
-
-**Output:** Presentational components with explicit props interfaces, ready for data injection from BE.
-
-**Rule:** Never modify `actions/`, `lib/`, or `prisma/` — those are BE territory.
+> **PENTING UNTUK VIBE CODER/AI:**
+> Jika merancang komponen UI baru, **DILARANG** melakukan pengambilan data langsung dari database di dalam komponen *Client* (`'use client'`). Ambil data di *Page* level, lalu oper ke komponen sebagai *props*.
 
 ---
 
-## 🧩 2. Design System (Source of Truth)
+## 🧩 4. Design System (Source of Truth)
 
 ### CSS Custom Properties (Tailwind v4)
 
@@ -76,7 +73,7 @@ const plusJakarta = Plus_Jakarta_Sans({
 
 ---
 
-## 🔗 3. Stitch AI Integration (Optional — Design-to-Code)
+## 🔗 5. Stitch AI Integration (Optional — Design-to-Code)
 
 Stitch is a **design-time tool** for converting Figma designs to React/Tailwind code. It is NOT a runtime dependency.
 
@@ -154,8 +151,6 @@ export async function getAllBerita(): Promise<ApiResponse<Berita[]>> {
 **Step 3 — FE Page Orchestrates:**
 ```typescript
 // app/berita/page.tsx (FE — calls BE, passes to UI)
-'use client';
-
 import { getAllBerita } from '@/actions/berita.action';
 import { BeritaCard } from '@/components/user/BeritaCard';
 
@@ -181,7 +176,7 @@ export default async function BeritaPage() {
 
 ---
 
-## 🚀 4. Exporting Components with Stitch
+## 🚀 6. Exporting Components with Stitch
 
 ### Prepare Component for Stitch
 
@@ -272,7 +267,7 @@ https://stitch.withgoogle.com/copy?url=https%3A%2F%2Fraw.githubusercontent.com%2
 
 ---
 
-## 🎨 5. Tailwind → Figma Property Map
+## 🎨 7. Tailwind → Figma Property Map
 
 Stitch recognizes these Tailwind patterns:
 
@@ -301,7 +296,7 @@ Stitch recognizes these Tailwind patterns:
 
 ---
 
-## 🖼️ 6. Image Handling
+## 🖼️ 8. Image Handling
 
 Static assets from `public/images/` require **absolute URLs** for Stitch preview:
 
@@ -310,7 +305,7 @@ Static assets from `public/images/` require **absolute URLs** for Stitch preview
 <img src="/images/hero_office.png" alt="Office hero" />
 
 // ✅ Absolute URL (Stitch-compatible)
-<img src="https://wergu-wetan.id/images/hero_office.png" alt="Office hero" />
+<img src="https://[DOMAIN_PRODUKSI]/images/hero_office.png" alt="Office hero" />
 ```
 
 **Image specs:**
@@ -320,7 +315,7 @@ Static assets from `public/images/` require **absolute URLs** for Stitch preview
 
 ---
 
-## 📱 7. Responsive Breakpoints
+## 📱 9. Responsive Breakpoints
 
 Map Tailwind breakpoints to device frames:
 
@@ -337,7 +332,7 @@ Map Tailwind breakpoints to device frames:
 
 ---
 
-## 🧪 8. Before PR: FE Checklist
+## 🧪 10. Before PR: FE Checklist
 
 - [ ] Component renders with mock data in Stitch preview (if used)
 - [ ] Exported code matches design specs (pixel-perfect)
@@ -350,7 +345,7 @@ Map Tailwind breakpoints to device frames:
 
 ---
 
-## 🛠️ 9. Common Issues & Solutions
+## 🛠️ 11. Common Issues & Solutions
 
 | Issue | Cause | Solution |
 |-------|-------|----------|

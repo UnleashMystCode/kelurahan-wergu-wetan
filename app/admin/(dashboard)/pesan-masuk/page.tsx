@@ -1,6 +1,8 @@
 import InboxClient from "@/components/admin/InboxClient";
 import { getPesanMasuk } from "@/actions/pesan.action";
 
+export const dynamic = "force-dynamic";
+
 export const metadata = {
   title: "Kotak Masuk | Admin Wergu Wetan",
 };

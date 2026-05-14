@@ -2,7 +2,8 @@
 
 **Status:** ✅ v0.1.0 — Production Ready  
 **Architecture:** ANF-Agentic (Vertical Slice Monolith — Next.js App Router)  
-**Stack:** Next.js 16.1.6 + React 19 + TypeScript 5 + Tailwind v4 + Prisma + PostgreSQL (Supabase)
+**Stack:** Next.js 16.1.6 + React 19 + TypeScript 5 + Tailwind v4 + Prisma + PostgreSQL (Supabase)  
+**Rendering:** `force-dynamic` enforced on all pages — konten selalu real-time dari DB
 
 ---
 
@@ -10,11 +11,13 @@
 
 | Guide | Description |
 |-------|-------------|
-| **[🏗️ Architecture (Master Blueprint)](.docs/architecture.md)** | ANF-Agentic Architecture theory, branching strategy (be/*, fe/*, pr/*), data contracts, file ownership |
+| **[🏗️ Architecture (Master Blueprint)](.docs/architecture.md)** | ANF-Agentic Architecture theory, branching strategy, data contracts, file ownership |
 | **[⚙️ Backend Logic (BE Workspace)](.docs/backend-logic.md)** | Server Actions pattern, Prisma ORM, Zod validation, JWT auth, data mapping to FE |
-| **[🎨 Frontend UI (FE Workspace)](.docs/frontend-ui.md)** | Design system, component "hole" pattern, Stitch workflow (optional), Tailwind v4 |
-| **[🔐 Security Policy](.docs/security-policy.md)** | RLS enforcement, JWT, Zod validation, secrets management (all branches) |
-| **[🗺️ Roadmap](.docs/roadmap.md)** | Feature timeline, sprint tracking, priorities by branch (be/*, fe/*, pr/*) |
+| **[🎨 Frontend UI (FE Workspace)](.docs/frontend-ui.md)** | Design system, component "hole" pattern, Tailwind v4 custom themes |
+| **[🤖 MCP & AI Skills](.docs/mcp-and-skills.md)** | Panduan integrasi AI, prompt engineering, dan daftar Tools untuk LLM |
+| **[🔐 Security Policy](.docs/security-policy.md)** | RLS enforcement, JWT, Zod validation, secrets management |
+| **[🗺️ Roadmap](.docs/roadmap.md)** | Feature timeline, sprint tracking, priorities by branch |
+| **[📝 Changelog](.docs/CHANGELOG.md)** | Log kronologis seluruh pembaruan arsitektur dan fitur |
 
 ---
 
@@ -53,8 +56,7 @@
 
 6. Login to admin panel:
    - URL: https://localhost:3000/admin/login
-   - Admin: `admin` / `admin`
-   - Super Admin: `superadmin` / `superadmin`
+   - *Catatan: Referensi password akun admin default bisa dilihat di `prisma/seed.ts`*
 
 ---
 
@@ -63,7 +65,6 @@
 ```
 wergu-wetan-app/
 ├── app/                        # Next.js App Router — FE workspace
-│   ├── (user)/                # Public pages (user-facing)
 │   ├── admin/                 # Protected CMS dashboard
 │   ├── api/                   # Minimal — Excel template only
 │   ├── globals.css            # Tailwind + CSS custom properties
@@ -88,10 +89,12 @@ wergu-wetan-app/
 │
 ├── public/                   # Static assets (images, icons)
 └── .docs/                   # 📚 ANF-Agentic Architecture documentation
+    ├── CHANGELOG.md         # Single source of truth untuk log pembaruan
     ├── project-manifest.md  # Active inventory & cleanup queue
-    ├── architecture.md      # Master blueprint
+    ├── architecture.md      # Master blueprint (Peta Utama)
     ├── backend-logic.md     # BE patterns & SSR
-    ├── frontend-ui.md       # FE UI & Stitch
+    ├── frontend-ui.md       # FE UI, The "Hole" Pattern
+    ├── mcp-and-skills.md    # AI tools & prompt integration
     ├── security-policy.md   # Security rules
     └── roadmap.md           # Feature timeline
 ```
@@ -161,16 +164,18 @@ This project implements the **ANF-Agentic Architecture** pattern (AlrafuruNotFou
 
 Core documentation in **[`.docs/`](.docs/)**:
 
-1. **[`project-manifest.md`](.docs/project-manifest.md)** — Active inventory, file ownership, cleanup queue (sanitize codebase)
-2. **[`architecture.md`](.docs/architecture.md)** — ANF-Agentic Architecture master blueprint, branching strategy (be/*, fe/*, pr/*), data contracts
-3. **[`backend-logic.md`](.docs/backend-logic.md)** — Backend patterns: Server Actions, Prisma, Zod validation, JWT auth, data mapping
-4. **[`frontend-ui.md`](.docs/frontend-ui.md)** — Frontend UI/UX: design system, Stitch workflow, component "hole" pattern, responsive design
-5. **[`security-policy.md`](.docs/security-policy.md)** — Security: RLS, JWT, Zod, secrets, audit logging, PR checklist
-6. **[`roadmap.md`](.docs/roadmap.md)** — Feature timeline, sprint planning, priority tracking by branch
+1. **[`CHANGELOG.md`](.docs/CHANGELOG.md)** — **BACA INI DULU** jika ada perubahan baru. Tempat mencatat semua pembaruan sistem.
+2. **[`project-manifest.md`](.docs/project-manifest.md)** — Active inventory, file ownership, cleanup queue (sanitize codebase)
+3. **[`architecture.md`](.docs/architecture.md)** — Master blueprint, ANF-Agentic Architecture theory, branching strategy, data contracts
+4. **[`backend-logic.md`](.docs/backend-logic.md)** — Backend patterns: Server Actions, Prisma, Zod validation, JWT auth, database config
+5. **[`frontend-ui.md`](.docs/frontend-ui.md)** — Frontend UI/UX: design system, component "hole" pattern, styling constraints
+6. **[`mcp-and-skills.md`](.docs/mcp-and-skills.md)** — MCP Integration: AI Assistant skills, payload schema, and interaction rules
+7. **[`security-policy.md`](.docs/security-policy.md)** — Security: RLS, JWT, Zod, secrets, audit logging, PR checklist
+8. **[`roadmap.md`](.docs/roadmap.md)** — Feature timeline, sprint planning, priority tracking
 
 **For new contributors:** Start with [`architecture.md`](.docs/architecture.md), then branch-specific docs ([`backend-logic.md`](.docs/backend-logic.md) or [`frontend-ui.md`](.docs/frontend-ui.md)).
 
-**For AI Agents (Antigravity/Claude Code):** Prompt: "Follow ANF-Agentic Architecture, see .docs/architecture.md and .docs/backend-logic.md (or .docs/frontend-ui.md)."
+**For AI Agents (Antigravity/Claude Code):** Prompt: "Follow ANF-Agentic Architecture. Cek `CHANGELOG.md` lalu baca `architecture.md`. Jika butuh BE, cek `backend-logic.md`, jika butuh FE cek `frontend-ui.md`, jika bertindak sebagai asisten integrasi cek `mcp-and-skills.md`."
 
 ---
 

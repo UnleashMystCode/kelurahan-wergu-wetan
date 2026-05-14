@@ -1,26 +1,25 @@
-# ⚙️ Backend Logic — Server Actions & Services Guide
+# ⚙️ Backend & Business Logic
 
-**Purpose:** Technical guide for backend development within ANF-Agentic Architecture. Covers Server Actions, Prisma ORM, authentication, and data mapping to FE.
+## 1. Overview
+Bagian ini mengatur bagaimana data diproses, disimpan, dan divalidasi. Semua fungsi di sini tidak peduli apakah yang memanggilnya itu User (lewat Browser) atau AI (lewat MCP). Fokus utamanya adalah operasi basis data, keamanan logika, dan pengembalian respons yang aman sesuai arsitektur *Vertical Slice*.
+
+## 2. Database & Data Models
+- Menggunakan library **Prisma ORM** yang terkoneksi ke **Supabase PostgreSQL**.
+- Skema utama berfokus pada entitas e-government: `Admin`, `Kegiatan` (Berita), `PotensiDesa`, `Layanan`, dan `PesanMasuk`.
+
+## 3. Core Services / Internal Functions (Server Actions)
+Di proyek ini, kita **tidak menggunakan API Routes**. Fungsi internal diimplementasikan secara murni sebagai **Server Actions** (`actions/*.action.ts`):
+
+- `getAllBerita()`: Mengambil daftar berita aktif dari database.
+- `tambahAdmin(formData)`: Memvalidasi dan menyimpan admin baru.
+- `getContactInfo()`: Mengambil konfigurasi dinamis situs.
+
+> **PENTING UNTUK VIBE CODER/AI:** 
+> Jika fitur AI memerlukan akses ke database, **DILARANG** menulis query database langsung di luar *backend workspace*. AI (Skills) **wajib** memanggil fungsi Core Services yang ada di `actions/` atau `lib/`.
 
 ---
 
-## 📦 1. Branch Context: `be/*` (BE Workspace)
-
-**Focus:** All backend logic — Server Actions, services, repositories, database operations.
-
-**Workspace files:**
-- `actions/*.action.ts` — Server Actions (FE calls these)
-- `lib/db.ts` — Prisma singleton
-- `lib/services/` — Business logic services (optional)
-- `prisma/` — Database schema and migrations
-
-**Output:** Type-safe, FE-friendly functions returning `ApiResponse<T>`.
-
-**Rule:** Never modify `components/` or `app/` — those are FE territory.
-
----
-
-## 🗄️ 2. Server Actions Pattern (Standard)
+## 🗄️ 4. Server Actions Pattern (Standard)
 
 All backend operations MUST use Server Actions (`'use server'`). No traditional REST API routes except for binary streaming (Excel).
 
@@ -57,7 +56,7 @@ export async function createEntity(input: unknown) {
     if (error instanceof z.ZodError) {
       return { success: false, errors: error.errors };
     }
-    return { success: false, message: error.message };
+    return { success: false, message: (error as Error).message || "Unknown error" };
   }
 }
 ```
@@ -70,7 +69,7 @@ export async function createEntity(input: unknown) {
 
 ---
 
-## 🗄️ 3. Prisma ORM — Best Practices
+## 🗄️ 5. Prisma ORM — Best Practices
 
 ### Database Client Singleton (`lib/db.ts`)
 
@@ -142,7 +141,7 @@ const postsWithAuthors = await prisma.post.findMany({
 
 ---
 
-## 🔐 4. Authentication & Authorization
+## 🔐 6. Authentication & Authorization
 
 ### JWT Implementation (jose)
 
@@ -152,7 +151,7 @@ const postsWithAuthors = await prisma.post.findMany({
 import { SignJWT } from 'jose';
 
 const secretKey = new TextEncoder().encode(
-  process.env.JWT_SECRET || 'fallback-secret-only-dev'
+  process.env.JWT_SECRET || 'sangat-rahasia-sekali'
 );
 
 const token = await new SignJWT({
@@ -215,12 +214,11 @@ cookieStore.set('admin_token', token, {
 | `super` | Full admin + user management + settings | All routes including `/admin/settings/*` |
 
 **Default seeds (`prisma/seed.ts`):**
-- `admin` / `admin` → regular admin
-- `superadmin` / `superadmin` → super admin
+- Referensi role `admin` dan `superadmin` dapat dilihat di file seed. Jangan gunakan default password di production.
 
 ---
 
-## 🔄 5. Caching & Revalidation
+## 🔄 7. Caching & Revalidation
 
 ### Incremental Static Regeneration (ISR)
 
@@ -246,7 +244,7 @@ export async function createBerita(data) {
 
 ---
 
-## 📥 6. Supabase PostgreSQL Connection
+## 📥 8. Supabase PostgreSQL Connection
 
 ### Connection Strings
 
@@ -266,9 +264,9 @@ DIRECT_URL="postgresql://user:pass@host:5432/db?schema=public"
 
 ---
 
-## 🧪 7. Database Seeding
+## 🧪 9. Database Seeding
 
-**Run:** `npx prisma migrate dev` (runs seed automatically) or `npx tsx prisma/seed.ts`
+**Run:** `npx prisma db seed` (to run manually) or automatically runs after `npx prisma migrate dev`.
 
 Seed script creates:
 1. Admin accounts (`admin`, `superadmin`)
@@ -285,7 +283,7 @@ Seed script creates:
 
 ---
 
-## ⚠️ 8. Known Pitfalls & Gotchas
+## ⚠️ 10. Known Pitfalls & Gotchas
 
 | Issue | Cause | Fix |
 |-------|-------|-----|
@@ -297,7 +295,7 @@ Seed script creates:
 
 ---
 
-## 🔍 9. Debugging Checklist
+## 🔍 11. Debugging Checklist
 
 ### Server Action not firing?
 - [ ] Is component marked `"use client"`? (Client components call Server Actions)

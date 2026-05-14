@@ -47,10 +47,10 @@ Each item di-tracking dengan status: `[TODO]`, `[IN-PROGRESS]`, `[DONE]`, `[BLOC
 
 | Task | Branch | Status | Owner |
 |------|--------|--------|-------|
-| Statistics data loading | `be/home-stats` | ⏳ IN-PROGRESS | BE Team |
-| Services (Layanan) display | `fe/home-services` | ⏳ IN-PROGRESS | FE Team |
-| Welcome message (Lurah) | `be/home-welcome` | ⏳ IN-PROGRESS | BE Team |
-| Responsive mobile layout | `fe/mobile-responsive` | ⏳ IN-PROGRESS | FE Team |
+| Statistics data loading | `be/home-stats` | ✅ DONE | BE Team |
+| Services (Layanan) display | `fe/home-services` | ✅ DONE | FE Team |
+| Welcome message (Lurah) | `be/home-welcome` | ✅ DONE | BE Team |
+| Responsive mobile layout | `fe/mobile-responsive` | ✅ DONE | FE Team |
 | Performance audit | `pr/performance` | ⏳ IN-PROGRESS | Both |
 
 ### 📝 Application Forms [TODO]
@@ -70,9 +70,9 @@ Each item di-tracking dengan status: `[TODO]`, `[IN-PROGRESS]`, `[DONE]`, `[BLOC
 
 | Task | Branch | Status | Owner |
 |------|--------|--------|-------|
-| Full-text search (PostgreSQL FTS) | `be/search-fts` | [TODO] | BE Team |
-| Search modal (Cmd+K) | `fe/search-modal` | [TODO] | FE Team |
-| Search result highlighting | `fe/search-results` | [TODO] | FE Team |
+| Full-text search (PostgreSQL FTS) | `be/search-fts` | ✅ DONE | BE Team |
+| Search modal (Cmd+K) | `fe/search-modal` | ✅ DONE | FE Team |
+| Search result highlighting | `fe/search-results` | ✅ DONE | FE Team |
 | Search analytics tracking | `be/search-analytics` | [TODO] | BE Team |
 
 ### 📊 Data Import/Export [TODO]
@@ -102,9 +102,9 @@ Each item di-tracking dengan status: `[TODO]`, `[IN-PROGRESS]`, `[DONE]`, `[BLOC
 | Extract primitive components to `components/ui/` | `fe/refactor-ui` | Medium | FE Team |
 | Add refresh token mechanism (JWT) | `be/auth-refactor` | High | BE Team |
 | Implement rate limiting on login | `be/rate-limit` | High | BE Team |
-| Migrate to middleware.ts for auth | `fe/middleware-auth` | Low | FE Team |
+| Migrate to middleware.ts for auth | `fe/middleware-auth` | [CANCELLED] (Auth di layout) | FE Team |
 | Add E2E tests (Playwright) | `pr/e2e-tests` | Medium | QA Team |
-| Upgrade Tailwind v3 → v4 (already on v4) | `fe/tailwind-upgrade` | Done | — |
+| Upgrade Tailwind v3 → v4 (already on v4) | `fe/tailwind-upgrade` | None (Done) | — |
 
 ---
 

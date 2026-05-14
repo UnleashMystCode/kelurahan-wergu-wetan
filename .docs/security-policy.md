@@ -41,6 +41,9 @@ CREATE POLICY "Public can read active news"
   ON kegiatan FOR SELECT
   USING (status = 'Aktif');
 
+-- Note: auth.jwt() here refers to Supabase Auth.
+-- Karena kita memakai JWT custom (jose), policy ini bersifat aspirasional
+-- dan akses harus dijaga di level Server Actions.
 CREATE POLICY "Admin can manage all news"
   ON kegiatan FOR ALL
   USING (auth.role() = 'authenticated' AND auth.jwt() ->> 'role' = 'admin');
@@ -152,7 +155,7 @@ interface JwtPayload {
 
 | Role | Can Access | Cannot Access |
 |------|------------|---------------|
-| `admin` | All `/admin/halaman/*` except settings | `/admin/settings/*`, user management |
+| `admin` | All `/admin/halaman/*` except settings | `/admin/settings/*` (diblokir sepenuhnya), user management |
 | `super` | Everything including `/admin/settings/*` | — |
 
 ### Auth Guard Pattern (Middleware-style)
@@ -176,6 +179,8 @@ export default async function AdminLayout({ children }) {
   return <AdminShell userRole={userRole}>{children}</AdminShell>;
 }
 ```
+
+> **Known Issue:** Saat ini token invalid/expired hanya melakukan downgrade ke `admin`. Idealnya, harus ada redirect ke `/admin/login`. Namun, karena `/admin/login` berada di dalam routing `app/admin/`, melakukan redirect di `layout.tsx` akan menyebabkan infinite loop. Refaktor rute `/admin/login` keluar dari `layout.tsx` dibutuhkan untuk memperbaiki ini.
 
 **Rule:** Protected routes use layout-level verification, not middleware (simpler, no extra layer).
 

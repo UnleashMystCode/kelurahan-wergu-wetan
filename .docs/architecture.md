@@ -1,42 +1,21 @@
-# 🏗️ ANF-Agentic Architecture — Master Blueprint
+# 🏗️ System Architecture — Master Blueprint
 
 **Portal Web Terpadu Kelurahan Wergu Wetan**
 
 > *"AlrafuruNotFound-Agentic Architecture for Modular Development"*
 
-**Created by:** [AlrafuruNotFound](https://github.com/AlrafuruNotFound) | **Version:** 3.0  
+**Created by:** [AlrafuruNotFound](https://github.com/AlrafuruNotFound) | **Version:** 3.3  
 **Last Updated:** 14 Mei 2026 | **Status:** ✅ Verified Against Codebase v0.1.0
 
 ---
 
-## 📜 Opening Statement
+## 1. Core Architecture
 
-This document is the **definitive source of truth** for the application's architecture, implementing the **ANF-Agentic Architecture** — a pattern designed for collaboration between human developers and AI agents (Antigravity, Claude Code, etc.).
+Proyek ini menggunakan arsitektur **Monolith** (Frontend & Backend dalam satu codebase) untuk mempermudah development dan deployment, yang secara spesifik diimplementasikan dengan pola **ANF-Agentic Architecture** (Vertical Slice + Agentic Branching).
 
 **Core Philosophy:** Modular structure + Agentic branching (`be/*`, `fe/*`, `pr/*`) + explicit data contracts = scalable, testable, AI-friendly development.
 
----
-
-## 📌 1. Project Overview
-
-| Aspect | Detail |
-|--------|--------|
-| **Name** | Portal Web Terpadu Kelurahan Wergu Wetan |
-| **Purpose** | E-Government platform — transparency, digital public services |
-| **Tagline** | Birokrasi Modern, Profesional, Inklusif, Dinamis |
-| **Architecture** | **ANF-Agentic** (Vertical Slice + Agentic Branching) |
-| **Stack** | Next.js 16.1.6 + React 19 + TypeScript 5 + Tailwind v4 |
-| **Database** | PostgreSQL (Supabase) + Prisma ORM 5.10.2 |
-| **Authentication** | JWT (jose HS256, 24h) + HTTP-only cookies |
-| **Status** | ✅ v0.1.0 — Production Ready |
-
----
-
-## 📐 2. Architecture Philosophy
-
-### Vertical Slice Monolith
-
-```
+```text
 [ Client Request ]
         ↓
 [ Next.js Server ] ← No API Routes (except binary streaming)
@@ -52,12 +31,38 @@ This document is the **definitive source of truth** for the application's archit
 - ✅ **Full-stack monolith** — FE + BE in one codebase
 - ✅ **Vertical slice** — Group by domain (`berita/`, `potensi-desa/`), not by `controller/`, `service/`
 - ✅ **Server Actions First** — ~99% logic in Server Actions, no REST API routes
-- ✅ **Stateless auth** — JWT in HTTP-only cookies, no session store
-- ✅ **CSS Variables theming** — Tailwind v4 custom properties
 
 ---
 
-## 🌿 3. Branching Strategy & Git Workflow
+## 2. Tech Stack (Framework & Libraries)
+
+### Framework Utama
+- **Next.js (App Router):** Bertindak sebagai fondasi utama aplikasi. Menangani routing (Static & Dynamic), Server-Side Rendering (SSR), dan Server Actions.
+- **React 19:** Library UI inti.
+
+### Core Libraries (Alat Utama)
+*Semua library di bawah ini dikendalikan di dalam ekosistem Next.js:*
+- **UI/Styling:** Tailwind CSS v4 (Custom CSS Variables, **non-Shadcn UI**).
+- **Database ORM:** Prisma ORM 5.10.2 (Terkoneksi ke Supabase PostgreSQL).
+- **Validation:** Zod (Untuk validasi payload API dan form).
+- **Authentication:** `jose` (JWT HS256) dengan HTTP-only cookies.
+- **AI Protocol:** `@modelcontextprotocol/sdk` (Untuk menghubungkan AI Agent dengan sistem internal kita).
+
+---
+
+## 3. Dokumentasi Terkait (Navigasi)
+
+Untuk menjaga "Separation of Concerns" (pemisahan fokus kode), detail sistem dipisah ke dokumen berikut:
+- **Daftar File Aktif & Rencana Pekerjaan:** Lihat [`project-manifest.md`](./project-manifest.md)
+- **Tampilan & Komponen:** Lihat [`frontend-ui.md`](./frontend-ui.md)
+- **Core Business Logic & API:** Lihat [`backend-logic.md`](./backend-logic.md)
+- **Keamanan & Autentikasi:** Lihat [`security-policy.md`](./security-policy.md)
+- **Jalur Waktu & Sprint:** Lihat [`roadmap.md`](./roadmap.md)
+- **Log Perubahan:** Lihat [`CHANGELOG.md`](./CHANGELOG.md)
+
+---
+
+## 🌿 4. Branching Strategy & Git Workflow
 
 ### Branch Types & Purpose
 
@@ -95,7 +100,7 @@ This document is the **definitive source of truth** for the application's archit
 
 ---
 
-## 📁 4. Directory Structure (Verified Against Codebase)
+## 📁 5. Directory Structure (Verified Against Codebase)
 
 ```
 wergu-wetan-app/
@@ -130,6 +135,7 @@ wergu-wetan-app/
 │
 ├── actions/                     # Server Actions — BE workspace
 │   ├── auth.action.ts
+│   ├── admin.action.ts
 │   ├── berita.action.ts
 │   ├── banner.action.ts
 │   ├── home.action.ts
@@ -177,7 +183,7 @@ wergu-wetan-app/
 
 ---
 
-## 🔐 5. Data Contracts (FE ↔ BE)
+## 🔐 6. Data Contracts (FE ↔ BE)
 
 ### ApiResponse Standard
 
@@ -293,8 +299,6 @@ export async function getAllBerita(): Promise<ApiResponse<Berita[]>> {
 **FE Page (orchestrator):**
 ```typescript
 // app/berita/page.tsx
-'use client';
-
 import { getAllBerita } from '@/actions/berita.action';
 import { BeritaCard } from '@/components/user/BeritaCard';
 
@@ -326,7 +330,7 @@ FE (Component) → Receive props → Render UI (no logic)
 
 ---
 
-## 🌐 6. Routing Conventions
+## 🌐 7. Routing Conventions
 
 > **Source of truth:** File paths verified via filesystem scan — 14 Mei 2026.
 
@@ -367,12 +371,12 @@ FE (Component) → Receive props → Render UI (no logic)
 | `/admin/halaman/tentang-kami/teks` | `app/admin/halaman/tentang-kami/teks/page.tsx` | ✅ | admin+ |
 | `/admin/halaman/tentang-kami/struktur` | `app/admin/halaman/tentang-kami/struktur/page.tsx` | ✅ | admin+ |
 | `/admin/halaman/tentang-kami/statistik` | `app/admin/halaman/tentang-kami/statistik/page.tsx` | ✅ | admin+ |
-| `/admin/settings` | `app/admin/settings/page.tsx` | ✅ | admin+ |
+| `/admin/settings` | `app/admin/settings/page.tsx` | ✅ | **super only** (redirect) |
 | `/admin/settings/manajemen-admin` | `app/admin/settings/manajemen-admin/page.tsx` | ✅ | **super only** |
 
 ---
 
-## 🎨 7. Design System
+## 🎨 8. Design System
 
 ### Design Tokens (non-negotiable)
 
@@ -420,7 +424,7 @@ const plusJakarta = Plus_Jakarta_Sans({
 
 ---
 
-## 🔑 8. Environment Variables
+## 🔑 9. Environment Variables
 
 | Variable | Required? | Description |
 |----------|-----------|-------------|
@@ -434,7 +438,7 @@ See `.env.example` for template.
 
 ---
 
-## 🚀 9. File Ownership Matrix
+## 🚀 10. File Ownership Matrix
 
 | File/Folder | Owner Branch | Modify in Branch |
 |-------------|--------------|------------------|
@@ -446,9 +450,26 @@ See `.env.example` for template.
 | `app/globals.css`, `tailwind.config.ts` | FE | `fe/*` |
 | `next.config.ts` | DevOps | `main` atau `fe/*` (sensitif) |
 
+**Action Files — Current Inventory:**
+
+| Action File | Model Used | Domain |
+|-------------|-----------|--------|
+| `auth.action.ts` | `Admin` | Authentication |
+| `admin.action.ts` | `Admin` | Admin CRUD (super only) |
+| `berita.action.ts` | `Kegiatan` | News |
+| `potensi.action.ts` | `PotensiDesa` | Village Potentials |
+| `banner.action.ts` | `BannerHomepage` | Hero Banners |
+| `home.action.ts` | `HomeStatistic`, `HomeService`, `HomeWelcome` | Homepage |
+| `kontak.action.ts` | `SiteConfig`, `PesanMasuk` | Contact |
+| `layanan.action.ts` | `HomeService` | Services |
+| `tentang-kami.action.ts` | `ProfilKonten`, `PerangkatDesa` | About |
+| `search.action.ts` | `Kegiatan`, `PotensiDesa` | Search |
+| `pesan.action.ts` | `PesanMasuk` | Inbox |
+| `surat.action.ts` | `PengajuanSurat` | Letters *(planned)* |
+
 ---
 
-## 🧪 10. Integration Testing Checklist (`pr/*`)
+## 🧪 11. Integration Testing Checklist (`pr/*`)
 
 After merging BE + FE in `pr/*` branch:
 
@@ -484,7 +505,7 @@ describe('BeritaPage Integration', () => {
 
 ---
 
-## 📚 11. Documentation & Agent Guidelines
+## 📚 12. Documentation & Agent Guidelines
 
 ### Core Documents (`.docs/`)
 
@@ -521,7 +542,7 @@ Follow ANF-Agentic Architecture:
 
 ---
 
-## 🏷️ 12. Document Control
+## 🏷️ 13. Document Control
 
 | Version | Date | Changes | Author |
 |---------|------|---------|--------|
@@ -529,7 +550,8 @@ Follow ANF-Agentic Architecture:
 | 2.0 | 2026-05-05 | Verified against codebase | Kilo AI |
 | 2.1 | 2026-05-14 | Restructured: ANF-Agentic Architecture | AlrafuruNotFound |
 | 3.0 | 2026-05-14 | Removed duplicates, fixed numbering, consolidated sections | Kilo AI |
-| **3.1** | **2026-05-14** | **Codebase audit: removed phantom `(user)/` route group, verified all actual routes, updated directory tree, deleted duplicate `.docs/README.md`** | **Antigravity** |
+| 3.1 | 2026-05-14 | Codebase audit: removed phantom `(user)/` route group, verified all actual routes, updated directory tree, deleted duplicate `.docs/README.md` | Antigravity |
+| **3.2** | **2026-05-14** | **Admin CRUD: `admin.action.ts` + `ManajemenAdminClient.tsx`; `force-dynamic` enforced on all pages; dummy data eliminated from `settings/`; Action Files inventory added** | **Antigravity** |
 
 **Review Cadence:** Every sprint retro or major feature addition.  
 **Approval:** Tech Lead sign-off required for any deviation.
