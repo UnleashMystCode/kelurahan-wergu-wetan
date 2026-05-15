@@ -48,6 +48,17 @@ Proyek ini menggunakan arsitektur **Monolith** (Frontend & Backend dalam satu co
 - **Authentication:** `jose` (JWT HS256) dengan HTTP-only cookies.
 - **AI Protocol:** `@modelcontextprotocol/sdk` (Untuk menghubungkan AI Agent dengan sistem internal kita).
 
+### Supporting Libraries (Production Active)
+*Library berikut aktif dipakai di production tapi bukan "core" arsitektur:*
+- **Animation:** `framer-motion` (Animasi komponen pada halaman user-facing).
+- **Date Formatting:** `date-fns` (Format tanggal locale `id-ID`).
+- **Password Hashing:** `bcryptjs` (Hash password admin di Server Action `auth.action.ts`).
+- **Toast Notifications:** `react-hot-toast` (Feedback notifikasi UI di admin panel).
+- **Print/PDF:** `react-to-print` (Cetak template surat langsung dari browser).
+- **Debounce:** `use-debounce` (Debounce input pencarian di `GlobalSearchModal`).
+- **Excel Export:** `xlsx` (Generate file Excel di `/api/template/stats`).
+- **Typography Prose:** `@tailwindcss/typography` (Styling artikel panjang / konten berita).
+
 ---
 
 ## 3. Dokumentasi Terkait (Navigasi)
@@ -362,6 +373,7 @@ FE (Component) → Receive props → Render UI (no logic)
 | `/admin/halaman/beranda` | `app/admin/halaman/beranda/page.tsx` | ✅ | admin+ |
 | `/admin/halaman/beranda/sambutan` | `app/admin/halaman/beranda/sambutan/page.tsx` | ✅ | admin+ |
 | `/admin/halaman/beranda/layanan-icon` | `app/admin/halaman/beranda/layanan-icon/page.tsx` | ✅ | admin+ |
+| `/admin/halaman/banner` | `app/admin/halaman/banner/page.tsx` | ✅ | admin+ |
 | `/admin/halaman/berita` | `app/admin/halaman/berita/page.tsx` | ✅ | admin+ |
 | `/admin/halaman/berita/daftar` | `app/admin/halaman/berita/daftar/page.tsx` | ✅ | admin+ |
 | `/admin/halaman/potensi-desa` | `app/admin/halaman/potensi-desa/page.tsx` | ✅ | admin+ |
@@ -450,7 +462,7 @@ See `.env.example` for template.
 | `prisma/schema.prisma` | BE | `be/*` |
 | `components/*` | FE | `fe/*` |
 | `app/(user)/*`, `app/admin/*` | FE | `fe/*` |
-| `app/globals.css`, `tailwind.config.ts` | FE | `fe/*` |
+| `app/globals.css`, `postcss.config.mjs` | FE | `fe/*` |
 | `next.config.ts` | DevOps | `main` atau `fe/*` (sensitif) |
 
 **Action Files — Current Inventory:**
@@ -555,13 +567,15 @@ Follow ANF-Agentic Architecture:
 | 3.0 | 2026-05-14 | Removed duplicates, fixed numbering, consolidated sections | Kilo AI |
 | 3.1 | 2026-05-14 | Codebase audit: removed phantom `(user)/` route group, verified all actual routes, updated directory tree, deleted duplicate `.docs/README.md` | Antigravity |
 | **3.2** | **2026-05-14** | **Admin CRUD: `admin.action.ts` + `ManajemenAdminClient.tsx`; `force-dynamic` enforced on all pages; dummy data eliminated from `settings/`; Action Files inventory added** | **Antigravity** |
+| 3.3 | 2026-05-16 | Rename `frontend-ui.md` → `frontend-design.md`; update semua referensi lintas dokumen | Antigravity |
+| **3.3.1** | **2026-05-16** | **Audit sinkronisasi: tambah 8 lib aktif, route banner, koreksi `tailwind.config.ts` → `postcss.config.mjs`, tambah `AdminShell.tsx`, `loading.tsx`, `sitemap.ts`, `logo-kudus.svg` ke manifest** | **Antigravity** |
 
 **Review Cadence:** Every sprint retro or major feature addition.  
 **Approval:** Tech Lead sign-off required for any deviation.
 
 ---
 
-**Last Review:** 14 Mei 2026 | **Status:** ✅ Verified Against Codebase v0.1.0  
+**Last Review:** 16 Mei 2026 | **Status:** ✅ Verified Against Codebase v0.1.0  
 **Owner:** Engineering Team | **Next Review:** Sprint Planning
 
 **Note:** This architecture document is the living source of truth. Update when structure changes.

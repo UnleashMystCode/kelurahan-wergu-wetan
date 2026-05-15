@@ -212,14 +212,25 @@ export const dynamic = "force-dynamic"; // ← WAJIB, baris pertama setelah impo
 | `InboxClient.tsx` | Contact messages inbox UI | ✅ Active |
 | `TemplateSurat.tsx` | Letter template preview — used by `AdminLayananManager` | ✅ Active |
 
+#### App-Level Components (`app/admin/`)
+
+> ⚠️ File ini berada di `app/admin/` (bukan `components/admin/`) karena terikat langsung dengan routing Next.js App Router.
+
+| Component | Purpose | Status |
+|-----------|---------|--------|
+| `AdminShell.tsx` | Layout shell admin: merangkum `AdminSidebar` + `AdminHeader`, dipanggil oleh `app/admin/layout.tsx` | ✅ Active |
+
 #### Design & Configuration
 
 | File | Purpose | Status |
 |------|---------|--------|
-| `app/globals.css` | Tailwind v4 + CSS design tokens | ✅ Active |
-| `app/tw-safelist.txt` | Dynamic Tailwind class safelist (VITAL) | ✅ Active |
-| `tailwind.config.ts` | Tailwind v4 configuration | ✅ Active |
-| `app/layout.tsx` | Root layout (Plus Jakarta Sans, metadata) | ✅ Active |
+| `app/globals.css` | Tailwind v4 + CSS custom properties (`@layer theme`) | ✅ Active |
+| `app/tw-safelist.txt` | Dynamic Tailwind class safelist — VITAL untuk kelas dinamis | ✅ Active |
+| `app/layout.tsx` | Root layout (Plus Jakarta Sans, metadata SEO) | ✅ Active |
+| `app/loading.tsx` | Global loading skeleton (Next.js Streaming SSR) | ✅ Active |
+| `app/sitemap.ts` | XML sitemap auto-generate untuk SEO production | ✅ Active |
+| `next.config.ts` | Next.js config (HTTPS, Server Actions `allowedOrigins`) | ✅ Active |
+| `postcss.config.mjs` | PostCSS + Tailwind v4 pipeline (`tailwind.config.ts` tidak ada di v4) | ✅ Active |
 
 #### Other Directories (Tracked, Out-of-Architecture)
 
@@ -227,11 +238,21 @@ export const dynamic = "force-dynamic"; // ← WAJIB, baris pertama setelah impo
 |-----------|---------|--------|
 | `context/` | React Context providers (`LanguageContext.tsx`) | ✅ Active |
 | `certificates/` | Local HTTPS certs (`npm run dev --experimental-https`) | ✅ Dev only |
-| `public/images/` | Hero images, potensi photos | ✅ Active |
-| `public/icons/` | SVG icons (created, ready) | 🆕 Empty |
-| `public/uploads/` | User-uploaded content | ✅ Active |
+| `public/images/` | Hero images, potensi photos (+ subdirektori `potensi/`) | ✅ Active |
+| `public/icons/` | SVG icons (belum diisi — reserved) | 🆕 Empty |
+| `public/uploads/` | User-uploaded content (foto berita, lurah, potensi dari admin panel) | ✅ Active |
+| `public/logo-kudus.svg` | Logo resmi Kabupaten Kudus (200KB) — dipakai di Navbar/Footer | ✅ Active |
 | `lib/services/` | Business logic layer (reserved) | 🔄 Optional |
 | `trash-temp/` | **REVIEW QUEUE** — files pending decision | 🔍 Review |
+| `.github/workflows/ci.yml` | CI Pipeline — Lint, TypeCheck, Build di setiap push/PR | ✅ Active |
+| `.github/workflows/docs-sync.yml` | Enforce ANF Docs-Sync Law di setiap PR | ✅ Active |
+| `.github/workflows/security-audit.yml` | Weekly npm audit keamanan dependency | ✅ Active |
+| `.github/PULL_REQUEST_TEMPLATE.md` | Checklist PR otomatis (ANF + BE/FE/Security) | ✅ Active |
+| `.github/ISSUE_TEMPLATE/bug_report.yml` | Form bug report terstruktur | ✅ Active |
+| `.github/ISSUE_TEMPLATE/feature_request.yml` | Form feature request terstruktur | ✅ Active |
+| `.github/ISSUE_TEMPLATE/config.yml` | Issue chooser config — nonaktifkan blank issues | ✅ Active |
+| `CONTRIBUTING.md` | Panduan kontribusi standar GitHub | ✅ Active |
+| `SECURITY.md` | Security policy — cara lapor kerentanan secara privat | ✅ Active |
 
 **Out-of-scope (tidak diimplementasi):**
 - `components/ui/` — primitive component library (TODO)

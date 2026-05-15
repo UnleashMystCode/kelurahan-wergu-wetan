@@ -1,0 +1,12 @@
+# Konfigurasi Issue Template Chooser
+# File ini mengontrol tampilan pemilih template saat user klik "New Issue"
+
+blank_issues_enabled: false  # Wajib pilih template, tidak bisa buat issue kosong
+
+contact_links:
+  - name: 💬 Diskusi & Pertanyaan Umum
+    url: https://github.com/UnleashMystCode/kelurahan-wergu-wetan/discussions
+    about: Untuk pertanyaan umum, ide, atau diskusi teknis — gunakan Discussions, bukan Issues.
+  - name: 📚 Dokumentasi Arsitektur
+    url: https://github.com/UnleashMystCode/kelurahan-wergu-wetan/blob/main/.docs/architecture.md
+    about: Baca dulu sebelum bertanya soal arsitektur proyek.

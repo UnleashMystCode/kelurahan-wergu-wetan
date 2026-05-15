@@ -1,0 +1,88 @@
+name: 🐛 Bug Report
+description: Laporkan bug atau perilaku yang tidak sesuai harapan
+title: "[BUG] "
+labels: ["bug", "triage"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Terima kasih sudah meluangkan waktu untuk melaporkan bug ini! 🙏
+        Mohon isi form berikut dengan lengkap agar bug bisa diselesaikan lebih cepat.
+
+  - type: input
+    id: summary
+    attributes:
+      label: 📝 Ringkasan Bug
+      placeholder: "Contoh: Tombol simpan di halaman Berita tidak merespons"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: 📍 Area yang Terdampak
+      options:
+        - Halaman publik (berita, layanan, kontak, tentang kami)
+        - Admin panel (login, dashboard, manajemen konten)
+        - Search (modal pencarian)
+        - Autentikasi (login/logout)
+        - Upload gambar
+        - Lainnya
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: 🔄 Langkah Reproduksi
+      description: Langkah-langkah detail untuk mereproduksi bug ini
+      placeholder: |
+        1. Buka halaman '/admin/halaman/berita/daftar'
+        2. Klik tombol "Tambah Berita"
+        3. Isi form dan klik "Simpan"
+        4. Lihat error yang muncul
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: ✅ Perilaku yang Diharapkan
+      placeholder: "Berita berhasil tersimpan dan muncul di daftar"
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: ❌ Perilaku Aktual
+      placeholder: "Muncul toast error 'Gagal menyimpan' tanpa keterangan"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: severity
+    attributes:
+      label: 🚨 Tingkat Keparahan
+      options:
+        - "Critical — Aplikasi tidak bisa diakses sama sekali"
+        - "High — Fitur utama rusak (tidak bisa CRUD)"
+        - "Medium — Fitur berjalan tapi tidak sempurna"
+        - "Low — Masalah tampilan / kosmetik"
+    validations:
+      required: true
+
+  - type: input
+    id: environment
+    attributes:
+      label: 🌐 Environment
+      placeholder: "Browser: Chrome 124, OS: Windows 11, Node: 20.x"
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: 📋 Error Log / Console Output
+      description: Tempel error dari browser console atau server terminal jika ada
+      render: shell

@@ -1,0 +1,31 @@
+name: 🔐 Security Audit
+
+# Berjalan otomatis setiap Senin jam 09.00 UTC (16.00 WIB)
+# Bisa juga dijalankan manual dari tab Actions di GitHub
+on:
+  schedule:
+    - cron: '0 9 * * 1'
+  workflow_dispatch:
+
+jobs:
+  audit:
+    name: 🔎 npm audit (high severity)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout kode
+        uses: actions/checkout@v4
+
+      - name: 🟢 Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: 📦 Install dependencies
+        run: npm ci
+
+      - name: 🔐 Jalankan security audit
+        # --audit-level=high: hanya gagal jika ada vuln HIGH atau CRITICAL
+        # Vuln severity LOW/MODERATE dilaporkan tapi tidak menghentikan pipeline
+        run: npm audit --audit-level=high

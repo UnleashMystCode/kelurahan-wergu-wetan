@@ -1,0 +1,66 @@
+name: ✨ Feature Request
+description: Usulkan fitur atau peningkatan baru
+title: "[FEAT] "
+labels: ["enhancement"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Terima kasih atas usulan fiturnya! 💡
+        Jelaskan fitur yang diinginkan dengan detail agar bisa direncanakan dengan baik.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: 🎯 Masalah yang Ingin Diselesaikan
+      description: Apa masalah atau kebutuhan yang melatarbelakangi usulan ini?
+      placeholder: "Saya frustrasi karena tidak bisa melihat statistik pengunjung halaman berita..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: 💡 Solusi yang Diusulkan
+      description: Jelaskan fitur yang diinginkan secara detail
+    validations:
+      required: true
+
+  - type: dropdown
+    id: scope
+    attributes:
+      label: 🔧 Scope Pekerjaan
+      description: Mana saja area yang perlu diubah?
+      multiple: true
+      options:
+        - "Frontend (UI/UX — components, pages)"
+        - "Backend (Server Action / Database)"
+        - "Integration (BE + FE)"
+        - "Dokumentasi"
+        - "DevOps / CI-CD"
+        - "Security"
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: 📊 Prioritas Usulan
+      options:
+        - "High — Sangat dibutuhkan, blocking workflow"
+        - "Medium — Berguna tapi tidak urgent"
+        - "Low — Nice to have"
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: 🔄 Alternatif yang Sudah Dipertimbangkan
+      description: Apakah ada cara lain untuk memenuhi kebutuhan ini?
+
+  - type: textarea
+    id: context
+    attributes:
+      label: 📎 Konteks Tambahan
+      description: Screenshot, mockup, referensi, atau informasi tambahan

@@ -5,11 +5,35 @@
 
 ---
 
+## [v3.4.0] - 2026-05-16
+### Added (GitHub Standards & CI/CD Setup)
+- `.github/workflows/ci.yml` — CI Pipeline: ESLint + TypeScript check + Next.js build pada setiap push/PR.
+- `.github/workflows/docs-sync.yml` — Enforce ANF Docs-Sync Law: PR ke `main`/`pr/*` wajib update CHANGELOG.md.
+- `.github/workflows/security-audit.yml` — Audit keamanan dependency otomatis setiap Senin (npm audit --audit-level=high).
+- `.github/PULL_REQUEST_TEMPLATE.md` — Template PR dengan checklist ANF: BE/FE/Security/Docs.
+- `.github/ISSUE_TEMPLATE/bug_report.yml` — Form bug report terstruktur.
+- `.github/ISSUE_TEMPLATE/feature_request.yml` — Form feature request terstruktur.
+- `CONTRIBUTING.md` — Panduan kontribusi lengkap (branching, standar kode, workflow).
+- `SECURITY.md` — Security policy GitHub: cara melaporkan kerentanan secara privat.
+
+---
+
+## [v3.3.1] - 2026-05-16
+### Fixed (Audit Sinkronisasi Dokumen vs Kode)
+- `architecture.md`: Tambah 8 library aktif ke Section 2 (`framer-motion`, `date-fns`, `bcryptjs`, `react-hot-toast`, `react-to-print`, `use-debounce`, `xlsx`, `@tailwindcss/typography`).
+- `architecture.md`: Tambah route `/admin/halaman/banner` yang terlewat dari tabel Admin Routes Section 7.
+- `architecture.md`: Koreksi File Ownership Matrix — `tailwind.config.ts` → `postcss.config.mjs` (Tailwind v4 tidak menggunakan `tailwind.config.ts`).
+- `project-manifest.md`: Hapus `tailwind.config.ts` (file tidak ada di filesystem), tambah `app/loading.tsx`, `app/sitemap.ts`, `next.config.ts`, `postcss.config.mjs` ke tabel Design & Configuration.
+- `project-manifest.md`: Tambah subsection `App-Level Components` untuk mendokumentasikan `AdminShell.tsx` yang berada di `app/admin/`.
+- `project-manifest.md`: Tambah `public/logo-kudus.svg` ke tabel Other Directories, perinci deskripsi `public/uploads/` dan `public/images/`.
+
+---
+
 ## [v3.3.0] - 2026-05-16
 ### Changed
-- Rename `.docs/frontend-ui.md` → `.docs/frontend-design.md` — nama baru lebih deskriptif (design system, bukan hanya "UI").
-- Update semua referensi lintas dokumen: `architecture.md` (4 titik), `project-manifest.md` (1 titik), `README.md` (5 titik), `CHANGELOG.md` (2 titik historis).
-- Label teks di `README.md` ikut disesuaikan: "Frontend UI" → "Frontend Design" dan deskripsi item no.5 diperbarui.
+- Rename `.docs/frontend-ui.md` → `.docs/frontend-design.md` — nama lebih deskriptif (design system, bukan hanya "UI").
+- Update semua referensi: `architecture.md` (4 titik), `project-manifest.md` (1 titik), `README.md` (5 titik), `CHANGELOG.md` (2 titik historis).
+- Label teks di `README.md` ikut disesuaikan: "Frontend UI" → "Frontend Design".
 
 ---
 

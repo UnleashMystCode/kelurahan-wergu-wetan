@@ -1,0 +1,37 @@
+name: 📝 Docs Sync Check (ANF Law)
+
+# Berjalan hanya saat ada Pull Request ke main atau pr/*
+on:
+  pull_request:
+    branches:
+      - main
+      - 'pr/**'
+
+jobs:
+  check-changelog:
+    name: 📋 CHANGELOG.md diupdate?
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout (dengan history untuk diff)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 🔍 Cek apakah CHANGELOG.md dimodifikasi
+        run: |
+          CHANGED=$(git diff --name-only origin/${{ github.base_ref }}...HEAD)
+          echo "File yang berubah:"
+          echo "$CHANGED"
+
+          if echo "$CHANGED" | grep -q "^\.docs/CHANGELOG\.md$"; then
+            echo ""
+            echo "✅ CHANGELOG.md sudah diupdate. ANF Docs-Sync Law terpenuhi."
+          else
+            echo ""
+            echo "❌ GAGAL: .docs/CHANGELOG.md TIDAK diupdate!"
+            echo ""
+            echo "ANF Docs-Sync Law mewajibkan setiap PR mencatat perubahannya di CHANGELOG.md."
+            echo "Tambahkan entri baru di .docs/CHANGELOG.md sebelum merge."
+            exit 1
+          fi
