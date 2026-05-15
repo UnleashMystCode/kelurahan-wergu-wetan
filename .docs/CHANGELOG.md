@@ -5,6 +5,15 @@
 
 ---
 
+## [v3.5.0] - 2026-05-16
+### Added (Standardisasi & Template Profesional)
+- `.editorconfig` — Standardisasi format kode lintas editor; fix masalah LF/CRLF di Windows.
+- `.gitmessage` — Template commit message (Conventional Commits); aktif via `git config commit.template`.
+- `.github/CODEOWNERS` — Auto-assign reviewer ke @AlrafuruNotFound untuk semua PR di area sensitif.
+- `.env.example` diperbarui — Instruksi lengkap dengan contoh nilai, panduan Supabase, dan catatan Vercel deployment.
+
+---
+
 ## [v3.4.0] - 2026-05-16
 ### Added (GitHub Standards & CI/CD Setup)
 - `.github/workflows/ci.yml` — CI Pipeline: ESLint + TypeScript check + Next.js build pada setiap push/PR.

@@ -1,0 +1,30 @@
+# CODEOWNERS — Pemilik kode otomatis di-assign sebagai reviewer saat ada PR
+# Dokumentasi: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+#
+# Format: <pattern> <@github-username atau @org/team>
+# Urutan: baris terakhir yang cocok = yang berlaku (override baris sebelumnya)
+
+# ── Default: semua file ──────────────────────────────────────────
+# Semua PR wajib di-review oleh owner utama
+*                           @AlrafuruNotFound
+
+# ── Dokumentasi ─────────────────────────────────────────────────
+# Perubahan di .docs/ dan README wajib review owner
+.docs/                      @AlrafuruNotFound
+README.md                   @AlrafuruNotFound
+CONTRIBUTING.md             @AlrafuruNotFound
+SECURITY.md                 @AlrafuruNotFound
+
+# ── Backend Workspace ────────────────────────────────────────────
+# Server Actions dan database harus di-review ketat
+actions/                    @AlrafuruNotFound
+prisma/                     @AlrafuruNotFound
+lib/                        @AlrafuruNotFound
+
+# ── CI/CD ────────────────────────────────────────────────────────
+# Perubahan pipeline CI sangat sensitif
+.github/                    @AlrafuruNotFound
+
+# ── Environment & Config ─────────────────────────────────────────
+.env.example                @AlrafuruNotFound
+next.config.ts              @AlrafuruNotFound

@@ -1,0 +1,62 @@
+# ═══════════════════════════════════════════════════════════════════
+#  COMMIT MESSAGE TEMPLATE — Portal Kelurahan Wergu Wetan
+#  ANF-Agentic Architecture | github.com/UnleashMystCode
+# ═══════════════════════════════════════════════════════════════════
+#
+#  FORMAT WAJIB:
+#  <type>(<scope>): <subject>
+#
+#  CONTOH YANG BENAR:
+#  feat(berita): add kategori filter to BeritaView
+#  fix(auth): handle expired JWT in admin layout
+#  docs: update architecture.md routing table
+#  ci: add security audit workflow
+#  refactor(admin): extract AdminShell to separate file
+#
+# ───────────────────────────────────────────────────────────────────
+#  TYPE — Pilih satu, wajib:
+# ───────────────────────────────────────────────────────────────────
+#  feat      → Fitur baru untuk user
+#  fix       → Perbaikan bug
+#  docs      → Perubahan dokumentasi saja (.docs/, README, dll.)
+#  style     → Format, whitespace — tidak mengubah logika kode
+#  refactor  → Refaktor — bukan fitur baru, bukan bug fix
+#  perf      → Peningkatan performa (query DB, bundle size, dll.)
+#  test      → Menambah atau memperbaiki test
+#  chore     → Maintenance, dependency update, config
+#  ci        → Perubahan file GitHub Actions / CI-CD
+#  revert    → Revert commit sebelumnya
+#
+# ───────────────────────────────────────────────────────────────────
+#  SCOPE — Nama domain (opsional, pakai kurung):
+# ───────────────────────────────────────────────────────────────────
+#  berita    potensi    layanan    kontak    tentang-kami
+#  auth      admin      banner     home      search
+#  pesan     surat      settings
+#
+# ───────────────────────────────────────────────────────────────────
+#  SUBJECT — Judul singkat (wajib):
+# ───────────────────────────────────────────────────────────────────
+#  ✅ Huruf kecil semua
+#  ✅ Imperative mood: "add filter" bukan "added filter"
+#  ✅ Tidak diakhiri titik (.)
+#  ✅ Max 72 karakter total (type + scope + subject)
+#  ✅ Bahasa Inggris (konsisten)
+#
+# ───────────────────────────────────────────────────────────────────
+#  BODY — Penjelasan detail (opsional, pisah dengan baris kosong):
+# ───────────────────────────────────────────────────────────────────
+#  Jelaskan APA yang berubah dan MENGAPA — bukan BAGAIMANA.
+#  Wrap di 72 karakter per baris.
+#
+# ───────────────────────────────────────────────────────────────────
+#  FOOTER — Referensi (opsional):
+# ───────────────────────────────────────────────────────────────────
+#  Closes #123              ← Otomatis tutup GitHub Issue
+#  Refs #456                ← Referensi issue tanpa menutupnya
+#  BREAKING CHANGE: <desc>  ← Perubahan yang tidak backward-compatible
+#
+# ═══════════════════════════════════════════════════════════════════
+#  ⚠️  Baris yang diawali # tidak masuk ke commit message
+#  ⚠️  Hapus template ini, tulis message kamu di baris PALING ATAS
+# ═══════════════════════════════════════════════════════════════════

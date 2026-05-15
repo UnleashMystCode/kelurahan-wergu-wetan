@@ -1,0 +1,47 @@
+# EditorConfig — Standardisasi format kode di semua editor (VS Code, Cursor, dll.)
+# https://editorconfig.org
+# Plugin otomatis terbaca jika editor support EditorConfig.
+
+root = true
+
+# ── Semua file ──────────────────────────────────────────────────
+[*]
+charset = utf-8
+end_of_line = lf              # Pakai LF (Unix) — fix masalah CRLF warning di Windows
+indent_style = space
+indent_size = 2
+insert_final_newline = true   # Selalu akhiri file dengan newline (standar POSIX)
+trim_trailing_whitespace = true
+
+# ── Markdown ─────────────────────────────────────────────────────
+[*.md]
+trim_trailing_whitespace = false  # Markdown pakai trailing space untuk line break
+max_line_length = off
+
+# ── YAML (GitHub Actions, config) ────────────────────────────────
+[*.{yml,yaml}]
+indent_size = 2
+
+# ── JSON & JSON5 ─────────────────────────────────────────────────
+[*.{json,json5,jsonc}]
+indent_size = 2
+
+# ── TypeScript & JavaScript ───────────────────────────────────────
+[*.{ts,tsx,js,jsx,mjs,cjs}]
+indent_size = 2
+
+# ── CSS ──────────────────────────────────────────────────────────
+[*.css]
+indent_size = 2
+
+# ── Prisma Schema ────────────────────────────────────────────────
+[*.prisma]
+indent_size = 2
+
+# ── Shell scripts ────────────────────────────────────────────────
+[*.sh]
+indent_style = tab
+
+# ── Makefile (tab required) ───────────────────────────────────────
+[Makefile]
+indent_style = tab
