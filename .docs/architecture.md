@@ -54,7 +54,7 @@ Proyek ini menggunakan arsitektur **Monolith** (Frontend & Backend dalam satu co
 
 Untuk menjaga "Separation of Concerns" (pemisahan fokus kode), detail sistem dipisah ke dokumen berikut:
 - **Daftar File Aktif & Rencana Pekerjaan:** Lihat [`project-manifest.md`](./project-manifest.md)
-- **Tampilan & Komponen:** Lihat [`frontend-ui.md`](./frontend-ui.md)
+- **Tampilan & Komponen:** Lihat [`frontend-design.md`](./frontend-design.md)
 - **Core Business Logic & API:** Lihat [`backend-logic.md`](./backend-logic.md)
 - **Keamanan & Autentikasi:** Lihat [`security-policy.md`](./security-policy.md)
 - **Jalur Waktu & Sprint:** Lihat [`roadmap.md`](./roadmap.md)
@@ -187,20 +187,19 @@ wergu-wetan-app/
 
 ### ApiResponse Standard
 
-All Server Actions must return this envelope:
+All Server Actions must return this unified envelope:
 
 ```typescript
 type ApiResponse<T> = {
   success: boolean;
-  data?: T;          // On success
-  errors?: ZodError[]; // On validation failure
-  message?: string;   // On error
+  message?: string;   // Human-readable response (success or error)
+  data?: T;          // Optional payload on success
 };
 ```
 
-### Zod Validation (Mandatory)
+### Zod Validation (Mandatory & Safe)
 
-Define Zod schema in Server Action, never trust client data.
+Define Zod schema in Server Action. Always use `safeParse` to prevent unhandled throws.
 
 ```typescript
 // actions/berita.action.ts
@@ -209,28 +208,32 @@ Define Zod schema in Server Action, never trust client data.
 import { z } from 'zod';
 
 const CreateBeritaSchema = z.object({
-  judul: z.string().min(5).max(200),
-  isi: z.string().min(20),
+  judul: z.string().min(5, "Judul minimal 5 karakter").max(200),
+  isi: z.string().min(20, "Isi berita terlalu pendek"),
   kategori: z.enum(['Umum', 'Kegiatan', 'Pengumuman']),
   gambar: z.string().url().optional(),
 });
 
 export async function createBerita(formData: FormData) {
   try {
-    const { judul, isi, kategori, gambar } = CreateBeritaSchema.parse({
+    const raw = {
       judul: formData.get('judul'),
       isi: formData.get('isi'),
       kategori: formData.get('kategori'),
       gambar: formData.get('gambar'),
-    });
+    };
 
-    const berita = await prisma.kegiatan.create({ data: { judul, isi, kategori, gambar } });
-    return { success: true, data: berita };
-  } catch (error) {
-    if (error instanceof z.ZodError) {
-      return { success: false, errors: error.errors };
+    const valid = CreateBeritaSchema.safeParse(raw);
+    if (!valid.success) {
+      return { success: false, message: valid.error.issues[0].message };
     }
-    return { success: false, message: "Terjadi kesalahan" };
+
+    const { judul, isi, kategori, gambar } = valid.data;
+    const berita = await prisma.kegiatan.create({ data: { judul, isi, kategori, gambar } });
+    
+    return { success: true, message: "Berita berhasil diterbitkan", data: berita };
+  } catch (error: any) {
+    return { success: false, message: error.message ?? "Terjadi kesalahan database" };
   }
 }
 ```
@@ -515,7 +518,7 @@ describe('BeritaPage Integration', () => {
 |------|----------|---------|
 | **[`architecture.md`](.docs/architecture.md)** | Tech Leads, Architects | Master blueprint, ANF theory, branching strategy, data contracts |
 | **[`backend-logic.md`](.docs/backend-logic.md)** | Backend devs, Agents | Server Actions pattern, Prisma queries, Zod validation, SSR |
-| **[`frontend-ui.md`](.docs/frontend-ui.md)** | Frontend devs, Agents | Design system, Stitch workflow, component "hole" pattern |
+| **[`frontend-design.md`](.docs/frontend-design.md)** | Frontend devs, Agents | Design system, Stitch workflow, component "hole" pattern |
 | **[`security-policy.md`](.docs/security-policy.md)** | All developers | RLS, JWT, Zod validation, secrets management |
 | **[`project-manifest.md`](.docs/project-manifest.md)** | All developers | Active file inventory, cleanup queue, feature coverage matrix |
 | **[`roadmap.md`](.docs/roadmap.md)** | Product, Teams | Feature timeline, sprint planning, priorities |
@@ -524,7 +527,7 @@ describe('BeritaPage Integration', () => {
 
 **When asked to implement a feature:**
 1. Read `architecture.md` first (branch context)
-2. Check `backend-logic.md` for BE patterns OR `frontend-ui.md` for FE patterns
+2. Check `backend-logic.md` for BE patterns OR `frontend-design.md` for FE patterns
 3. Follow "Service Pattern" for BE, "Hole Pattern" for FE
 4. Enforce Zod validation + RLS policies (see `security-policy.md`)
 5. Write integration tests in `pr/*` branch
@@ -537,7 +540,7 @@ Follow ANF-Agentic Architecture:
 - Use Server Actions: never create API routes
 - Validate with Zod: define schema before DB ops
 - Check Security: RLS enabled? JWT verified?
-- Docs reference: .docs/backend-logic.md or .docs/frontend-ui.md
+- Docs reference: .docs/backend-logic.md or .docs/frontend-design.md
 ```
 
 ---

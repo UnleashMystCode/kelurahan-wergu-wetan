@@ -13,7 +13,7 @@
 |-------|-------------|
 | **[🏗️ Architecture (Master Blueprint)](.docs/architecture.md)** | ANF-Agentic Architecture theory, branching strategy, data contracts, file ownership |
 | **[⚙️ Backend Logic (BE Workspace)](.docs/backend-logic.md)** | Server Actions pattern, Prisma ORM, Zod validation, JWT auth, data mapping to FE |
-| **[🎨 Frontend UI (FE Workspace)](.docs/frontend-ui.md)** | Design system, component "hole" pattern, Tailwind v4 custom themes |
+| **[🎨 Frontend Design (FE Workspace)](.docs/frontend-design.md)** | Design system, component "hole" pattern, Tailwind v4 custom themes |
 | **[🤖 MCP & AI Skills](.docs/mcp-and-skills.md)** | Panduan integrasi AI, prompt engineering, dan daftar Tools untuk LLM |
 | **[🔐 Security Policy](.docs/security-policy.md)** | RLS enforcement, JWT, Zod validation, secrets management |
 | **[🗺️ Roadmap](.docs/roadmap.md)** | Feature timeline, sprint tracking, priorities by branch |
@@ -93,7 +93,7 @@ wergu-wetan-app/
     ├── project-manifest.md  # Active inventory & cleanup queue
     ├── architecture.md      # Master blueprint (Peta Utama)
     ├── backend-logic.md     # BE patterns & SSR
-    ├── frontend-ui.md       # FE UI, The "Hole" Pattern
+    ├── frontend-design.md   # FE Design System, The "Hole" Pattern
     ├── mcp-and-skills.md    # AI tools & prompt integration
     ├── security-policy.md   # Security rules
     └── roadmap.md           # Feature timeline
@@ -140,7 +140,7 @@ This project uses **Supabase PostgreSQL** with Prisma ORM.
 - **Icons:** Lucide React
 - **Animations:** Framer Motion
 
-Design tokens defined in `app/globals.css`. See [Frontend UI Guide](.docs/frontend-ui.md) for full spec.
+Design tokens defined in `app/globals.css`. See [Frontend Design Guide](.docs/frontend-design.md) for full spec.
 
 ---
 
@@ -168,14 +168,14 @@ Core documentation in **[`.docs/`](.docs/)**:
 2. **[`project-manifest.md`](.docs/project-manifest.md)** — Active inventory, file ownership, cleanup queue (sanitize codebase)
 3. **[`architecture.md`](.docs/architecture.md)** — Master blueprint, ANF-Agentic Architecture theory, branching strategy, data contracts
 4. **[`backend-logic.md`](.docs/backend-logic.md)** — Backend patterns: Server Actions, Prisma, Zod validation, JWT auth, database config
-5. **[`frontend-ui.md`](.docs/frontend-ui.md)** — Frontend UI/UX: design system, component "hole" pattern, styling constraints
+5. **[`frontend-design.md`](.docs/frontend-design.md)** — Frontend Design System: design tokens, component "hole" pattern, Stitch workflow, styling constraints
 6. **[`mcp-and-skills.md`](.docs/mcp-and-skills.md)** — MCP Integration: AI Assistant skills, payload schema, and interaction rules
 7. **[`security-policy.md`](.docs/security-policy.md)** — Security: RLS, JWT, Zod, secrets, audit logging, PR checklist
 8. **[`roadmap.md`](.docs/roadmap.md)** — Feature timeline, sprint planning, priority tracking
 
-**For new contributors:** Start with [`architecture.md`](.docs/architecture.md), then branch-specific docs ([`backend-logic.md`](.docs/backend-logic.md) or [`frontend-ui.md`](.docs/frontend-ui.md)).
+**For new contributors:** Start with [`architecture.md`](.docs/architecture.md), then branch-specific docs ([`backend-logic.md`](.docs/backend-logic.md) or [`frontend-design.md`](.docs/frontend-design.md)).
 
-**For AI Agents (Antigravity/Claude Code):** Prompt: "Follow ANF-Agentic Architecture. Cek `CHANGELOG.md` lalu baca `architecture.md`. Jika butuh BE, cek `backend-logic.md`, jika butuh FE cek `frontend-ui.md`, jika bertindak sebagai asisten integrasi cek `mcp-and-skills.md`."
+**For AI Agents (Antigravity/Claude Code):** Prompt: "Follow ANF-Agentic Architecture. Cek `CHANGELOG.md` lalu baca `architecture.md`. Jika butuh BE, cek `backend-logic.md`, jika butuh FE cek `frontend-design.md`, jika bertindak sebagai asisten integrasi cek `mcp-and-skills.md`."
 
 ---
 

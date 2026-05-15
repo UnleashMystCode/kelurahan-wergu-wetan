@@ -40,10 +40,14 @@ const CreateEntitySchema = z.object({
 // 2. Server action
 export async function createEntity(input: unknown) {
   try {
-    // 3. Parse & validate
-    const data = CreateEntitySchema.parse(input);
+    // 3. Parse & validate using safeParse (No throw)
+    const valid = CreateEntitySchema.safeParse(input);
+    if (!valid.success) {
+      return { success: false, message: valid.error.issues[0].message };
+    }
 
     // 4. Business logic + Prisma operation
+    const data = valid.data;
     const entity = await prisma.entity.create({
       data: { ...data, createdAt: new Date() },
     });
@@ -51,21 +55,18 @@ export async function createEntity(input: unknown) {
     // 5. Optional: Invalidate cache
     // revalidatePath('/entities');
 
-    return { success: true, data: entity };
-  } catch (error) {
-    if (error instanceof z.ZodError) {
-      return { success: false, errors: error.errors };
-    }
-    return { success: false, message: (error as Error).message || "Unknown error" };
+    return { success: true, message: "Entity berhasil dibuat", data: entity };
+  } catch (error: any) {
+    return { success: false, message: error.message || "Terjadi kesalahan sistem" };
   }
 }
 ```
 
 **Key points:**
 - Always mark with `'use server'` directive
-- Accept `unknown` input, parse with Zod
-- Return `{ success, data?, errors?, message? }` envelope
-- Catch Zod errors separately for field-level error reporting
+- Accept `unknown` or `FormData` input, parse safely with `Zod.safeParse()`
+- Return `{ success: boolean, data?: any, message: string }` envelope
+- Avoid `try/catch` for validation errors; handle them via `!valid.success`
 
 ---
 

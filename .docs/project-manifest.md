@@ -313,7 +313,7 @@ export const dynamic = "force-dynamic"; // ← WAJIB, baris pertama setelah impo
 |---------|-------------|-----|
 | [`architecture.md`](.docs/architecture.md) | Tech Lead, AI Agent | Master blueprint, branching, data contracts, routing, file ownership |
 | [`backend-logic.md`](.docs/backend-logic.md) | BE Dev, AI Agent | Server Actions pattern, Prisma, Zod validation |
-| [`frontend-ui.md`](.docs/frontend-ui.md) | FE Dev, AI Agent | Design system, component hole pattern |
+| [`frontend-design.md`](.docs/frontend-design.md) | FE Dev, AI Agent | Design system, component hole pattern |
 | [`security-policy.md`](.docs/security-policy.md) | Semua Dev | RLS, JWT, Zod, secrets management |
 | [`roadmap.md`](.docs/roadmap.md) | Product, Teams | Feature timeline, sprint planning |
 
