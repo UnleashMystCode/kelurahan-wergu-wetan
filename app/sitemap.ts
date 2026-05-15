@@ -1,38 +1,17 @@
 import { MetadataRoute } from 'next';
 import { PrismaClient } from '@prisma/client';
 
+// Force dynamic rendering — sitemap tidak boleh di-pre-render di build time
+// karena bergantung pada data DB yang tidak tersedia saat CI
+export const dynamic = 'force-dynamic';
+
 const prisma = new PrismaClient();
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = 'https://wergu-wetan.com';
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://wergu-wetan.com';
 
-  // Dapatkan semua berita aktif (dari tabel Kegiatan)
-  const berita = await prisma.kegiatan.findMany({
-    where: { status: 'Aktif' },
-    select: { slug: true, updatedAt: true },
-  });
-
-  const beritaUrls = berita.map((b) => ({
-    url: `${baseUrl}/berita/${b.slug}`,
-    lastModified: b.updatedAt,
-    changeFrequency: 'weekly' as const,
-    priority: 0.8,
-  }));
-
-  // Dapatkan semua potensi desa aktif
-  const potensiDesa = await prisma.potensiDesa.findMany({
-    where: { status: 'Aktif' },
-    select: { slug: true, updatedAt: true },
-  });
-
-  const potensiDesaUrls = potensiDesa.map((p) => ({
-    url: `${baseUrl}/potensi-desa/${p.slug}`,
-    lastModified: p.updatedAt,
-    changeFrequency: 'monthly' as const,
-    priority: 0.7,
-  }));
-
-  return [
+  // Static URLs (selalu tersedia, tidak butuh DB)
+  const staticUrls: MetadataRoute.Sitemap = [
     {
       url: baseUrl,
       lastModified: new Date(),
@@ -69,7 +48,40 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'weekly',
       priority: 0.8,
     },
-    ...beritaUrls,
-    ...potensiDesaUrls,
   ];
+
+  // Dynamic URLs dari DB (dengan fallback kosong jika DB tidak tersedia)
+  let beritaUrls: MetadataRoute.Sitemap = [];
+  let potensiDesaUrls: MetadataRoute.Sitemap = [];
+
+  try {
+    const berita = await prisma.kegiatan.findMany({
+      where: { status: 'Aktif' },
+      select: { slug: true, updatedAt: true },
+    });
+
+    beritaUrls = berita.map((b) => ({
+      url: `${baseUrl}/berita/${b.slug}`,
+      lastModified: b.updatedAt,
+      changeFrequency: 'weekly' as const,
+      priority: 0.8,
+    }));
+
+    const potensiDesa = await prisma.potensiDesa.findMany({
+      where: { status: 'Aktif' },
+      select: { slug: true, updatedAt: true },
+    });
+
+    potensiDesaUrls = potensiDesa.map((p) => ({
+      url: `${baseUrl}/potensi-desa/${p.slug}`,
+      lastModified: p.updatedAt,
+      changeFrequency: 'monthly' as const,
+      priority: 0.7,
+    }));
+  } catch {
+    // DB tidak tersedia (CI environment) — kembalikan hanya static URLs
+    console.warn('[sitemap] Database tidak dapat dijangkau, mengembalikan URL statis saja.');
+  }
+
+  return [...staticUrls, ...beritaUrls, ...potensiDesaUrls];
 }
