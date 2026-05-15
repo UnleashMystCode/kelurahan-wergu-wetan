@@ -11,6 +11,7 @@ on:
       - 'pr/**'    # Branch integrasi spesifik (pr/berita-filter, dll.)
       - 'be/**'
       - 'fe/**'
+      - 'hotfix/**' # Branch perbaikan darurat
   pull_request:
     branches:
       - main

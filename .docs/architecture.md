@@ -4,8 +4,8 @@
 
 > *"AlrafuruNotFound-Agentic Architecture for Modular Development"*
 
-**Created by:** [AlrafuruNotFound](https://github.com/AlrafuruNotFound) | **Version:** 3.3  
-**Last Updated:** 14 Mei 2026 | **Status:** ✅ Verified Against Codebase v0.1.0
+**Created by:** [AlrafuruNotFound](https://github.com/AlrafuruNotFound) | **Version:** 3.6  
+**Last Updated:** 16 Mei 2026 | **Status:** ✅ Verified Against Codebase v0.1.0
 
 ---
 
@@ -569,6 +569,9 @@ Follow ANF-Agentic Architecture:
 | **3.2** | **2026-05-14** | **Admin CRUD: `admin.action.ts` + `ManajemenAdminClient.tsx`; `force-dynamic` enforced on all pages; dummy data eliminated from `settings/`; Action Files inventory added** | **Antigravity** |
 | 3.3 | 2026-05-16 | Rename `frontend-ui.md` → `frontend-design.md`; update semua referensi lintas dokumen | Antigravity |
 | **3.3.1** | **2026-05-16** | **Audit sinkronisasi: tambah 8 lib aktif, route banner, koreksi `tailwind.config.ts` → `postcss.config.mjs`, tambah `AdminShell.tsx`, `loading.tsx`, `sitemap.ts`, `logo-kudus.svg` ke manifest** | **Antigravity** |
+| 3.4.0 | 2026-05-16 | Setup GitHub Actions (CI, Docs-Sync, Security Audit), PR Template, Issue Templates, `CONTRIBUTING.md`, `SECURITY.md` | Antigravity |
+| 3.5.0 | 2026-05-16 | Tambah `.editorconfig`, `.gitmessage`, `CODEOWNERS`, update `.env.example` | Antigravity |
+| **3.6.0** | **2026-05-16** | **Fix CI: trigger branch `pr`, ESLint rules override, `sitemap.ts` force-dynamic, `next.config.ts` allowedOrigins** | **Antigravity** |
 
 **Review Cadence:** Every sprint retro or major feature addition.  
 **Approval:** Tech Lead sign-off required for any deviation.

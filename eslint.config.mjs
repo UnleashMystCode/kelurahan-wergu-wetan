@@ -41,10 +41,6 @@ const eslintConfig = defineConfig([
       // Next.js App Router menggunakan pola ini secara sah
       "react-hooks/exhaustive-deps": "warn",
 
-      // React Compiler rules — disable karena pattern Next.js App Router
-      // menggunakan setState di useEffect dan function call di render secara sah
-      "react-compiler/react-compiler": "off",
-
       // setState di dalam useEffect adalah pattern valid untuk sync state dengan props
       // Contoh: useEffect(() => { if (isActive) setIsOpen(true) }, [isActive])
       "react-hooks/set-state-in-effect": "off",
