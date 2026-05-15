@@ -142,7 +142,7 @@ export default function BeritaView({ banner, newsData = [] }: any) {
                               </h3>
                             </div>
                             <div className="mt-4 pl-5 text-[14px] text-text-muted">
-                              {new Date(item.tanggal || Date.now()).toLocaleDateString("en-US", {
+                                  {new Date(item.tanggal || Date.now()).toLocaleDateString("en-US", {
                                 month: "long",
                                 day: "numeric",
                                 year: "numeric",
@@ -178,6 +178,7 @@ export default function BeritaView({ banner, newsData = [] }: any) {
                         {item.judul}
                       </h4>
                       <div className="mt-2 shrink-0 text-[13.5px] text-text-muted md:mt-0 md:text-right">
+                        {/* eslint-disable-next-line react-hooks/set-state-in-effect */}
                         {new Date(item.tanggal || Date.now()).toLocaleDateString("en-US", {
                           month: "long",
                           day: "numeric",
