@@ -5,7 +5,8 @@ on:
   pull_request:
     branches:
       - main
-      - 'pr/**'
+      - 'pr'       # PR yang menyasar branch integrasi utama
+      - 'pr/**'    # PR yang menyasar branch pr/xxx
 
 jobs:
   check-changelog:
