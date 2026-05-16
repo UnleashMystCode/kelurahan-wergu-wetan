@@ -16,17 +16,25 @@ Terima kasih sudah ingin berkontribusi! Proyek ini menggunakan **ANF-Agentic Arc
 
 | Branch | Untuk | Boleh sentuh |
 |--------|-------|-------------|
-| `be/<domain>-<desc>` | Backend | `actions/`, `lib/`, `prisma/` |
-| `fe/<domain>-<desc>` | Frontend | `components/`, `app/` |
-| `pr/<domain>-<desc>` | Integration (merge be + fe) | Semua, hanya untuk testing |
-| `hotfix/<desc>` | Bugfix kritis ke production | Minimal, targeted |
-| `main` | Production | ❌ Tidak pernah langsung commit |
+| `be/<nama-fitur>` | Ranting khusus kerja Backend | `actions/`, `lib/`, `prisma/` |
+| `fe/<nama-fitur>` | Ranting khusus kerja Frontend | `components/`, `app/` |
+| `pr` | **Batang Integrasi Utama** (Staging). Semua ranting `be/` dan `fe/` dilempar (merge) ke sini untuk dites bersama. | Semua, tempat bertemunya kode |
+| `hotfix/<desc>` | Bugfix darurat ke production | Minimal, targeted |
+| `main` | **Production (Live)** | ❌ Dilarang keras commit langsung |
 
-**Contoh nama branch yang benar:**
+> **⚠️ ATURAN EMAS BRANCHING:** 
+> Dilarang membuat *branch* dengan nama `be` atau `fe` saja. Selalu gunakan format *folder* (contoh: `be/nama-fitur`). Ini mencegah penumpukan kode dan menghindari *Merge Hell*.
+
+**Contoh Siklus Kerja (Pro Max Workflow):**
 ```bash
-git checkout -b be/berita-add-kategori-field
-git checkout -b fe/berita-card-filter-ui
-git checkout -b pr/berita-kategori-integration
+# 1. Developer Backend bekerja:
+git checkout -b be/ulasan-ikm
+
+# 2. Developer Frontend bekerja:
+git checkout -b fe/ulasan-ui
+
+# 3. Keduanya melempar kode mereka ke batang integrasi di GitHub:
+# -> Merge PR ke branch `pr`
 ```
 
 ---

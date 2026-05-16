@@ -14,6 +14,7 @@
 - `.docs/` — Purge total semua referensi "Pengajuan Surat" dan "Letter Forms" di `roadmap.md`, `project-manifest.md`, `architecture.md`, `mcp-and-skills.md`. Sistem kini sepenuhnya beralih ke konsep Direktori Layanan dan Ulasan/IKM.
 - `AdminLayananManager.tsx` — Direset menjadi halaman *placeholder* ("Dalam Tahap Pengembangan") karena UI form surat lama sudah tidak relevan.
 - Supabase Database — Migrasi skema secara remote (`db push --accept-data-loss`) sukses.
+- `CONTRIBUTING.md` — Menyederhanakan dan merapikan *Branching Strategy*. Menetapkan `pr` sebagai satu-satunya batang integrasi dan memberikan *warning* untuk tidak membuat branch zombie `be` atau `fe` tanpa garis miring.
 
 ### Removed
 - `TemplateSurat.tsx` — Fitur cetak PDF surat dihapus karena kelurahan tidak lagi memproses surat online.
