@@ -53,14 +53,14 @@ Each item di-tracking dengan status: `[TODO]`, `[IN-PROGRESS]`, `[DONE]`, `[BLOC
 | Responsive mobile layout | `fe/mobile-responsive` | ✅ DONE | FE Team |
 | Performance audit | `pr/performance` | ⏳ IN-PROGRESS | Both |
 
-### 📝 Application Forms [TODO]
+### 📝 Direktori Informasi & Indeks Kepuasan (IKM) [TODO]
 
 | Task | Branch | Status | Owner |
 |------|--------|--------|-------|
-| Letter request (Pengajuan Surat) form | `fe/letter-form` | [TODO] | FE Team |
-| Form validation (Zod) | `be/letter-validation` | [TODO] | BE Team |
-| Database storage for applications | `be/letter-crud` | [TODO] | BE Team |
-| Admin notification system | `be/notifications` | [TODO] | BE Team |
+| UI Direktori Panduan Layanan (Cara Akses) | `fe/layanan-panduan` | [TODO] | FE Team |
+| Form Ulasan / Penilaian Kepuasan Warga | `fe/ulasan-ikm` | [TODO] | FE Team |
+| Backend CRUD & Kalkulasi Statistik Ulasan Tahunan | `be/ulasan-stats` | [TODO] | BE Team |
+| Integrasi Rating ke Data Statistik Homepage | `pr/home-stats-ikm` | [TODO] | Both |
 
 ---
 
@@ -133,7 +133,7 @@ Each item di-tracking dengan status: `[TODO]`, `[IN-PROGRESS]`, `[DONE]`, `[BLOC
 ```
 Q2 2026 (Apr-Jun):
   ✅ Auth + Basic CMS (News, Banners)
-  ⏳ Homepage optimization + letter forms
+  ⏳ Homepage optimization + IKM (Ulasan) & Layanan info
   ⏳ Search + Excel import/export
 
 Q3 2026 (Jul-Sep):

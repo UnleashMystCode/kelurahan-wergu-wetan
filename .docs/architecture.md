@@ -54,7 +54,7 @@ Proyek ini menggunakan arsitektur **Monolith** (Frontend & Backend dalam satu co
 - **Date Formatting:** `date-fns` (Format tanggal locale `id-ID`).
 - **Password Hashing:** `bcryptjs` (Hash password admin di Server Action `auth.action.ts`).
 - **Toast Notifications:** `react-hot-toast` (Feedback notifikasi UI di admin panel).
-- **Print/PDF:** `react-to-print` (Cetak template surat langsung dari browser).
+- **Print/PDF:** `react-to-print` (Cetak dokumen arsip dari browser).
 - **Debounce:** `use-debounce` (Debounce input pencarian di `GlobalSearchModal`).
 - **Excel Export:** `xlsx` (Generate file Excel di `/api/template/stats`).
 - **Typography Prose:** `@tailwindcss/typography` (Styling artikel panjang / konten berita).
@@ -480,7 +480,7 @@ See `.env.example` for template.
 | `tentang-kami.action.ts` | `ProfilKonten`, `PerangkatDesa` | About |
 | `search.action.ts` | `Kegiatan`, `PotensiDesa` | Search |
 | `pesan.action.ts` | `PesanMasuk` | Inbox |
-| `surat.action.ts` | `PengajuanSurat` | Letters *(planned)* |
+| `ulasan.action.ts` | `UlasanLayanan` | Reviews & IKM *(planned)* |
 
 ---
 

@@ -33,16 +33,15 @@ model Umkm {
   @@map("umkm")
 }
 
-model PengajuanSurat {
-  id         Int      @id @default(autoincrement())
-  nama       String
-  nik        String
-  jenisSurat String
-  status     String   @default("Pending")
-  whatsapp   String
-  createdAt  DateTime @default(now())
+model UlasanLayanan {
+  id        Int      @id @default(autoincrement())
+  nama      String?  // Boleh anonim
+  rating    Int      // Bintang 1-5
+  pesan     String   @db.Text
+  status    String   @default("Belum Dibaca") // Status untuk admin
+  createdAt DateTime @default(now())
 
-  @@map("pengajuansurat")
+  @@map("ulasanlayanan")
 }
 
 model BannerHomepage {

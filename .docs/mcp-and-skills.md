@@ -23,7 +23,7 @@ Berikut adalah daftar rancangan fungsi yang didaftarkan ke dalam MCP Server agar
 - **Under the hood:** Tool ini akan memanggil eksekusi pencarian teks penuh (FTS) dari `actions/search.action.ts`.
 
 ### Tool 2: `get_village_services`
-- **Deskripsi untuk AI:** Gunakan tool ini jika user bertanya tentang prosedur atau layanan surat-menyurat apa saja yang bisa diurus di kantor kelurahan.
+- **Deskripsi untuk AI:** Gunakan tool ini jika user bertanya tentang prosedur atau informasi panduan layanan apa saja yang ada di kantor kelurahan.
 - **Input Payload:** `{}` (Tanpa parameter)
 - **Under the hood:** Tool ini terhubung ke fungsi `getAllLayanan()` dari `actions/layanan.action.ts`.
 

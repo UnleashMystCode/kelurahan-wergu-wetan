@@ -91,7 +91,7 @@ export const dynamic = "force-dynamic"; // ← WAJIB, baris pertama setelah impo
 | `actions/tentang-kami.action.ts` | About page content management | ✅ Active |
 | `actions/search.action.ts` | Site-wide search (PostgreSQL FTS) | ✅ Active |
 | `actions/pesan.action.ts` | Contact form messages (PesanMasuk) | ✅ Active |
-| `actions/surat.action.ts` | Letter request (Pengajuan Surat) | ⏳ Planned |
+| `actions/ulasan.action.ts` | Customer Satisfaction Index (Ulasan IKM) | ⏳ Planned |
 
 #### Utilities & Libraries (`lib/`)
 
@@ -122,7 +122,7 @@ export const dynamic = "force-dynamic"; // ← WAJIB, baris pertama setelah impo
 | `PerangkatDesa` | `perangkatdesa` | Staff organizational structure | ✅ Active |
 | `ProfilKonten` | `profilkonten` | About page (visi, misi, sejarah) | ✅ Active |
 | `SiteConfig` | `siteconfig` | Global site config (phone, email) | ✅ Active |
-| `PengajuanSurat` | `pengajuansurat` | Letter request applications | ⏳ Planned |
+| `UlasanLayanan` | `ulasanlayanan` | Service reviews and IKM ratings | ⏳ Planned |
 | `PesanMasuk` | `pesanmasuk` | Contact form messages | ✅ Active |
 | `Umkm` | `umkm` | Legacy — unused | ❌ Deprecated |
 | `Penduduk` | `penduduk` | Legacy — unused | ❌ Deprecated |
@@ -210,7 +210,7 @@ export const dynamic = "force-dynamic"; // ← WAJIB, baris pertama setelah impo
 | `PotensiRowActions.tsx` | Potensi table row actions | ✅ Active |
 | `ConfirmDeleteButton.tsx` | Delete confirmation button | ✅ Active |
 | `InboxClient.tsx` | Contact messages inbox UI | ✅ Active |
-| `TemplateSurat.tsx` | Letter template preview — used by `AdminLayananManager` | ✅ Active |
+| `PanduanLayanan.tsx` | Service directory guide — used by `AdminLayananManager` | ⏳ Planned |
 
 #### App-Level Components (`app/admin/`)
 
@@ -282,7 +282,7 @@ export const dynamic = "force-dynamic"; // ← WAJIB, baris pertama setelah impo
 | About Page (Public) | `tentang-kami.action.ts` | `/tentang-kami` | TentangKamiView | ✅ Done |
 | Site Search | `search.action.ts` | Global | GlobalSearchModal | ✅ Done |
 | Contact Messages Inbox | `pesan.action.ts` | `/admin/pesan-masuk` | InboxClient | ✅ Done |
-| Letter Requests (Surat) | `surat.action.ts` *(planned)* | — | TemplateSurat | ⏳ Planned |
+| Service Reviews (IKM) | `ulasan.action.ts` *(planned)* | — | FormUlasan | ⏳ Planned |
 
 ---
 
@@ -292,7 +292,7 @@ export const dynamic = "force-dynamic"; // ← WAJIB, baris pertama setelah impo
 
 | File | Dari | Alasan | Aksi |
 |------|------|--------|------|
-| `AdminSuratView.tsx` | `components/admin/` | Zero imports — orphan (fitur Surat belum jalan) | 🔍 Simpan jika Surat dimulai, hapus jika tidak |
+| `AdminUlasanView.tsx` | `components/admin/` | Zero imports — orphan (fitur Ulasan belum jalan) | 🔍 Simpan untuk fitur IKM, hapus jika tidak |
 | `ttd-test.png` | `public/` | Test image tanda tangan — tidak ada referensi di kode | 🔍 Konfirmasi dulu |
 | `file.svg` | `public/` | Boilerplate Next.js — tidak dipakai | 🗑️ Hapus |
 | `globe.svg` | `public/` | Boilerplate Next.js — tidak dipakai | 🗑️ Hapus |

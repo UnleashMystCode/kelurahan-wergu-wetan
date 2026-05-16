@@ -5,6 +5,22 @@
 
 ---
 
+## [v3.7.0] - 2026-05-16
+### Changed (Arsitektur Direktori Layanan & IKM)
+- `schema.prisma` — Menghapus tabel obsolete `PengajuanSurat`, menggantinya dengan tabel `UlasanLayanan` (Indeks Kepuasan Masyarakat).
+- `.docs/` — Purge total semua referensi "Pengajuan Surat" dan "Letter Forms" di `roadmap.md`, `project-manifest.md`, `architecture.md`, `mcp-and-skills.md`. Sistem kini sepenuhnya beralih ke konsep Direktori Layanan dan Ulasan/IKM.
+- `AdminLayananManager.tsx` — Direset menjadi halaman *placeholder* ("Dalam Tahap Pengembangan") karena UI form surat lama sudah tidak relevan.
+- Supabase Database — Migrasi skema secara remote (`db push --accept-data-loss`) sukses.
+
+### Removed
+- `TemplateSurat.tsx` — Fitur cetak PDF surat dihapus karena kelurahan tidak lagi memproses surat online.
+- `xlsx` dependency — Library dihapus karena terdeteksi mengandung *High Vulnerability* tanpa fix (Prototype Pollution).
+
+### Security
+- `npm audit fix --force` — Meng-upgrade Next.js dari v16.1.6 ke v16.2.6 untuk menambal 5 *High Vulnerability* kritis (DoS, Request Smuggling, CSRF Bypass).
+
+---
+
 ## [v3.6.0] - 2026-05-16
 ### Fixed (CI Pipeline — Debugging & Stabilisasi)
 - `ci.yml` — Fix trigger: tambah branch `pr` secara eksplisit (pattern `pr/**` tidak match branch bernama `pr`).
