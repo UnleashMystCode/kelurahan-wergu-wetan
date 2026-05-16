@@ -6,6 +6,9 @@
 ---
 
 ## [v3.7.0] - 2026-05-16
+### Added (Backend Fitur Ulasan & IKM)
+- `actions/ulasan.action.ts` — Membuat *Server Action* untuk manajemen IKM. Mencakup `tambahUlasan` (dengan validasi Zod form), `getSemuaUlasan` (untuk tabel Admin), dan `getStatistikUlasan` (kalkulasi agregat untuk dasbor publik).
+
 ### Changed (Arsitektur Direktori Layanan & IKM)
 - `schema.prisma` — Menghapus tabel obsolete `PengajuanSurat`, menggantinya dengan tabel `UlasanLayanan` (Indeks Kepuasan Masyarakat).
 - `.docs/` — Purge total semua referensi "Pengajuan Surat" dan "Letter Forms" di `roadmap.md`, `project-manifest.md`, `architecture.md`, `mcp-and-skills.md`. Sistem kini sepenuhnya beralih ke konsep Direktori Layanan dan Ulasan/IKM.
