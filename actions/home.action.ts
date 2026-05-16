@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import prisma from "@/lib/db";
 import { z } from "zod";
-import * as XLSX from "xlsx";
+// xlsx removed for security reasons
 import { writeFile, unlink, mkdir } from "fs/promises";
 import path from "path";
 
@@ -20,58 +20,10 @@ const HomeWelcomeSchema = z.object({
 
 // === 1. UPLOAD STATISTIK EXCEL ===
 export async function uploadStatisticsExcel(rawFormData: FormData) {
-  try {
-    const file = rawFormData.get("excelFile") as File;
-    const url = rawFormData.get("excelUrl") as string;
-    let workbook;
-
-    if (url && url.trim() !== "") {
-      const response = await fetch(url.trim());
-      const buffer = Buffer.from(await response.arrayBuffer());
-      workbook = XLSX.read(buffer, { type: "buffer", cellDates: true });
-    } else if (file && file.size > 0) {
-      const buffer = Buffer.from(await file.arrayBuffer());
-      workbook = XLSX.read(buffer, { type: "buffer", cellDates: true });
-    } else {
-      throw new Error("File atau URL Excel wajib diisi (tidak boleh kosong)");
-    }
-
-    if (!workbook.SheetNames.length) throw new Error("File Excel rusak (tidak ada sheet).");
-
-    const sheetName = workbook.SheetNames[0];
-    const sheet = workbook.Sheets[sheetName];
-    const rawData = XLSX.utils.sheet_to_json(sheet, { defval: "" });
-
-    const cleanData = rawData
-      .map((item: any) => {
-        const labelKey = Object.keys(item).find((k) => k.toLowerCase().trim() === "label");
-        const valueKey = Object.keys(item).find((k) => k.toLowerCase().trim() === "value");
-
-        return {
-          label: labelKey ? String(item[labelKey] || "").trim() : "",
-          value: valueKey ? String(item[valueKey] || "").trim() : "",
-        };
-      })
-      .filter(
-        (item) =>
-          item.label !== "" &&
-          item.label.toLowerCase() !== "undefined" &&
-          item.label !== "Tanpa Label"
-      );
-
-    await prisma.$transaction([
-      prisma.homeStatistic.deleteMany(),
-      ...(cleanData.length > 0 ? [prisma.homeStatistic.createMany({ data: cleanData })] : []),
-    ]);
-
-    revalidatePath("/home");
-    revalidatePath("/tentang-kami");
-    revalidatePath("/admin/halaman/tentang-kami/statistik");
-    return { success: true, message: "Data Excel berhasil diunggah!" };
-  } catch (error: any) {
-    console.error("Upload Error:", error);
-    return { success: false, message: `Gagal proses: ${error.message}` };
-  }
+  return { 
+    success: false, 
+    message: "Fitur upload Excel dinonaktifkan sementara karena masalah keamanan (migrasi dari library xlsx)." 
+  };
 }
 
 export async function saveStatistic(formData: FormData) {

@@ -18,9 +18,9 @@ export default async function DashboardPage() {
   const totalBerita = await prisma.kegiatan.count();
   const totalPotensi = await prisma.potensiDesa.count();
   const totalPesan = await prisma.pesanMasuk.count();
-  const totalSurat = await prisma.pengajuanSurat.count();
+  const totalUlasan = await prisma.ulasanLayanan.count();
+  const unreadUlasan = await prisma.ulasanLayanan.count({ where: { status: "Belum Dibaca" } });
   const unreadPesan = await prisma.pesanMasuk.count({ where: { status: "Belum Dibaca" } });
-  const pendingSurat = await prisma.pengajuanSurat.count({ where: { status: "Pending" } });
 
   const recentPesan = await prisma.pesanMasuk.findMany({
     take: 3,
@@ -61,12 +61,12 @@ export default async function DashboardPage() {
       {/* 2. Statistik Real-time */}
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
         <StatCard 
-          title="Pengajuan Surat" 
-          value={totalSurat.toString()} 
-          sub={pendingSurat > 0 ? `${pendingSurat} perlu diproses` : "Semua selesai"} 
+          title="Ulasan IKM" 
+          value={totalUlasan.toString()} 
+          sub={unreadUlasan > 0 ? `${unreadUlasan} belum dibaca` : "Semua terbaca"} 
           icon={FileText} 
           color="blue" 
-          alert={pendingSurat > 0}
+          alert={unreadUlasan > 0}
         />
         <StatCard 
           title="Pesan Masuk" 

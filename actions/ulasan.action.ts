@@ -32,7 +32,6 @@ export async function tambahUlasan(formData: FormData) {
         nama: valid.data.nama || "Anonim",
         rating: valid.data.rating,
         pesan: valid.data.pesan,
-        isRead: false, // Default admin belum baca
       },
     });
 
