@@ -102,7 +102,7 @@ wergu-wetan-app/
 **Workspace Separation (ANF Theory):**
 - **BE workspace** (`be/*` branch): `actions/`, `lib/`, `prisma/` — Server Actions, Prisma, services
 - **FE workspace** (`fe/*` branch): `components/`, `app/` — UI components, pages, layouts
-- **Integration** (`pr/*` branch): Merge BE + FE → test data contracts (props "holes")
+- **Integration** (`pr` branch): Merge BE + FE → test data contracts (props "holes")
 - **Production** (`main` branch): Stable, tested, deployed
 
 ---
@@ -150,7 +150,7 @@ Design tokens defined in `app/globals.css`. See [Frontend Design Guide](.docs/fr
 
 This project implements the **ANF-Agentic Architecture** pattern (AlrafuruNotFound-Agentic Architecture), designed for:
 - **Agentic collaboration:** Human developers + AI agents (Antigravity, Claude Code, etc.)
-- **Modular structure:** Clear separation between BE/FE via branch-based workflow (`be/*`, `fe/*`, `pr/*`)
+- **Modular structure:** Clear separation between BE/FE via branch-based workflow (`be/*`, `fe/*`, `pr`)
 - **Vertical Slice:** Domain-centric organization (berita, potensi, layanan) over horizontal layers
 - **Server Actions First:** Type-safe backend integration without REST overhead
 
@@ -215,7 +215,7 @@ Running `npm run dev` uses `--experimental-https` with a self-signed cert. Brows
 6. Implement FE component with explicit props interface ("hole")
 7. Run `npm run lint` & `npm run format` before PR
 8. **Add new files to [`project-manifest.md`](.docs/project-manifest.md) inventory**
-9. After BE + FE complete, merge into `pr/<domain>-<desc>` for integration testing
+9. After BE + FE complete, merge into `pr` for integration testing
 10. Update `.docs/` if architecture or patterns change
 11. Reference: [`.docs/architecture.md`](.docs/architecture.md) for full branching workflow
 
