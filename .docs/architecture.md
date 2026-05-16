@@ -79,26 +79,32 @@ Untuk menjaga "Separation of Concerns" (pemisahan fokus kode), detail sistem dip
 
 | Branch | Focus | Purpose | Output |
 |--------|-------|---------|--------|
-| **`be/*`** | Backend | Server Actions, services, Prisma queries in `actions/`, `lib/`, `prisma/` | Type-safe functions ready for FE consumption |
-| **`fe/*`** | Frontend | UI components and pages in `components/`, `app/` with "hole" props interfaces | Presentational components awaiting data |
-| **`pr/*`** | Integration | Merge BE + FE to test data contracts and full flows | Integrated features, validated contracts |
-| **`main`** | Production | Stable, tested, deployed code | Production releases |
+| **`be/<nama-fitur>`** | Backend | Kerja terisolasi Server Actions, Prisma (`actions/`, `lib/`, `prisma/`) | Kode logic mentah |
+| **`fe/<nama-fitur>`** | Frontend | Kerja terisolasi UI komponen (`components/`, `app/`) | Tampilan UI yang siap diikat data |
+| **`pr`** | Integration | **Staging Server**. Tempat bertemunya kode hasil kerja `be/` dan `fe/` | Fitur terintegrasi penuh |
+| **`main`** | Production | Server Live, kode siap pakai warga | Rilis Resmi |
 
-### Branch Lifecycle
+### Branch Lifecycle (Pro Max Flow)
 
-```
-[be/feature-x]     [fe/feature-x]       [pr/feature-x]         [main]
-     ↓                   ↓                    ↓                     ↓
-[Server Actions] + [UI Components] → [Integration Test] → [Release]
-     ↓                   ↓                    ↓                     ↓
-[BE Logic done] + [FE UI done] → [Data binding test] → [Deploy]
+```text
+[be/fitur-x] ---
+                \
+                 \ (Merge Pull Request)
+                  \
+                   v
+                 [pr] (Staging / Tes Integrasi) -----> [main] (Production / Rilis)
+                   ^
+                  /
+                 / (Merge Pull Request)
+                /
+[fe/fitur-x] ---
 ```
 
 **Rules:**
-- ✅ **BE (`be/*`)** — Only modify `actions/`, `lib/`, `prisma/`. Never touch `components/` or `app/` (except wrappers).
-- ✅ **FE (`fe/*`)** — Only modify `components/`, `app/`. Never touch `actions/` or `lib/`.
-- ✅ **PR (`pr/*`)** — Merge be + fe branches, test full flow, then merge to `develop` → `main`.
-- ❌ **Never** develop directly on `main` (except hotfix `hotfix/*`).
+- ✅ **Kerja selalu di ranting (`be/*` atau `fe/*` atau `chore/*`).**
+- ❌ **Dilarang keras** membuat branch `be` atau `fe` tanpa garis miring (zombie branches).
+- ✅ **Merge Target:** Selalu arahkan Pull Request ke branch `pr`.
+- ❌ **Jangan pernah** push langsung ke `main`.
 
 ### Branch Naming Convention
 

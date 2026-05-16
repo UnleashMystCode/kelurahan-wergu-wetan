@@ -1,0 +1,42 @@
+name: 🚀 Auto Release (Pro Max)
+
+# Robot ini akan bangun otomatis HANYA ketika ada Tag versi baru yang di-push ke GitHub
+on:
+  push:
+    tags:
+      - 'v*.*.*' # Trigger otomatis saat ada tag format v1.0.0, v3.7.0, dll
+
+jobs:
+  release:
+    name: 📦 Create GitHub Release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # Robot butuh izin untuk membuat release di tab Releases
+
+    steps:
+      - name: 📥 Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Ambil seluruh histori agar bisa baca CHANGELOG
+
+      - name: 📝 Setup Node.js (Untuk tools tambahan)
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 🤖 Generate Release Notes dari CHANGELOG
+        id: changelog_reader
+        uses: mindsers/changelog-reader-action@v2.2.3
+        with:
+          version: ${{ github.ref_name }}
+          path: .docs/CHANGELOG.md
+
+      - name: 🎉 Publish to GitHub Releases
+        uses: softprops/action-gh-release@v2
+        with:
+          name: Release ${{ github.ref_name }}
+          body: ${{ steps.changelog_reader.outputs.changes }}
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
