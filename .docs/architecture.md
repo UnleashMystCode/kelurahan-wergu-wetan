@@ -110,10 +110,10 @@ Untuk menjaga "Separation of Concerns" (pemisahan fokus kode), detail sistem dip
 
 | Type | Format | Example |
 |------|--------|---------|
-| Feature (BE) | `be/<domain>-<desc>` | `be/berita-crud` |
-| Feature (FE) | `fe/<domain>-<desc>` | `fe/berita-card-ui` |
-| Integration | `pr/<domain>-<desc>` | `pr/berita-full-integration` |
+| Feature (BE) | `be/<nama-fitur>` | `be/berita-crud` |
+| Feature (FE) | `fe/<nama-fitur>` | `fe/berita-card-ui` |
 | Hotfix | `hotfix/<desc>` | `hotfix/login-cookie-bug` |
+| Integration | **`pr`** | *(Single integration branch)* |
 
 ---
 
@@ -151,17 +151,17 @@ wergu-wetan-app/
 │   └── tw-safelist.txt          # VITAL — dynamic Tailwind classes
 │
 ├── actions/                     # Server Actions — BE workspace
-│   ├── auth.action.ts
 │   ├── admin.action.ts
-│   ├── berita.action.ts
+│   ├── auth.action.ts
 │   ├── banner.action.ts
+│   ├── berita.action.ts
 │   ├── home.action.ts
 │   ├── kontak.action.ts
-│   ├── layanan.action.ts
 │   ├── pesan.action.ts
 │   ├── potensi.action.ts
 │   ├── search.action.ts
-│   └── tentang-kami.action.ts
+│   ├── tentang-kami.action.ts
+│   └── ulasan.action.ts
 │
 ├── components/                  # React Components — FE workspace
 │   ├── user/                   # Public-facing components
